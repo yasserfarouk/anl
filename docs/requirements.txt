@@ -75,7 +75,6 @@ pandas
 pandoc
 pandocfilters
 parso
-pathtools
 pep8
 pexpect
 pickleshare
