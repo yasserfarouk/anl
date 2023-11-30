@@ -1,0 +1,13 @@
+pytest
+hypothesis
+coverage
+jinja2
+matrix
+tox
+pysnooper
+coverage
+pytest-coverage
+pytest-repeat
+jupyter
+ipykernel
+-r docs/requirements.txt
