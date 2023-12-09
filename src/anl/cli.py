@@ -1,43 +1,24 @@
 #!/usr/bin/env python
-"""The anl universal command line tool"""
+"""The ANL universal command line tool"""
 import math
 import os
 import sys
-import traceback
 from collections import defaultdict
 from functools import partial
 from pathlib import Path
-from pprint import pformat, pprint
 from time import perf_counter
 from typing import List
 
 import click
 import click_config_file
 import negmas
-import numpy as np
-import pandas as pd
-import tqdm
-import yaml
-from negmas import save_stats
 from negmas.helpers import humanize_time, unique_name
-from negmas.helpers.inout import load
-from tabulate import tabulate
+from negmas.helpers.types import get_class
+from rich import print
 
 import anl
-
-try:
-    from anl.vendor.quick.quick import gui_option
-except:
-
-    def gui_option(x):
-        return x
-
-
-try:
-    # disable a warning in yaml 1b1 version
-    yaml.warnings({"YAMLLoadWarning": False})
-except:
-    pass
+from anl import DEFAULT_AN2024_COMPETITORS
+from anl.anl2024.runner import DEFAULT_TOURNAMENT_PATH, anl2024_tournament
 
 n_completed = 0
 n_total = 0
@@ -125,10 +106,20 @@ def nCr(n, r):
 click.option = partial(click.option, show_default=True)
 
 
-@gui_option
 @click.group()
 def main():
     pass
+
+
+def _path(path) -> Path:
+    """Creates an absolute path from given path which can be a string"""
+    if isinstance(path, Path):
+        return path.absolute()
+    path.replace("/", os.sep)
+    if isinstance(path, str):
+        if path.startswith("~"):
+            path = Path.home() / (os.sep.join(path.split(os.sep)[1:]))
+    return Path(path).absolute()
 
 
 @main.command(help="Runs an ANL 2024 tournament")
@@ -144,6 +135,20 @@ def main():
     help='The name of the tournament. The special value "random" will result in a random name',
 )
 @click.option(
+    "--outcomes",
+    "-o",
+    default=1000,
+    type=int,
+    help="Number of outcomes in every scenario",
+)
+@click.option(
+    "--scenarios",
+    "-S",
+    default=10,
+    type=int,
+    help="Number of scenarios to generate",
+)
+@click.option(
     "--repetitions",
     "-r",
     default=10,
@@ -151,41 +156,97 @@ def main():
     help="Number of repetition for each negotiation",
 )
 @click.option(
-    "--timeout",
-    "-t",
-    default=-1,
-    type=int,
-    help="Timeout the whole tournament after the given number of seconds (0 for infinite, -1 for None)",
-)
-@click.option(
     "--competitors",
-    default="BoulwareTBNegoatiator;ConcederTBNegotiator",
+    default="Conceder;Linear;Boulware",
     help="A semicolon (;) separated list of agent types to use for the competition. You"
     " can also pass the special value default for the default builtin"
     " agents",
 )
 @click.option(
-    "--log",
-    "-l",
-    type=click.Path(dir_okay=True, file_okay=False),
-    default=default_tournament_path(),
-    help="Default location to save logs (A folder will be created under it)",
+    "--metric",
+    default="advantage",
+    help="The metric to use for evaluating agents. Can be one of: utility, advantage, partner_welfare, welfare",
+)
+@click.option(
+    "--stat",
+    default="mean",
+    help="The statistic applied to the metric to evaluate agents. Can be one of: mean, median, std, min, max",
+)
+@click.option(
+    "--known-partner/--unknown-partner",
+    default=False,
+    help="Can the agent know its partner type?",
+)
+@click.option(
+    "--save-logs/--no-logs",
+    default=True,
+    help="Whether to save logs.",
+)
+@click.option(
+    "--timelimit",
+    "-t",
+    default=-1,
+    type=float,
+    help="Number of seconds allowed in every negotiation. Negative numbers mean no-limit",
+)
+@click.option(
+    "--steps",
+    "-s",
+    default=-1,
+    type=int,
+    help="Number of negotiation rounds allowed in every negotiation. Negative numbers mean no-limit",
+)
+@click.option(
+    "--pend",
+    default=0.0,
+    type=float,
+    help="Probability of ending the negotiation at every round",
+)
+@click.option(
+    "--plot",
+    "-p",
+    default=0.1,
+    type=float,
+    help="Fraction of negotiations to plot and save",
 )
 @click.option(
     "--verbosity",
+    "-v",
     default=1,
     type=int,
     help="verbosity level",
 )
 @click.option(
-    "--raise-exceptions/--ignore-exceptions",
-    default=True,
-    help="Whether to ignore agent exceptions",
+    "--save_every",
+    "-e",
+    default=1,
+    type=int,
+    help="Number of negotiations after which to save stats",
 )
+@click.option(
+    "--rotate/--no-rotate",
+    default=True,
+    help="Rotate utility functions when creating scenarios for the tournament",
+)
+@click.option(
+    "--self-play/--no-self-play",
+    default=True,
+    help="Allow each agent to negotiate with itself or not",
+)
+@click.option(
+    "--randomize/--no-randomize",
+    default=True,
+    help="Randomize the order of negotiations or not",
+)
+# @click.option(
+#     "--raise-exceptions/--ignore-exceptions",
+#     default=True,
+#     help="Whether to ignore agent exceptions",
+# )
 @click.option(
     "--path",
     default="",
-    help="A path to be added to PYTHONPATH in which all competitors are stored. You can path a : separated list of "
+    help="A path to be added to PYTHONPATH in which all competitors are stored. You can pass a : separated list of "
     "paths on linux/mac and a ; separated list in windows",
 )
 @click_config_file.configuration_option()
@@ -193,14 +254,91 @@ def tournament2024(
     parallel,
     name,
     repetitions,
-    timeout,
     competitors,
-    log,
     verbosity,
-    raise_exceptions,
     path,
+    metric,
+    save_logs,
+    stat,
+    known_partner,
+    save_every,
+    randomize,
+    self_play,
+    plot,
+    pend,
+    timelimit,
+    steps,
+    rotate,
+    outcomes,
+    scenarios,
 ):
-    ...
+    if len(path) > 0:
+        sys.path.append(path)
+    if name == "random":
+        name = unique_name(base="", rand_digits=0)
+
+    all_competitors = competitors.split(";")
+
+    def find_type_name(stem: str):
+        for pre in (
+            "",
+            "anl.anl2024.negotiators.",
+            "negmas.sao.negotiators.",
+            "negmas.genius.gnegotiators.",
+        ):
+            s = pre + stem
+            try:
+                get_class(s)
+                return s
+            except:
+                pass
+        print(f"[red]ERROR[/red] Unknown Competitor Type: {stem}")
+        sys.exit()
+
+    for i, cp in enumerate(all_competitors):
+        all_competitors[i] = find_type_name(cp)
+
+    if not all_competitors:
+        all_competitors = DEFAULT_AN2024_COMPETITORS
+    all_competitors_params = [dict() for _ in range(len(all_competitors))]
+
+    print(f"Tournament will be run between {len(all_competitors)} agents: ")
+    print(all_competitors)
+    if steps <= 0:
+        steps = None
+    if timelimit <= 0:
+        timelimit = None
+    if steps is None and timelimit is None and pend <= 0.0:
+        print(
+            f"[red]ERROR[/red] You specified no way to end the negotiation. You MUST pass either --steps, --timelimit or --pend"
+        )
+        sys.exit(1)
+    tic = perf_counter()
+    results = anl2024_tournament(
+        n_scenarios=scenarios,
+        n_outcomes=outcomes,
+        competitors=all_competitors,
+        competitor_params=all_competitors_params,
+        rotate_ufuns=rotate,
+        n_repetitions=repetitions,
+        n_steps=steps,
+        time_limit=timelimit,
+        pend=pend,
+        name=name,
+        nologs=not save_logs,
+        njobs=0 if parallel else -1,
+        plot_fraction=plot,
+        verbosity=verbosity,
+        self_play=self_play,
+        randomize_runs=randomize,
+        save_every=save_every,
+        known_partner=known_partner,
+        final_score=(metric, stat),
+    )
+    print(results.final_scores)
+    print(f"Done in {humanize_time(perf_counter() - tic, show_ms=True)}")
+    if save_logs:
+        print(f"Detailed logs are stored at: {DEFAULT_TOURNAMENT_PATH / name}")
 
 
 @main.command(help="Prints ANL version and NegMAS version")

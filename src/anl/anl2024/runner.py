@@ -2,6 +2,7 @@ import random
 from pathlib import Path
 from typing import Sequence
 
+from negmas.helpers.strings import unique_name
 from negmas.inout import Scenario
 from negmas.negotiators import Negotiator
 from negmas.outcomes import make_issue, make_os
@@ -10,24 +11,34 @@ from negmas.preferences.value_fun import TableFun
 from negmas.sao.mechanism import SAOMechanism
 from negmas.tournaments.neg.simple import SimpleTournamentResults, cartesian_tournament
 
-from anl.anl2024.negotiators import Boulware, Conceder, Linear
-from anl.anl2024.negotiators.builtin import (
-    StochasticBoulware,
-    StochasticConceder,
-    StochasticLinear,
-)
+from anl.anl2024.negotiators.builtins import Boulware, Conceder, Linear
 
-__all__ = ["make_scenarios", "anl2024_tournament"]
+# from anl.anl2024.negotiators.builtin import (
+#     StochasticBoulware,
+#     StochasticConceder,
+#     StochasticLinear,
+# )
 
-DEFAULT_ANL2024_NEGOTIATORS = (
+__all__ = [
+    "make_scenarios",
+    "anl2024_tournament",
+    "DEFAULT_AN2024_COMPETITORS",
+    "DEFAULT_TOURNAMENT_PATH",
+    "RESERVED_RANGES",
+]
+
+DEFAULT_AN2024_COMPETITORS = (
     Conceder,
     Linear,
     Boulware,
-    StochasticLinear,
-    StochasticConceder,
-    StochasticBoulware,
+    # StochasticLinear,
+    # StochasticConceder,
+    # StochasticBoulware,
 )
 """Default set of negotiators (agents) used as competitors"""
+
+DEFAULT_TOURNAMENT_PATH = Path.home() / "negmas" / "anl2024" / "tournaments"
+"""Default location to store tournament logs"""
 
 RESERVED_RANGES = tuple[tuple[float, float], tuple[float, float]]
 
@@ -75,14 +86,16 @@ def make_scenarios(
 def anl2024_tournament(
     n_scenarios: int = 20,
     n_outcomes: int = 100,
-    competitors: tuple[type[Negotiator] | str, ...] = DEFAULT_ANL2024_NEGOTIATORS,
+    competitors: tuple[type[Negotiator] | str, ...]
+    | list[type[Negotiator] | str] = DEFAULT_AN2024_COMPETITORS,
     competitor_params: Sequence[dict | None] | None = None,
     rotate_ufuns: bool = True,
     n_repetitions: int = 5,
     n_steps: int | None = 100,
     time_limit: float | None = None,
     pend: float = 0.0,
-    path: Path | None = None,
+    name: str | None = None,
+    nologs: bool = False,
     njobs: int = 0,
     plot_fraction: float = 0.2,
     verbosity: int = 1,
@@ -90,8 +103,13 @@ def anl2024_tournament(
     randomize_runs: bool = True,
     save_every: int = 0,
     save_stats: bool = True,
+    known_partner: bool = False,
     final_score: tuple[str, str] = ("advantage", "mean"),
 ) -> SimpleTournamentResults:
+    if nologs:
+        path = None
+    else:
+        path = DEFAULT_TOURNAMENT_PATH / (name if name else unique_name("anl"))
     return cartesian_tournament(
         competitors=tuple(competitors),
         scenarios=make_scenarios(n_outcomes=n_outcomes, n_scenarios=n_scenarios),
@@ -109,18 +127,17 @@ def anl2024_tournament(
         save_every=save_every,
         save_stats=save_stats,
         final_score=final_score,
+        id_reveals_type=known_partner,
+        name_reveals_type=True,
     )
 
 
 if __name__ == "__main__":
-    from negmas.helpers.strings import unique_name
-
     anl2024_tournament(
         # competitors=(StochasticBoulware, StochasticLinear),
         n_scenarios=5,
         n_repetitions=3,
         n_outcomes=10,
-        path=Path.home() / "negmas" / "anltest" / unique_name("test"),
         verbosity=2,
         njobs=-1,
     )

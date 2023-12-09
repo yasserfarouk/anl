@@ -1,8 +1,8 @@
 {
-	"venvPath": "/Users/yasser/myvenvs",
-	"venv": "anl",
-	"extraPaths": [
-		"/Users/yasser/code/projects/negmas"
-	],
-	"useLibraryCodeForTypes": true
+    "venvPath": "/Users/yasser/myvenvs",
+    "venv": "anl",
+    "extraPaths": [
+        "/Users/yasser/code/projects/negmas"
+    ],
+    "useLibraryCodeForTypes": true
 }

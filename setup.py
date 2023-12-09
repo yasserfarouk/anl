@@ -64,20 +64,17 @@ setup(
         "pytest",
         "hypothesis",
         "prettytable",
-        "negmas>=0.10.3",
+        "negmas>=0.10.6",
         "tqdm",
         "joblib",
         "jupyter",
         "gif",
     ],
-    extras_require={
-        "gui": ["pyqt5"],
-    },
+    extras_require={},
     setup_requires=["pytest-runner"],
     entry_points={
         "console_scripts": [
             "anl = anl.cli:main",
-            "cliadv = anl.cliadv:cli",
         ]
     },
 )
