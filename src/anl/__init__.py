@@ -1,6 +1,6 @@
 __author__ = """Yasser Mohammad"""
 __email__ = "yasserfarouk@gmail.com"
-__version__ = "0.1.0"
+__version__ = "0.1.1"
 
 from .anl2024 import *
 
