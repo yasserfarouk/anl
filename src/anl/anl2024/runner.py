@@ -170,6 +170,7 @@ def anl2024_tournament(
         final_score=final_score,
         id_reveals_type=known_partner,
         name_reveals_type=True,
+        plot_params=dict(ylimits=(0,1))
     )
 
 
