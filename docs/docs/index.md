@@ -25,8 +25,8 @@ You can also install the in-development version with::
 
 ## Documentation
 
-Documentation for the ANL package: [https://yasserfarouk.github.io/anl/](https://yasserfarouk.github.io/anl/)
-Documentation for the NegMAS library: [https://negmas.readthedocs.io](https://negmas.readthedocs.io)
+* Documentation for the ANL package: [https://yasserfarouk.github.io/anl/](https://yasserfarouk.github.io/anl/)
+* Documentation for the NegMAS library: [https://negmas.readthedocs.io](https://negmas.readthedocs.io)
 
 
 ## CLI
