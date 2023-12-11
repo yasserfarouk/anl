@@ -93,6 +93,8 @@ logs
 tags
 /docs/_build/*
 /docs/_build
+/docs/site/*
+/docs/site
 tags
 .vscode
 .eggs
