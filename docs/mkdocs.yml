@@ -3,7 +3,7 @@ site_url: https://yasserfarouk.github.io/anl/
 nav:
     - Index: index.md
     - FAQ: faq.md
-    - Reference: faq.md
+    - Reference: reference.md
 theme:
   name: "mkdocs"
 plugins:
