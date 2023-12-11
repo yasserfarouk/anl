@@ -126,10 +126,6 @@
                     <div class="col-md-9" role="main">
 
 <h2 id="faq">FAQ</h2>
-<!-- BEGIN INCLUDE ../../docs_old/faq.rst -->
-<p>===
-FAQ
-===</p>
 <h2 id="how-can-i-access-a-data-file-in-my-package">How can I access a data file in my package?</h2>
 <p>When your agent is submitted, it is run in an environment different from that in which the tournament
 will be run. This means that you <strong>cannot</strong> use hardcoded paths in your agent. Moreover, you (and we) do
@@ -139,7 +135,6 @@ the code accessing these files is located. Please note that accessing ANY FILES 
 your agent is <strong>prohibited</strong> and <strong>will lead to immediate disqualification</strong> for obvious security reasons.
 There are no second chances in this one.</p>
 <p>Let's assume that your file structure is something like that:</p>
-<p>::</p>
 <pre><code>base
 ├── sub
 │   ├── myagent.py
@@ -195,7 +190,6 @@ if __name__ == "__main__":
 at <em>~/negmas/anl2024/[date-time-uuid]</em></p>
 <h2 id="i-implement-my-agent-using-multiple-files-how-should-i-import-them">I implement my agent using multiple files. How should I import them?</h2>
 <p>Assume that you have the following file structure</p>
-<p>::</p>
 <pre><code>base
 ├── subfolder
 │   └── component2.py
@@ -231,8 +225,7 @@ sys.path.append(os.path.dirname(__file__))
 </code></pre>
 <p>Note that the later method has the disadvantage of putting your components at the <strong>end</strong> of the path which
 means that if you have any classes, functions, etc with a name that is defined in <em>any</em> module that appears
-earlier in the path, yours will be hidden.</p>
-<!-- END INCLUDE --></div>
+earlier in the path, yours will be hidden.</p></div>
             </div>
         </div>
 
