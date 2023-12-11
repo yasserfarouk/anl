@@ -1,6 +1,6 @@
 import random
 from pathlib import Path
-from typing import Sequence
+from typing import Sequence, Callable
 
 from negmas.helpers.strings import unique_name
 from negmas.inout import Scenario
@@ -42,17 +42,25 @@ DEFAULT_TOURNAMENT_PATH = Path.home() / "negmas" / "anl2024" / "tournaments"
 
 RESERVED_RANGES = tuple[tuple[float, float], tuple[float, float]]
 
+def onein(x: int | tuple[int, int]) -> int:
+    if isinstance(x, tuple):
+        if x[0] == x[-1]:
+            return x[0]
+        return random.randint(*x)
+    return x
 
 def make_scenarios(
-    n_outcomes: int = 100,
     n_scenarios: int = 20,
-    reserved_ranges: RESERVED_RANGES = ((0.0, 0.5), (0.0, 0.5)),
+    n_outcomes: int | tuple[int, int] = 100,
+    *,
+    reserved_ranges: RESERVED_RANGES = ((0.0, 0.499999), (0.0, 0.499999)),
 ) -> list[Scenario]:
     """Creates `n_scenarios` scenarios of the divide-the-pie domain all of `n_outcomes`
     outcomes and with different reserved value combinations that fall within `reserved_ranges`
     """
+    n = onein(n_outcomes)
     issues = (
-        make_issue([f"{i}_{n_outcomes-1 - i}" for i in range(n_outcomes)], "portions"),
+        make_issue([f"{i}_{n-1 - i}" for i in range(n)], "portions"),
     )
     ufun_sets = [
         tuple(
@@ -60,7 +68,7 @@ def make_scenarios(
                 values=(
                     TableFun(
                         {
-                            _: int(str(_).split("_")[k]) / (n_outcomes - 1)
+                            _: int(str(_).split("_")[k]) / (n - 1)
                             for _ in issues[0].all
                         }
                     ),
@@ -85,7 +93,7 @@ def make_scenarios(
 
 def anl2024_tournament(
     n_scenarios: int = 20,
-    n_outcomes: int = 100,
+    n_outcomes: int| tuple[int, int] = 100,
     competitors: tuple[type[Negotiator] | str, ...]
     | list[type[Negotiator] | str] = DEFAULT_AN2024_COMPETITORS,
     competitor_params: Sequence[dict | None] | None = None,
@@ -106,7 +114,37 @@ def anl2024_tournament(
     known_partner: bool = False,
     final_score: tuple[str, str] = ("advantage", "mean"),
     base_path: Path | None = None,
+    scenario_generator: Callable[[int, int | tuple[int, int]], list[Scenario]] = make_scenarios
 ) -> SimpleTournamentResults:
+    """Runs an ANL 2024 tournament
+
+    Args:
+        n_scenarios: Number of negotiation scenarios
+        n_outcomes: Number of outcomes (or a min/max tuple of n. outcomes) for each scenario
+        competitors: list of competitor agents
+        competitor_params: If given, parameters to construct each competitor
+        rotate_ufuns: If given, each scenario will be tried with both orders of the ufuns.
+        n_repetitions: Number of times to repeat each negotiation
+        n_steps: Number of steps (rounds) per negotiation. None means no limit
+        time_limit: Number of seconds per negotiation. None means no limit
+        pend: Probability of ending the negotiation each round.
+        name: Name of the tournament
+        nologs: If given, no logs will be saved
+        njobs: Number of parallel jobs to use. -1 for serial and 0 for all cores
+        plot_fraction: Fraction of negotiations to plot. Only used if not nologs
+        verbosity: Verbosity level. The higher the more verbose
+        self_play: Allow negotiators to run against themselves.
+        randomize_runs: Randomize the order of negotiations
+        save_every: Save logs every this number of negotiations
+        save_stats: Save statistics for scenarios
+        known_partner: Allow negotiators to know the type of their partner (through their ID)
+        final_score: The metric and statistic used to calculate the score. Metrics are: advantage, utility, welfare, partner_welfare and Stats are: median, mean, std, min, max
+        base_path: Folder in which to generate the logs folder for this tournament. Default is ~/negmas/anl2024/tournaments
+        scenario_generator: An alternative method for generating bilateral negotiation scenarios. Must receive the number of scenarios and number of outcomes.
+
+    Returns:
+        Tournament results as a `SimpleTournamentResults` object.
+    """
     if nologs:
         path = None
     elif base_path is not None:
@@ -115,7 +153,7 @@ def anl2024_tournament(
         path = DEFAULT_TOURNAMENT_PATH / (name if name else unique_name("anl"))
     return cartesian_tournament(
         competitors=tuple(competitors),
-        scenarios=make_scenarios(n_outcomes=n_outcomes, n_scenarios=n_scenarios),
+        scenarios=scenario_generator(n_scenarios, n_outcomes),
         competitor_params=competitor_params,
         rotate_ufuns=rotate_ufuns,
         n_repetitions=n_repetitions,

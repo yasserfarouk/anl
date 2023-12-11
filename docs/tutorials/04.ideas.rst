@@ -1,8 +1,0 @@
-Ideas for developing your agent
--------------------------------
-
-
-
-Download :download:`Notebook<notebooks/04.ideas.ipynb>`.
-
-

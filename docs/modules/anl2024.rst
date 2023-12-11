@@ -1,7 +1,0 @@
-anl2024
-=======
-    This module describes the Automated Negotiations League as run in 2024
-
-.. automodapi:: anl.anl2024
-    :members:
-    :show-inheritance:

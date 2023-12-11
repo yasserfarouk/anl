@@ -47,7 +47,7 @@ Overview
     :alt: Commits since latest release
     :target: https://github.com/autoneg/anl/compare/v0.6.2...master
 
-.. |CI| image:: https://github.com/autoneg/anl/workflows/CI/badge.svg
+.. |CI| image:: https://github.com/autoneg/anl/workflows/test/badge.svg
     :target: https://www.github.com/autoneg/anl
     :alt: Build Status
 
@@ -103,6 +103,6 @@ Documentation
 =============
 
 
-https://anl.readthedocs.io
+https://yasserfarouk.github.io/anl/
 
 
