@@ -105,9 +105,12 @@ def anl2024_tournament(
     save_stats: bool = True,
     known_partner: bool = False,
     final_score: tuple[str, str] = ("advantage", "mean"),
+    base_path: Path | None = None,
 ) -> SimpleTournamentResults:
     if nologs:
         path = None
+    elif base_path is not None:
+        path = Path(base_path)/ (name if name else unique_name("anl"))
     else:
         path = DEFAULT_TOURNAMENT_PATH / (name if name else unique_name("anl"))
     return cartesian_tournament(
