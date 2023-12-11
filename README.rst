@@ -77,7 +77,7 @@ Overview
 
 .. end-badges
 
-ANAC Automated Negotiations League Platform  (v0.1.1)
+ANAC Automated Negotiations League Platform
 
 Overview
 ========

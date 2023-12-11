@@ -31,10 +31,9 @@ Now you want to access the file *myfile.csv* when you are inside *myagent.py*. T
     import pathlib
     path_2_myfile = pathlib.Path(__file__).parent.parent / "data" / "myfile.csv"
 
-Can my agent pass data to my other agents between worlds?
----------------------------------------------------------
-**NO** Passing data to your agents between world simulations will lead to
-disqualification.
+Can my agent pass data to my other agents between negotiations?
+---------------------------------------------------------------
+**NO** Passing data to your agents between negotiations will lead to disqualification.
 
 Can my agent read data from the HDD outside my agent's folder?
 --------------------------------------------------------------
@@ -43,7 +42,7 @@ It cannot modify these files in anyway during the competition.
 It cannot read from anywhere else in secondary storage. Trying to do
 so will lead to disqualification.
 
-Can my agent write data to the HDD during the simulation?
+Can my agent write data to the HDD during the negotiation?
 ---------------------------------------------------------
 **NO** The agent is not allowed to write anything to the hard disk during the
 competition.
@@ -56,24 +55,12 @@ Printing to the screen in your agent will prevent us from monitoring the progres
 runs and will slow down the process. Moreover, it is not useful anyway because the tournaments are run in
 parallel.
 
-If you really need to print something (e.g. for debugging purposes), you can use one of the following two
-methods:
-
-    1. Remove all print statements before submission. We will never touch your code after submission so we cannot remove
-       them.
-    2. Use the screen logging facility provided by negmas. When creating a world (or a tournament) pass the following
-       parameter::
-
-          import logging
-          World(..., log_screen_level=logging.DEBUG)
-          # or create_tournament/anac2022std/anac2022collusion/tournament(..., log_screen_level=logging.DEBUG)
-
-          # You can then use something like athis to log to the screen (and file)
-          self.awi.logdebug("MY LOG MESSAGE")
+If you really need to print something (e.g. for debugging purposes), please remove all print
+statements before submission. We will never touch your code after submission so we cannot remove them.
 
 
-Can I write arbitrary code in my module besides the agent class definition?
----------------------------------------------------------------------------
+Can I write arbitrary code in my module besides the negotiator class definition?
+--------------------------------------------------------------------------------
 When python imports your module, it runs everything in it so the top level code should be only one of these:
 
     - Class definitions
@@ -87,25 +74,23 @@ Any other code *must* be protected inside::
 
 For example, if you want to run a simulation to test your agent. *DO NOT USE SOMETHING LIKE THIS*::
 
-    w = anl2021World(....)
-    w.run()
+    anl2024_tournament(....)
 
 But something like this::
 
     def main():
-        w = anl2021World(...)
-        w.run()
+        anl2024_tournament(....)
 
     if __name__ == "__main__":
         main()
 
 This way, importing your module will not run the world simulation.
 
-I ran a simulation using "anl run2022" command. Where are my log files?
+I ran a simulation using "anl tournament2024" command. Where are my log files?
 ------------------------------------------------------------------------
 
-If you did not pass a log location through "--log", you will find the log files
-at *~/negmas/logs/anl/anl2022/[date-time-uuid]*
+If you did not pass "--no-log", you will find the log files
+at *~/negmas/anl2024/[date-time-uuid]*
 
 
 I implement my agent using multiple files. How should I import them?
@@ -159,55 +144,3 @@ Note that the later method has the disadvantage of putting your components at th
 means that if you have any classes, functions, etc with a name that is defined in *any* module that appears
 earlier in the path, yours will be hidden.
 
-How can I run simulations with the same parameters as the actual competition (e.g. for training my agent)
----------------------------------------------------------------------------------------------------------
-
-You can use the `utils` submodule of `anl.anl2020` to generate worlds with the same parameters as in the
-competition for all tracks. Here is some example script to run `1` such world using three built-in agents::
-
-    from typing import List, Union
-    from anl.utils import (
-        anac2020_config_generator,
-        anac2020_world_generator,
-        anac2020_assigner,
-    )
-    from anl.anl2020.agent import anl2020Agent
-    from anl.anl2020.agents import (
-        DecentralizingAgent, BuyCheapSellExpensiveAgent, RandomAgent
-    )
-
-    COMPETITORS = [DecentralizingAgent, BuyCheapSellExpensiveAgent, RandomAgent]
-
-    def generate_worlds(
-        competitors: List[Union[str, anl2020Agent]],
-        n_agents_per_competitor,
-    ):
-        collusion = n_agents_per_competitor != 1
-        config = anac2020_config_generator(
-            n_competitors=len(competitors),
-            n_agents_per_competitor=n_agents_per_competitor,
-            n_steps=(50, 100) if collusion else (50, 200),
-        )
-        assigned = anac2020_assigner(
-            config,
-            max_n_worlds=None,
-            n_agents_per_competitor=n_agents_per_competitor,
-            competitors=competitors,
-            params=[dict() for _ in competitors],
-        )
-        return [anac2020_world_generator(**(a[0])) for a in assigned]
-
-    if __name__ == "__main__":
-        worlds = generate_worlds(COMPETITORS, 1)
-        for world in worlds:
-            world.run()
-            print(world.stats_df.head())
-
-Notice that `generate_worlds` will not generate a single world but a set of them putting the `COMPETITORS`
-in all possible assignments of factories. The detailed process of world generation is described in the appendices of the
-`description
-<https://anl.readthedocs.io/en/latest/gc/anl2022.pdf>`_ .
-
-You can change the competitors by just changing the `COMPETITORS` list. Setting the third parameter of `generate_worlds`
-to `1` generates a standard league world and setting it to a random number between 2 and 4 generates a collusion
-league world ( `randint(2, min(4, len(COMPETITORS)))` ).
