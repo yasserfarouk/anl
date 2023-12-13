@@ -4,8 +4,8 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-
+        
+        
         <link rel="canonical" href="https://yasserfarouk.github.io/anl/reference/">
         <link rel="shortcut icon" href="../img/favicon.ico">
         <title>Reference - ANL Documentation</title>
@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
         <link href="../assets/_mkdocstrings.css" rel="stylesheet">
         <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script>
+        <script>hljs.highlightAll();</script> 
     </head>
 
     <body>
@@ -72,20 +72,20 @@
         </button>
     </div>
 
-
+    
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
-
+            
             <li class="nav-item" data-level="2"><a href="#anl" class="nav-link">ANL</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-
+            
             <li class="nav-item" data-level="2"><a href="#anl.anl2024.anl2024_tournament" class="nav-link">anl2024_tournament</a>
               <ul class="nav flex-column">
               </ul>
             </li>
-
+            
             <li class="nav-item" data-level="2"><a href="#anl.anl2024.make_scenarios" class="nav-link">make_scenarios</a>
               <ul class="nav flex-column">
               </ul>
@@ -108,7 +108,7 @@
 
 <a id="anl.anl2024.anl2024_tournament"></a>
   <div class="doc doc-contents first">
-
+  
       <p>Runs an ANL 2024 tournament</p>
 
 
@@ -149,7 +149,7 @@
             </div>
           </td>
           <td>
-                <code>100</code>
+                <code>(1, 100000)</code>
           </td>
         </tr>
         <tr>
@@ -219,7 +219,7 @@
             </div>
           </td>
           <td>
-                <code>100</code>
+                <code>(10, 1001000)</code>
           </td>
         </tr>
         <tr>
@@ -233,7 +233,7 @@
             </div>
           </td>
           <td>
-                <code>None</code>
+                <code>60</code>
           </td>
         </tr>
         <tr>
@@ -517,14 +517,7 @@
 
           <details class="quote">
             <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
-<span class="normal">107</span>
-<span class="normal">108</span>
-<span class="normal">109</span>
-<span class="normal">110</span>
-<span class="normal">111</span>
-<span class="normal">112</span>
-<span class="normal">113</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">113</span>
 <span class="normal">114</span>
 <span class="normal">115</span>
 <span class="normal">116</span>
@@ -636,16 +629,23 @@
 <span class="normal">222</span>
 <span class="normal">223</span>
 <span class="normal">224</span>
-<span class="normal">225</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">anl2024_tournament</span><span class="p">(</span>
+<span class="normal">225</span>
+<span class="normal">226</span>
+<span class="normal">227</span>
+<span class="normal">228</span>
+<span class="normal">229</span>
+<span class="normal">230</span>
+<span class="normal">231</span>
+<span class="normal">232</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">anl2024_tournament</span><span class="p">(</span>
     <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
-    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100_000</span><span class="p">),</span>
     <span class="n">competitors</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">Negotiator</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
     <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">Negotiator</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_AN2024_COMPETITORS</span><span class="p">,</span>
     <span class="n">competitor_params</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">rotate_ufuns</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">n_repetitions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="n">time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span> <span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">100_1000</span><span class="p">),</span>
+    <span class="n">time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">60</span><span class="p">,</span>
     <span class="n">pend</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
     <span class="n">pend_per_second</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
     <span class="n">step_time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
@@ -738,12 +738,12 @@
         <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
         <span class="n">njobs</span><span class="o">=</span><span class="n">njobs</span><span class="p">,</span>
         <span class="n">mechanism_type</span><span class="o">=</span><span class="n">SAOMechanism</span><span class="p">,</span>
-    <span class="n">n_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">,</span>
-    <span class="n">time_limit</span><span class="o">=</span><span class="n">time_limit</span><span class="p">,</span>
-    <span class="n">pend</span><span class="o">=</span><span class="n">pend</span><span class="p">,</span>
-    <span class="n">pend_per_second</span><span class="o">=</span><span class="n">pend_per_second</span><span class="p">,</span>
-    <span class="n">step_time_limit</span><span class="o">=</span><span class="n">step_time_limit</span><span class="p">,</span>
-    <span class="n">negotiator_time_limit</span><span class="o">=</span><span class="n">negotiator_time_limit</span><span class="p">,</span>
+        <span class="n">n_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">,</span>
+        <span class="n">time_limit</span><span class="o">=</span><span class="n">time_limit</span><span class="p">,</span>
+        <span class="n">pend</span><span class="o">=</span><span class="n">pend</span><span class="p">,</span>
+        <span class="n">pend_per_second</span><span class="o">=</span><span class="n">pend_per_second</span><span class="p">,</span>
+        <span class="n">step_time_limit</span><span class="o">=</span><span class="n">step_time_limit</span><span class="p">,</span>
+        <span class="n">negotiator_time_limit</span><span class="o">=</span><span class="n">negotiator_time_limit</span><span class="p">,</span>
         <span class="n">mechanism_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">plot_fraction</span><span class="o">=</span><span class="n">plot_fraction</span><span class="p">,</span>
         <span class="n">verbosity</span><span class="o">=</span><span class="n">verbosity</span><span class="p">,</span>
@@ -770,7 +770,7 @@
 
 <a id="anl.anl2024.make_scenarios"></a>
   <div class="doc doc-contents first">
-
+  
       <p>Creates scenarios for the competition</p>
 
 
@@ -853,9 +853,7 @@
 </details>
           <details class="quote">
             <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 59</span>
-<span class="normal"> 60</span>
-<span class="normal"> 61</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 61</span>
 <span class="normal"> 62</span>
 <span class="normal"> 63</span>
 <span class="normal"> 64</span>
@@ -897,12 +895,19 @@
 <span class="normal">100</span>
 <span class="normal">101</span>
 <span class="normal">102</span>
-<span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">make_scenarios</span><span class="p">(</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">make_scenarios</span><span class="p">(</span>
     <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
     <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">reserved_ranges</span><span class="p">:</span> <span class="n">RESERVED_RANGES</span> <span class="o">=</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.499999</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.499999</span><span class="p">)),</span>
-    <span class="n">log_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">log_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scenario</span><span class="p">]:</span>
 <span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates scenarios for the competition</span>
 
@@ -920,19 +925,24 @@
         <span class="n">n</span> <span class="o">=</span> <span class="n">onein</span><span class="p">(</span><span class="n">n_outcomes</span><span class="p">,</span> <span class="n">log_range</span><span class="p">)</span>
         <span class="n">issues</span> <span class="o">=</span> <span class="p">(</span><span class="n">make_issue</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)],</span> <span class="s2">&quot;portions&quot;</span><span class="p">),)</span>
         <span class="n">ufun_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
-        <span class="nb">tuple</span><span class="p">(</span>
-            <span class="n">U</span><span class="p">(</span>
-                <span class="n">values</span><span class="o">=</span><span class="p">(</span>
-                    <span class="n">TableFun</span><span class="p">(</span>
-                        <span class="p">{</span><span class="n">_</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">issues</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">all</span><span class="p">}</span>
+            <span class="nb">tuple</span><span class="p">(</span>
+                <span class="n">U</span><span class="p">(</span>
+                    <span class="n">values</span><span class="o">=</span><span class="p">(</span>
+                        <span class="n">TableFun</span><span class="p">(</span>
+                            <span class="p">{</span>
+                                <span class="n">_</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">issues</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">all</span>
+                            <span class="p">}</span>
+                        <span class="p">),</span>
                     <span class="p">),</span>
-                <span class="p">),</span>
-                <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uname</span><span class="si">}{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">reserved_value</span><span class="o">=</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1e-8</span><span class="p">)),</span>
-                <span class="n">outcome_space</span><span class="o">=</span><span class="n">make_os</span><span class="p">(</span><span class="n">issues</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DivideTyePie</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+                    <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uname</span><span class="si">}{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                    <span class="n">reserved_value</span><span class="o">=</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1e-8</span><span class="p">)),</span>
+                    <span class="n">outcome_space</span><span class="o">=</span><span class="n">make_os</span><span class="p">(</span><span class="n">issues</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DivideTyePie</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+                <span class="p">)</span>
+                <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">uname</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span>
+                    <span class="nb">zip</span><span class="p">((</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">),</span> <span class="n">reserved_ranges</span><span class="p">)</span>
+                <span class="p">)</span>
             <span class="p">)</span>
-            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">uname</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">((</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">),</span> <span class="n">reserved_ranges</span><span class="p">))</span>
-        <span class="p">)</span>
         <span class="p">)</span>
 
     <span class="k">return</span> <span class="p">[</span>
