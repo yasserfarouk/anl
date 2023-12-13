@@ -144,13 +144,13 @@ def main():
 )
 @click.option(
     "--min-outcomes",
-    default=10,
+    default=1000,
     type=int,
     help="Minimum number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
 @click.option(
     "--max-outcomes",
-    default=10000,
+    default=1000,
     type=int,
     help="Max number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
@@ -184,6 +184,11 @@ def main():
     "--stat",
     default="mean",
     help="The statistic applied to the metric to evaluate agents. Can be one of: mean, median, std, min, max",
+)
+@click.option(
+    "--small/--normal",
+    default=False,
+    help="If --small, then a small tournament will be run and most parameters will be ignored",
 )
 @click.option(
     "--known-partner/--unknown-partner",
@@ -223,13 +228,13 @@ def main():
 )
 @click.option(
     "--min-steps",
-    default=-1,
+    default=100,
     type=int,
     help="Minimum number of steps in every scenario. Only used of --steps is zero or negative",
 )
 @click.option(
     "--max-steps",
-    default=-1,
+    default=10_000,
     type=int,
     help="Max number of steps in every scenario. Only used of --steps is zero or negative",
 )
@@ -328,11 +333,19 @@ def tournament2024(
     min_outcomes,
     max_outcomes,
     scenarios,
+    small,
 ):
+    if small:
+        scenarios = 3
+        steps = 100
+        outcomes = 1000
+        timelimit = 30
     def read_range(x, min_x, max_x):
         if x > 0:
             return x
         if min_x < 0 and max_x < 0:
+            return min_x
+        if min_x == max_x:
             return min_x
         return (min_x, max_x)
 
@@ -386,6 +399,7 @@ def tournament2024(
             f"[red]ERROR[/red] You specified no way to end the negotiation. You MUST pass either --steps, --timelimit or --pend (or the --min, --max versions of them)"
         )
         sys.exit(1)
+    print(f"Will use {scenarios} scenarios of {outcomes} outcomes each.")
     print(f"Negotiations will end if any of the following conditions is satisfied:")
     if steps is not None:
         print(f"\tN. Rounds: {steps}")
