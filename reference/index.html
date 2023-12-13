@@ -211,11 +211,11 @@
         <tr>
           <td><code>n_steps</code></td>
           <td>
-                <code>int | None</code>
+                <code>int | tuple[int, int] | None</code>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Number of steps (rounds) per negotiation. None means no limit</p>
+              <p>Number of steps/rounds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</p>
             </div>
           </td>
           <td>
@@ -225,11 +225,11 @@
         <tr>
           <td><code>time_limit</code></td>
           <td>
-                <code>float | None</code>
+                <code>float | tuple[float, float] | None</code>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Number of seconds per negotiation. None means no limit</p>
+              <p>Number of seconds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</p>
             </div>
           </td>
           <td>
@@ -239,15 +239,57 @@
         <tr>
           <td><code>pend</code></td>
           <td>
-                <code>float</code>
+                <code>float | tuple[float, float]</code>
           </td>
           <td>
             <div class="doc-md-description">
-              <p>Probability of ending the negotiation each round.</p>
+              <p>Probability of ending the negotiation every step/round (None for no-limit and a 2-valued tuple for sampling from a range)</p>
             </div>
           </td>
           <td>
                 <code>0.0</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pend_per_second</code></td>
+          <td>
+                <code>float | tuple[float, float]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Probability of ending the negotiation every second (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code>0.0</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>step_time_limit</code></td>
+          <td>
+                <code>float | tuple[float, float] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Time limit for every negotiation step (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>negotiator_time_limit</code></td>
+          <td>
+                <code>float | tuple[float, float] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Time limit for all actions of every negotiator (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
           </td>
         </tr>
         <tr>
@@ -475,22 +517,7 @@
 
           <details class="quote">
             <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 91</span>
-<span class="normal"> 92</span>
-<span class="normal"> 93</span>
-<span class="normal"> 94</span>
-<span class="normal"> 95</span>
-<span class="normal"> 96</span>
-<span class="normal"> 97</span>
-<span class="normal"> 98</span>
-<span class="normal"> 99</span>
-<span class="normal">100</span>
-<span class="normal">101</span>
-<span class="normal">102</span>
-<span class="normal">103</span>
-<span class="normal">104</span>
-<span class="normal">105</span>
-<span class="normal">106</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">106</span>
 <span class="normal">107</span>
 <span class="normal">108</span>
 <span class="normal">109</span>
@@ -582,7 +609,34 @@
 <span class="normal">195</span>
 <span class="normal">196</span>
 <span class="normal">197</span>
-<span class="normal">198</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">anl2024_tournament</span><span class="p">(</span>
+<span class="normal">198</span>
+<span class="normal">199</span>
+<span class="normal">200</span>
+<span class="normal">201</span>
+<span class="normal">202</span>
+<span class="normal">203</span>
+<span class="normal">204</span>
+<span class="normal">205</span>
+<span class="normal">206</span>
+<span class="normal">207</span>
+<span class="normal">208</span>
+<span class="normal">209</span>
+<span class="normal">210</span>
+<span class="normal">211</span>
+<span class="normal">212</span>
+<span class="normal">213</span>
+<span class="normal">214</span>
+<span class="normal">215</span>
+<span class="normal">216</span>
+<span class="normal">217</span>
+<span class="normal">218</span>
+<span class="normal">219</span>
+<span class="normal">220</span>
+<span class="normal">221</span>
+<span class="normal">222</span>
+<span class="normal">223</span>
+<span class="normal">224</span>
+<span class="normal">225</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">anl2024_tournament</span><span class="p">(</span>
     <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
     <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="n">competitors</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">Negotiator</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
@@ -590,9 +644,12 @@
     <span class="n">competitor_params</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">rotate_ufuns</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
     <span class="n">n_repetitions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="n">time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">pend</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span> <span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="n">time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span> <span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">pend</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">pend_per_second</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+    <span class="n">step_time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">negotiator_time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
     <span class="n">nologs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
     <span class="n">njobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
@@ -619,9 +676,12 @@
 <span class="sd">        competitor_params: If given, parameters to construct each competitor</span>
 <span class="sd">        rotate_ufuns: If given, each scenario will be tried with both orders of the ufuns.</span>
 <span class="sd">        n_repetitions: Number of times to repeat each negotiation</span>
-<span class="sd">        n_steps: Number of steps (rounds) per negotiation. None means no limit</span>
-<span class="sd">        time_limit: Number of seconds per negotiation. None means no limit</span>
-<span class="sd">        pend: Probability of ending the negotiation each round.</span>
+<span class="sd">        n_steps: Number of steps/rounds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        time_limit: Number of seconds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        pend: Probability of ending the negotiation every step/round (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        pend_per_second: Probability of ending the negotiation every second (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        step_time_limit: Time limit for every negotiation step (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        negotiator_time_limit: Time limit for all actions of every negotiator (None for no-limit and a 2-valued tuple for sampling from a range)</span>
 <span class="sd">        name: Name of the tournament</span>
 <span class="sd">        nologs: If given, no logs will be saved</span>
 <span class="sd">        njobs: Number of parallel jobs to use. -1 for serial and 0 for all cores</span>
@@ -678,7 +738,13 @@
         <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
         <span class="n">njobs</span><span class="o">=</span><span class="n">njobs</span><span class="p">,</span>
         <span class="n">mechanism_type</span><span class="o">=</span><span class="n">SAOMechanism</span><span class="p">,</span>
-        <span class="n">mechanism_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">time_limit</span><span class="o">=</span><span class="n">time_limit</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">,</span> <span class="n">pend</span><span class="o">=</span><span class="n">pend</span><span class="p">),</span>
+    <span class="n">n_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">,</span>
+    <span class="n">time_limit</span><span class="o">=</span><span class="n">time_limit</span><span class="p">,</span>
+    <span class="n">pend</span><span class="o">=</span><span class="n">pend</span><span class="p">,</span>
+    <span class="n">pend_per_second</span><span class="o">=</span><span class="n">pend_per_second</span><span class="p">,</span>
+    <span class="n">step_time_limit</span><span class="o">=</span><span class="n">step_time_limit</span><span class="p">,</span>
+    <span class="n">negotiator_time_limit</span><span class="o">=</span><span class="n">negotiator_time_limit</span><span class="p">,</span>
+        <span class="n">mechanism_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
         <span class="n">plot_fraction</span><span class="o">=</span><span class="n">plot_fraction</span><span class="p">,</span>
         <span class="n">verbosity</span><span class="o">=</span><span class="n">verbosity</span><span class="p">,</span>
         <span class="n">self_play</span><span class="o">=</span><span class="n">self_play</span><span class="p">,</span>
@@ -705,57 +771,155 @@
 <a id="anl.anl2024.make_scenarios"></a>
   <div class="doc doc-contents first">
   
-      <p>Creates <code>n_scenarios</code> scenarios of the divide-the-pie domain all of <code>n_outcomes</code>
-outcomes and with different reserved value combinations that fall within <code>reserved_ranges</code></p>
+      <p>Creates scenarios for the competition</p>
 
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>n_scenarios</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of scenarios to create</p>
+            </div>
+          </td>
+          <td>
+                <code>20</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_outcomes</code></td>
+          <td>
+                <code>int | tuple[int, int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes per scenario (if a tuple it will be interpreted as a min/max range to sample n. outcomes from).</p>
+            </div>
+          </td>
+          <td>
+                <code>100</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>reserved_ranges</code></td>
+          <td>
+                <code><span title="anl.anl2024.runner.RESERVED_RANGES">RESERVED_RANGES</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Ranges of reserved values for first and second negotiators</p>
+            </div>
+          </td>
+          <td>
+                <code>((0.0, 0.499999), (0.0, 0.499999))</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>log_range</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</p>
+            </div>
+          </td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="remarks" open>
+  <summary>Remarks</summary>
+  <ul>
+<li>When n_outcomes is a tuple, the number of outcomes for each outcome will be sampled independently</li>
+</ul>
+</details>
           <details class="quote">
             <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span>
-<span class="normal">84</span>
-<span class="normal">85</span>
-<span class="normal">86</span>
-<span class="normal">87</span>
-<span class="normal">88</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">make_scenarios</span><span class="p">(</span>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 59</span>
+<span class="normal"> 60</span>
+<span class="normal"> 61</span>
+<span class="normal"> 62</span>
+<span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
+<span class="normal"> 87</span>
+<span class="normal"> 88</span>
+<span class="normal"> 89</span>
+<span class="normal"> 90</span>
+<span class="normal"> 91</span>
+<span class="normal"> 92</span>
+<span class="normal"> 93</span>
+<span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">make_scenarios</span><span class="p">(</span>
     <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
     <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
     <span class="o">*</span><span class="p">,</span>
     <span class="n">reserved_ranges</span><span class="p">:</span> <span class="n">RESERVED_RANGES</span> <span class="o">=</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.499999</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.499999</span><span class="p">)),</span>
+    <span class="n">log_range</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scenario</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates `n_scenarios` scenarios of the divide-the-pie domain all of `n_outcomes`</span>
-<span class="sd">    outcomes and with different reserved value combinations that fall within `reserved_ranges`</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates scenarios for the competition</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_scenarios: Number of scenarios to create</span>
+<span class="sd">        n_outcomes: Number of outcomes per scenario (if a tuple it will be interpreted as a min/max range to sample n. outcomes from).</span>
+<span class="sd">        reserved_ranges: Ranges of reserved values for first and second negotiators</span>
+<span class="sd">        log_range: If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</span>
+
+<span class="sd">    Remarks:</span>
+<span class="sd">        - When n_outcomes is a tuple, the number of outcomes for each outcome will be sampled independently</span>
 <span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">n</span> <span class="o">=</span> <span class="n">onein</span><span class="p">(</span><span class="n">n_outcomes</span><span class="p">)</span>
-    <span class="n">issues</span> <span class="o">=</span> <span class="p">(</span><span class="n">make_issue</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)],</span> <span class="s2">&quot;portions&quot;</span><span class="p">),)</span>
-    <span class="n">ufun_sets</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">ufun_sets</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_scenarios</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">onein</span><span class="p">(</span><span class="n">n_outcomes</span><span class="p">,</span> <span class="n">log_range</span><span class="p">)</span>
+        <span class="n">issues</span> <span class="o">=</span> <span class="p">(</span><span class="n">make_issue</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)],</span> <span class="s2">&quot;portions&quot;</span><span class="p">),)</span>
+        <span class="n">ufun_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span>
         <span class="nb">tuple</span><span class="p">(</span>
             <span class="n">U</span><span class="p">(</span>
                 <span class="n">values</span><span class="o">=</span><span class="p">(</span>
@@ -769,8 +933,7 @@ outcomes and with different reserved value combinations that fall within <code>r
             <span class="p">)</span>
             <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">uname</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">((</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">),</span> <span class="n">reserved_ranges</span><span class="p">))</span>
         <span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_scenarios</span><span class="p">)</span>
-    <span class="p">]</span>
+        <span class="p">)</span>
 
     <span class="k">return</span> <span class="p">[</span>
         <span class="n">Scenario</span><span class="p">(</span>
