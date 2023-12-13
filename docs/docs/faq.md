@@ -137,4 +137,3 @@ Another way that does not require any modification of your file structure is to 
 Note that the later method has the disadvantage of putting your components at the **end** of the path which
 means that if you have any classes, functions, etc with a name that is defined in *any* module that appears
 earlier in the path, yours will be hidden.
-

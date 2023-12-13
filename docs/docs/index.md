@@ -42,5 +42,3 @@ To find all the parameters you can customize for running tournaments run:
 ```bash
 anl tournament2024 --help
 ```
-
-

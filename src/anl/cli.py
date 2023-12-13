@@ -1,7 +1,8 @@
 #!/usr/bin/env python
 """The ANL universal command line tool"""
 import math
-import os
+
+# import os
 import sys
 from collections import defaultdict
 from functools import partial
@@ -111,15 +112,15 @@ def main():
     pass
 
 
-def _path(path) -> Path:
-    """Creates an absolute path from given path which can be a string"""
-    if isinstance(path, Path):
-        return path.absolute()
-    path.replace("/", os.sep)
-    if isinstance(path, str):
-        if path.startswith("~"):
-            path = Path.home() / (os.sep.join(path.split(os.sep)[1:]))
-    return Path(path).absolute()
+# def _path(path) -> Path:
+#     """Creates an absolute path from given path which can be a string"""
+#     if isinstance(path, Path):
+#         return path.absolute()
+#     path.replace("/", os.sep)
+#     if isinstance(path, str):
+#         if path.startswith("~"):
+#             path = Path.home() / (os.sep.join(path.split(os.sep)[1:]))
+#     return Path(path).absolute()
 
 
 @main.command(help="Runs an ANL 2024 tournament")
@@ -137,9 +138,21 @@ def _path(path) -> Path:
 @click.option(
     "--outcomes",
     "-o",
-    default=1000,
+    default=-1,
     type=int,
-    help="Number of outcomes in every scenario",
+    help="Number of outcomes in every scenario. If negative or zero, --min-outcomes and --max-outcomes will beused",
+)
+@click.option(
+    "--min-outcomes",
+    default=10,
+    type=int,
+    help="Minimum number of outcomes in every scenario. Only used of --outcomes is zero or negative",
+)
+@click.option(
+    "--max-outcomes",
+    default=10000,
+    type=int,
+    help="Max number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
 @click.option(
     "--scenarios",
@@ -185,9 +198,21 @@ def _path(path) -> Path:
 @click.option(
     "--timelimit",
     "-t",
-    default=-1,
+    default=60,
     type=float,
     help="Number of seconds allowed in every negotiation. Negative numbers mean no-limit",
+)
+@click.option(
+    "--min-timelimit",
+    default=-1,
+    type=int,
+    help="Minimum number of seconds in every scenario. Only used of --timelimit is zero or negative",
+)
+@click.option(
+    "--max-timelimit",
+    default=-1,
+    type=int,
+    help="Max number of seconds in every scenario. Only used of --timelimit is zero or negative",
 )
 @click.option(
     "--steps",
@@ -197,10 +222,34 @@ def _path(path) -> Path:
     help="Number of negotiation rounds allowed in every negotiation. Negative numbers mean no-limit",
 )
 @click.option(
+    "--min-steps",
+    default=-1,
+    type=int,
+    help="Minimum number of steps in every scenario. Only used of --steps is zero or negative",
+)
+@click.option(
+    "--max-steps",
+    default=-1,
+    type=int,
+    help="Max number of steps in every scenario. Only used of --steps is zero or negative",
+)
+@click.option(
     "--pend",
-    default=0.0,
+    default=0,
     type=float,
     help="Probability of ending the negotiation at every round",
+)
+@click.option(
+    "--min-pend",
+    default=0,
+    type=int,
+    help="Minimum pend in every scenario. Only used of --pend is zero or negative",
+)
+@click.option(
+    "--max-pend",
+    default=0,
+    type=int,
+    help="Max pend in every scenario. Only used of --pend is zero or negative",
 )
 @click.option(
     "--plot",
@@ -266,12 +315,31 @@ def tournament2024(
     self_play,
     plot,
     pend,
+    min_pend,
+    max_pend,
     timelimit,
+    min_timelimit,
+    max_timelimit,
     steps,
+    min_steps,
+    max_steps,
     rotate,
     outcomes,
+    min_outcomes,
+    max_outcomes,
     scenarios,
 ):
+    def read_range(x, min_x, max_x):
+        if x > 0:
+            return x
+        if min_x < 0 and max_x < 0:
+            return min_x
+        return (min_x, max_x)
+
+    steps = read_range(steps, min_steps, max_steps)
+    outcomes = read_range(outcomes, min_outcomes, max_outcomes)
+    timelimit = read_range(timelimit, min_timelimit, max_timelimit)
+    pend = read_range(pend, min_pend, max_pend)
     if len(path) > 0:
         sys.path.append(path)
     if name == "random":
@@ -304,15 +372,27 @@ def tournament2024(
 
     print(f"Tournament will be run between {len(all_competitors)} agents: ")
     print(all_competitors)
-    if steps <= 0:
+    if not isinstance(steps, tuple) and steps <= 0:
         steps = None
-    if timelimit <= 0:
+    if not isinstance(timelimit, tuple) and timelimit <= 0:
         timelimit = None
-    if steps is None and timelimit is None and pend <= 0.0:
+    if (
+        steps is None
+        and timelimit is None
+        and not isinstance(pend, tuple)
+        and pend <= 0.0
+    ):
         print(
-            f"[red]ERROR[/red] You specified no way to end the negotiation. You MUST pass either --steps, --timelimit or --pend"
+            f"[red]ERROR[/red] You specified no way to end the negotiation. You MUST pass either --steps, --timelimit or --pend (or the --min, --max versions of them)"
         )
         sys.exit(1)
+    print(f"Negotiations will end if any of the following conditions is satisfied:")
+    if steps is not None:
+        print(f"\tN. Rounds: {steps}")
+    if timelimit is not None:
+        print(f"\tN. Seconds: {timelimit}")
+    if pend is not None and (isinstance(pend, tuple) or pend > 0):
+        print(f"\tProbability of ending each round : {pend}")
     tic = perf_counter()
     results = anl2024_tournament(
         n_scenarios=scenarios,
@@ -335,7 +415,8 @@ def tournament2024(
         known_partner=known_partner,
         final_score=(metric, stat),
     )
-    print(results.final_scores)
+    if verbosity <= 0:
+        print(results.final_scores)
     print(f"Done in {humanize_time(perf_counter() - tic, show_ms=True)}")
     if save_logs:
         print(f"Detailed logs are stored at: {DEFAULT_TOURNAMENT_PATH / name}")

@@ -1,6 +1,7 @@
+from math import exp, log
 import random
 from pathlib import Path
-from typing import Sequence, Callable
+from typing import Sequence, Callable, Any
 
 from negmas.helpers.strings import unique_name
 from negmas.inout import Scenario
@@ -42,45 +43,63 @@ DEFAULT_TOURNAMENT_PATH = Path.home() / "negmas" / "anl2024" / "tournaments"
 
 RESERVED_RANGES = tuple[tuple[float, float], tuple[float, float]]
 
-def onein(x: int | tuple[int, int]) -> int:
+
+def onein(x: int | tuple[int, int], log_uniform: bool) -> int:
     if isinstance(x, tuple):
         if x[0] == x[-1]:
             return x[0]
+        if log_uniform:
+            l = [log(_) for _ in x]
+            return min(
+                x[1], max(x[0], int(exp(random.random() * (l[1] - l[0]) + l[0])))
+            )
+
         return random.randint(*x)
     return x
+
 
 def make_scenarios(
     n_scenarios: int = 20,
     n_outcomes: int | tuple[int, int] = 100,
     *,
     reserved_ranges: RESERVED_RANGES = ((0.0, 0.499999), (0.0, 0.499999)),
+    log_range: bool = True,
 ) -> list[Scenario]:
-    """Creates `n_scenarios` scenarios of the divide-the-pie domain all of `n_outcomes`
-    outcomes and with different reserved value combinations that fall within `reserved_ranges`
+    """Creates scenarios for the competition
+
+    Args:
+        n_scenarios: Number of scenarios to create
+        n_outcomes: Number of outcomes per scenario (if a tuple it will be interpreted as a min/max range to sample n. outcomes from).
+        reserved_ranges: Ranges of reserved values for first and second negotiators
+        log_range: If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).
+
+    Remarks:
+        - When n_outcomes is a tuple, the number of outcomes for each outcome will be sampled independently
     """
-    n = onein(n_outcomes)
-    issues = (
-        make_issue([f"{i}_{n-1 - i}" for i in range(n)], "portions"),
-    )
-    ufun_sets = [
-        tuple(
-            U(
-                values=(
-                    TableFun(
-                        {
-                            _: int(str(_).split("_")[k]) / (n - 1)
-                            for _ in issues[0].all
-                        }
+    ufun_sets = []
+    for i in range(n_scenarios):
+        n = onein(n_outcomes, log_range)
+        issues = (make_issue([f"{i}_{n-1 - i}" for i in range(n)], "portions"),)
+        ufun_sets.append(
+            tuple(
+                U(
+                    values=(
+                        TableFun(
+                            {
+                                _: int(str(_).split("_")[k]) / (n - 1)
+                                for _ in issues[0].all
+                            }
+                        ),
                     ),
-                ),
-                name=f"{uname}{i}",
-                reserved_value=(r[0] + 1e-8 + random.random() * (r[1] - r[0] - 1e-8)),
-                outcome_space=make_os(issues, name=f"DivideTyePie{i}"),
+                    name=f"{uname}{i}",
+                    reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),
+                    outcome_space=make_os(issues, name=f"DivideTyePie{i}"),
+                )
+                for k, (uname, r) in enumerate(
+                    zip(("First", "Second"), reserved_ranges)
+                )
             )
-            for k, (uname, r) in enumerate(zip(("First", "Second"), reserved_ranges))
         )
-        for i in range(n_scenarios)
-    ]
 
     return [
         Scenario(
@@ -93,15 +112,18 @@ def make_scenarios(
 
 def anl2024_tournament(
     n_scenarios: int = 20,
-    n_outcomes: int| tuple[int, int] = 100,
+    n_outcomes: int | tuple[int, int] = (1, 100_000),
     competitors: tuple[type[Negotiator] | str, ...]
     | list[type[Negotiator] | str] = DEFAULT_AN2024_COMPETITORS,
     competitor_params: Sequence[dict | None] | None = None,
     rotate_ufuns: bool = True,
     n_repetitions: int = 5,
-    n_steps: int | None = 100,
-    time_limit: float | None = None,
-    pend: float = 0.0,
+    n_steps: int | tuple[int, int] | None = (10, 100_1000),
+    time_limit: float | tuple[float, float] | None = 60,
+    pend: float | tuple[float, float] = 0.0,
+    pend_per_second: float | tuple[float, float] = 0.0,
+    step_time_limit: float | tuple[float, float] | None = None,
+    negotiator_time_limit: float | tuple[float, float] | None = None,
     name: str | None = None,
     nologs: bool = False,
     njobs: int = 0,
@@ -114,7 +136,10 @@ def anl2024_tournament(
     known_partner: bool = False,
     final_score: tuple[str, str] = ("advantage", "mean"),
     base_path: Path | None = None,
-    scenario_generator: Callable[[int, int | tuple[int, int]], list[Scenario]] = make_scenarios
+    scenario_generator: Callable[
+        [int, int | tuple[int, int]], list[Scenario]
+    ] = make_scenarios,
+    plot_params: dict[str, Any] | None = None,
 ) -> SimpleTournamentResults:
     """Runs an ANL 2024 tournament
 
@@ -125,9 +150,12 @@ def anl2024_tournament(
         competitor_params: If given, parameters to construct each competitor
         rotate_ufuns: If given, each scenario will be tried with both orders of the ufuns.
         n_repetitions: Number of times to repeat each negotiation
-        n_steps: Number of steps (rounds) per negotiation. None means no limit
-        time_limit: Number of seconds per negotiation. None means no limit
-        pend: Probability of ending the negotiation each round.
+        n_steps: Number of steps/rounds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)
+        time_limit: Number of seconds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)
+        pend: Probability of ending the negotiation every step/round (None for no-limit and a 2-valued tuple for sampling from a range)
+        pend_per_second: Probability of ending the negotiation every second (None for no-limit and a 2-valued tuple for sampling from a range)
+        step_time_limit: Time limit for every negotiation step (None for no-limit and a 2-valued tuple for sampling from a range)
+        negotiator_time_limit: Time limit for all actions of every negotiator (None for no-limit and a 2-valued tuple for sampling from a range)
         name: Name of the tournament
         nologs: If given, no logs will be saved
         njobs: Number of parallel jobs to use. -1 for serial and 0 for all cores
@@ -141,6 +169,7 @@ def anl2024_tournament(
         final_score: The metric and statistic used to calculate the score. Metrics are: advantage, utility, welfare, partner_welfare and Stats are: median, mean, std, min, max
         base_path: Folder in which to generate the logs folder for this tournament. Default is ~/negmas/anl2024/tournaments
         scenario_generator: An alternative method for generating bilateral negotiation scenarios. Must receive the number of scenarios and number of outcomes.
+        plot_params: If given, overrides plotting parameters. See `nemgas.sao.SAOMechanism.plot()` for all parameters
 
     Returns:
         Tournament results as a `SimpleTournamentResults` object.
@@ -148,9 +177,32 @@ def anl2024_tournament(
     if nologs:
         path = None
     elif base_path is not None:
-        path = Path(base_path)/ (name if name else unique_name("anl"))
+        path = Path(base_path) / (name if name else unique_name("anl"))
     else:
         path = DEFAULT_TOURNAMENT_PATH / (name if name else unique_name("anl"))
+    params = dict(
+        ylimits=(0, 1),
+        mark_offers_view=True,
+        mark_pareto_points=False,
+        mark_all_outcomes=False,
+        mark_nash_points=True,
+        mark_kalai_points=False,
+        mark_max_welfare_points=False,
+        show_agreement=True,
+        show_pareto_distance=False,
+        show_nash_distance=True,
+        show_kalai_distance=False,
+        show_max_welfare_distance=False,
+        show_max_relative_welfare_distance=False,
+        show_end_reason=True,
+        show_annotations=True,
+        show_reserved=True,
+        show_total_time=True,
+        show_relative_time=True,
+        show_n_steps=True,
+    )
+    if plot_params:
+        params = params.update(plot_params)
     return cartesian_tournament(
         competitors=tuple(competitors),
         scenarios=scenario_generator(n_scenarios, n_outcomes),
@@ -160,7 +212,13 @@ def anl2024_tournament(
         path=path,
         njobs=njobs,
         mechanism_type=SAOMechanism,
-        mechanism_params=dict(time_limit=time_limit, n_steps=n_steps, pend=pend),
+        n_steps=n_steps,
+        time_limit=time_limit,
+        pend=pend,
+        pend_per_second=pend_per_second,
+        step_time_limit=step_time_limit,
+        negotiator_time_limit=negotiator_time_limit,
+        mechanism_params=None,
         plot_fraction=plot_fraction,
         verbosity=verbosity,
         self_play=self_play,
@@ -170,7 +228,7 @@ def anl2024_tournament(
         final_score=final_score,
         id_reveals_type=known_partner,
         name_reveals_type=True,
-        plot_params=dict(ylimits=(0,1))
+        plot_params=params,
     )
 
 

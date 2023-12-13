@@ -8,5 +8,3 @@ The core functionality of this package is provided by NegMAS.
 
 #### function: make_scenarios
 ::: anl.anl2024.make_scenarios
-
-
