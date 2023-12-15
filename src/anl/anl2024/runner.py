@@ -82,24 +82,33 @@ def make_divide_the_pie_scenarios(
     ufun_sets = []
     base_name = "DivideTyePie" if monotonic else "S"
 
-    def adjust(x: np.ndarray, i, monotonic=monotonic):
-        mn, mx = x.min(), x.max()
+    def generate(n, i):
         if monotonic:
-            x = np.sort(x, axis=None)
-            x *= np.linspace(0.0, 1.0, num=len(x), endpoint=True)
+            x = [random.random()]
+            for _ in range(n - 1):
+                x.append(x[-1] + random.random() * 10)
+            x = np.asarray(x)
             if i:
                 x = x[::-1]
+        else:
+            x = np.random.random(n).flatten()
+        mn, mx = x.min(), x.max()
         return ((x - mn) / (mx - mn)).tolist()
 
     for i in range(n_scenarios):
         n = onein(n_outcomes, log_range)
-        issues = (make_issue([f"{i}_{n-1 - i}" for i in range(n)], "portions"),)
+        issues = (
+            make_issue(
+                [f"{i}_{n-1 - i}" for i in range(n)],
+                "portions" if not monotonic else "i1",
+            ),
+        )
         funs = [
             dict(
                 zip(
                     issues[0].all,
                     # adjust(np.asarray([random.random() for _ in range(n)])),
-                    adjust(np.random.random(n).flatten(), i),
+                    generate(n, i),
                 )
             )
             for i in range(2)
