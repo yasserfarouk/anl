@@ -278,6 +278,12 @@ def main():
     help="Number of negotiations after which to save stats",
 )
 @click.option(
+    "--type",
+    default="arbitrary",
+    type=str,
+    help="Type of scenarios to use. Available options are: zerosum, monotonic, arbitrary",
+)
+@click.option(
     "--rotate/--no-rotate",
     default=True,
     help="Rotate utility functions when creating scenarios for the tournament",
@@ -306,6 +312,7 @@ def main():
 @click_config_file.configuration_option()
 def tournament2024(
     parallel,
+    type,
     name,
     repetitions,
     competitors,
@@ -340,6 +347,7 @@ def tournament2024(
         steps = 100
         outcomes = 1000
         timelimit = 30
+
     def read_range(x, min_x, max_x):
         if x > 0:
             return x
@@ -428,6 +436,7 @@ def tournament2024(
         save_every=save_every,
         known_partner=known_partner,
         final_score=(metric, stat),
+        scenario_generator=type,
     )
     if verbosity <= 0:
         print(results.final_scores)

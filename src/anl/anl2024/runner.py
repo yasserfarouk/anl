@@ -1,8 +1,9 @@
-from math import exp, log
 import random
+from math import exp, log
 from pathlib import Path
-from typing import Sequence, Callable, Any
+from typing import Any, Callable, Sequence
 
+import numpy as np
 from negmas.helpers.strings import unique_name
 from negmas.inout import Scenario
 from negmas.negotiators import Negotiator
@@ -21,7 +22,7 @@ from anl.anl2024.negotiators.builtins import Boulware, Conceder, Linear
 # )
 
 __all__ = [
-    "make_scenarios",
+    "make_divide_the_pie_scenarios",
     "anl2024_tournament",
     "DEFAULT_AN2024_COMPETITORS",
     "DEFAULT_TOURNAMENT_PATH",
@@ -58,14 +59,112 @@ def onein(x: int | tuple[int, int], log_uniform: bool) -> int:
     return x
 
 
-def make_scenarios(
+def make_divide_the_pie_scenarios(
+    n_scenarios: int = 20,
+    n_outcomes: int | tuple[int, int] = 100,
+    *,
+    reserved_ranges: RESERVED_RANGES = ((0.0, 0.999999), (0.0, 0.999999)),
+    log_range: bool = True,
+    monotonic=False,
+) -> list[Scenario]:
+    """Creates single-issue scenarios with arbitrary/monotonically increasing utility functions
+
+    Args:
+        n_scenarios: Number of scenarios to create
+        n_outcomes: Number of outcomes per scenario (if a tuple it will be interpreted as a min/max range to sample n. outcomes from).
+        reserved_ranges: Ranges of reserved values for first and second negotiators
+        log_range: If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).
+        monotonic: If true all ufuns are monotonically increasing in the portion of the pie
+
+    Remarks:
+        - When n_outcomes is a tuple, the number of outcomes for each outcome will be sampled independently
+    """
+    ufun_sets = []
+    base_name = "DivideTyePie" if monotonic else "S"
+
+    def adjust(x: np.ndarray, i, monotonic=monotonic):
+        mn, mx = x.min(), x.max()
+        if monotonic:
+            x = np.sort(x, axis=None)
+            x *= np.linspace(0.0, 1.0, num=len(x), endpoint=True)
+            if i:
+                x = x[::-1]
+        return ((x - mn) / (mx - mn)).tolist()
+
+    for i in range(n_scenarios):
+        n = onein(n_outcomes, log_range)
+        issues = (make_issue([f"{i}_{n-1 - i}" for i in range(n)], "portions"),)
+        funs = [
+            dict(
+                zip(
+                    issues[0].all,
+                    # adjust(np.asarray([random.random() for _ in range(n)])),
+                    adjust(np.random.random(n).flatten(), i),
+                )
+            )
+            for i in range(2)
+        ]
+        ufun_sets.append(
+            tuple(
+                U(
+                    values=(TableFun(fun),),
+                    name=f"{uname}{i}",
+                    reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),
+                    outcome_space=make_os(issues, name=f"{base_name}{i}"),
+                )
+                for (uname, r, fun) in zip(("First", "Second"), reserved_ranges, funs)
+            )
+        )
+
+    return [
+        Scenario(
+            outcome_space=ufuns[0].outcome_space,  # type: ignore We are sure this is not None
+            ufuns=ufuns,
+        )
+        for ufuns in ufun_sets
+    ]
+
+
+def make_arbitrary_divide_the_pie_scenarios(
+    n_scenarios: int = 20,
+    n_outcomes: int | tuple[int, int] = 100,
+    *,
+    reserved_ranges: RESERVED_RANGES = ((0.0, 0.999999), (0.0, 0.999999)),
+    log_range: bool = True,
+) -> list[Scenario]:
+    return make_divide_the_pie_scenarios(
+        n_scenarios,
+        n_outcomes,
+        reserved_ranges=reserved_ranges,
+        log_range=log_range,
+        monotonic=False,
+    )
+
+
+def make_monotonic_divide_the_pie_scenarios(
+    n_scenarios: int = 20,
+    n_outcomes: int | tuple[int, int] = 100,
+    *,
+    reserved_ranges: RESERVED_RANGES = ((0.0, 0.999999), (0.0, 0.999999)),
+    log_range: bool = True,
+) -> list[Scenario]:
+    return make_divide_the_pie_scenarios(
+        n_scenarios,
+        n_outcomes,
+        reserved_ranges=reserved_ranges,
+        log_range=log_range,
+        monotonic=True,
+    )
+
+
+def make_zerosum_divide_the_pie_scenarios(
     n_scenarios: int = 20,
     n_outcomes: int | tuple[int, int] = 100,
     *,
     reserved_ranges: RESERVED_RANGES = ((0.0, 0.499999), (0.0, 0.499999)),
     log_range: bool = True,
 ) -> list[Scenario]:
-    """Creates scenarios for the competition
+    """Creates scenarios all of the DivideThePie variety with proportions giving utility
 
     Args:
         n_scenarios: Number of scenarios to create
@@ -110,6 +209,13 @@ def make_scenarios(
     ]
 
 
+GENERAROR_MAP = dict(
+    monotonic=make_monotonic_divide_the_pie_scenarios,
+    arbitrary=make_arbitrary_divide_the_pie_scenarios,
+    zerosum=make_zerosum_divide_the_pie_scenarios,
+)
+
+
 def anl2024_tournament(
     n_scenarios: int = 20,
     n_outcomes: int | tuple[int, int] = (1, 100_000),
@@ -136,9 +242,8 @@ def anl2024_tournament(
     known_partner: bool = False,
     final_score: tuple[str, str] = ("advantage", "mean"),
     base_path: Path | None = None,
-    scenario_generator: Callable[
-        [int, int | tuple[int, int]], list[Scenario]
-    ] = make_scenarios,
+    scenario_generator: str
+    | Callable[[int, int | tuple[int, int]], list[Scenario]] = "arbitrary",
     plot_params: dict[str, Any] | None = None,
 ) -> SimpleTournamentResults:
     """Runs an ANL 2024 tournament
@@ -174,6 +279,8 @@ def anl2024_tournament(
     Returns:
         Tournament results as a `SimpleTournamentResults` object.
     """
+    if isinstance(scenario_generator, str):
+        scenario_generator = GENERAROR_MAP[scenario_generator]
     if nologs:
         path = None
     elif base_path is not None:
