@@ -5,7 +5,7 @@ from typing import Any, Callable, Sequence
 
 import numpy as np
 from negmas.helpers.strings import unique_name
-from negmas.inout import Scenario
+from negmas.inout import LinearAdditiveUtilityFunction, Scenario
 from negmas.negotiators import Negotiator
 from negmas.outcomes import make_issue, make_os
 from negmas.preferences import LinearAdditiveUtilityFunction as U
@@ -82,19 +82,25 @@ def make_divide_the_pie_scenarios(
     ufun_sets = []
     base_name = "DivideTyePie" if monotonic else "S"
 
-    def generate(n, i):
-        if monotonic:
-            x = [random.random()]
-            for _ in range(n - 1):
-                x.append(x[-1] + random.random() * 10)
-            x = np.asarray(x)
-            if i:
-                x = x[::-1]
-        else:
-            x = np.random.random(n).flatten()
+    def normalize(x):
         mn, mx = x.min(), x.max()
         return ((x - mn) / (mx - mn)).tolist()
 
+    def make_monotonic(x, i):
+        x = np.sort(np.asarray(x), axis=None)
+
+        if i:
+            x = x[::-1]
+        r = random.random()
+        if r < 0.33:
+            x = np.exp(x)
+        elif r < 0.67:
+            x = np.log(x)
+        else:
+            pass
+        return normalize(x)
+
+    max_jitter_level = 0.8
     for i in range(n_scenarios):
         n = onein(n_outcomes, log_range)
         issues = (
@@ -103,25 +109,43 @@ def make_divide_the_pie_scenarios(
                 "portions" if not monotonic else "i1",
             ),
         )
+        # funs = [
+        #     dict(
+        #         zip(
+        #             issues[0].all,
+        #             # adjust(np.asarray([random.random() for _ in range(n)])),
+        #             generate(n, i),
+        #         )
+        #     )
+        #     for i in range(2)
+        # ]
+        os = make_os(issues, name=f"{base_name}{i}")
+        outcomes = list(os.enumerate_or_sample())
+        ufuns = U.generate_bilateral(
+            outcomes,
+            conflict_level=0.5 + 0.5 * random.random(),
+            conflict_delta=random.random(),
+        )
+        jitter_level = random.random() * max_jitter_level
         funs = [
-            dict(
-                zip(
-                    issues[0].all,
-                    # adjust(np.asarray([random.random() for _ in range(n)])),
-                    generate(n, i),
-                )
-            )
-            for i in range(2)
+            np.asarray([float(u(_)) for _ in outcomes])
+            + np.random.random() * jitter_level
+            for u in ufuns
         ]
+
+        if monotonic:
+            funs = [make_monotonic(x, i) for i, x in enumerate(funs)]
+        else:
+            funs = [normalize(x) for x in funs]
         ufun_sets.append(
             tuple(
                 U(
-                    values=(TableFun(fun),),
+                    values=(TableFun(dict(zip(issues[0].all, vals))),),
                     name=f"{uname}{i}",
                     reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),
-                    outcome_space=make_os(issues, name=f"{base_name}{i}"),
+                    outcome_space=os,
                 )
-                for (uname, r, fun) in zip(("First", "Second"), reserved_ranges, funs)
+                for (uname, r, vals) in zip(("First", "Second"), reserved_ranges, funs)
             )
         )
 
@@ -290,6 +314,7 @@ def anl2024_tournament(
     """
     if isinstance(scenario_generator, str):
         scenario_generator = GENERAROR_MAP[scenario_generator]
+    all_outcomes = not scenario_generator == make_zerosum_divide_the_pie_scenarios
     if nologs:
         path = None
     elif base_path is not None:
@@ -299,11 +324,11 @@ def anl2024_tournament(
     params = dict(
         ylimits=(0, 1),
         mark_offers_view=True,
-        mark_pareto_points=False,
-        mark_all_outcomes=False,
+        mark_pareto_points=all_outcomes,
+        mark_all_outcomes=all_outcomes,
         mark_nash_points=True,
-        mark_kalai_points=False,
-        mark_max_welfare_points=False,
+        mark_kalai_points=all_outcomes,
+        mark_max_welfare_points=all_outcomes,
         show_agreement=True,
         show_pareto_distance=False,
         show_nash_distance=True,
@@ -311,7 +336,7 @@ def anl2024_tournament(
         show_max_welfare_distance=False,
         show_max_relative_welfare_distance=False,
         show_end_reason=True,
-        show_annotations=True,
+        show_annotations=not all_outcomes,
         show_reserved=True,
         show_total_time=True,
         show_relative_time=True,
