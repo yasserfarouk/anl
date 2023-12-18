@@ -236,7 +236,7 @@ def sample_reserved_values(
 
 DEFAULT2024SETTINGS = dict(
     n_ufuns=2,
-    n_scenarios=100,
+    n_scenarios=50,
     n_outcomes=(900, 1100),
     n_steps=(10, 10_000),
     n_repetitions=5,
@@ -280,7 +280,7 @@ def mixed_scenarios(
     curve_fraction: float = DEFAULT2024SETTINGS["generator_params"]["curve_fraction"],  # type: ignore
     pareto_first: bool = DEFAULT2024SETTINGS["generator_params"]["pareto_first"],  # type: ignore
     n_ufuns: int = DEFAULT2024SETTINGS["n_ufuns"],  # type: ignore
-    n_pareto: int | float | tuple[float | int, float | int] | list[int | float] = DEFAULT2024SETTINGS["n_pareto"],  # type: ignore
+    n_pareto: int | float | tuple[float | int, float | int] | list[int | float] = DEFAULT2024SETTINGS["generator_params"]["n_pareto"],  # type: ignore
     pareto_log_uniform: bool = True,
 ) -> list[Scenario]:
     """Generates a mix of zero-sum, monotonic and general scenarios
