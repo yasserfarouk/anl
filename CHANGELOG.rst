@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.1.2 (2023.12.18)
+------------------
+
+* Adding better scenario generation and supporting mixtures of zero-sum, monotonic and general scenarios.
+* Requiring negmas 0.10.8
+
 0.1.2 (2023.12.11)
 ------------------
 
