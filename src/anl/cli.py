@@ -8,18 +8,23 @@ from collections import defaultdict
 from functools import partial
 from pathlib import Path
 from time import perf_counter
-from typing import List
+from typing import Iterable, List
 
 import click
 import click_config_file
 import negmas
 from negmas.helpers import humanize_time, unique_name
+from negmas.helpers.inout import load
 from negmas.helpers.types import get_class
 from rich import print
 
 import anl
 from anl import DEFAULT_AN2024_COMPETITORS
-from anl.anl2024.runner import DEFAULT_TOURNAMENT_PATH, anl2024_tournament
+from anl.anl2024.runner import (
+    DEFAULT2024SETTINGS,
+    DEFAULT_TOURNAMENT_PATH,
+    anl2024_tournament,
+)
 
 n_completed = 0
 n_total = 0
@@ -138,51 +143,51 @@ def main():
 @click.option(
     "--outcomes",
     "-o",
-    default=-1,
+    default=DEFAULT2024SETTINGS["n_outcomes"] if not isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
     type=int,
     help="Number of outcomes in every scenario. If negative or zero, --min-outcomes and --max-outcomes will beused",
 )
 @click.option(
     "--min-outcomes",
-    default=1000,
+    default=DEFAULT2024SETTINGS["n_outcomes"][0] if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
     type=int,
     help="Minimum number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
 @click.option(
     "--max-outcomes",
-    default=1000,
+    default=DEFAULT2024SETTINGS["n_outcomes"][1] if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
     type=int,
     help="Max number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
 @click.option(
     "--scenarios",
     "-S",
-    default=10,
+    default=DEFAULT2024SETTINGS["n_scenarios"],  # type: ignore
     type=int,
     help="Number of scenarios to generate",
 )
 @click.option(
     "--repetitions",
     "-r",
-    default=10,
+    default=DEFAULT2024SETTINGS["n_repetitions"],  # type: ignore
     type=int,
     help="Number of repetition for each negotiation",
 )
 @click.option(
     "--competitors",
-    default="Conceder;Linear;Boulware",
+    default=";".join(_().type_name for _ in DEFAULT2024SETTINGS["competitors"]),  # type: ignore # type: ignore
     help="A semicolon (;) separated list of agent types to use for the competition. You"
     " can also pass the special value default for the default builtin"
     " agents",
 )
 @click.option(
     "--metric",
-    default="advantage",
+    default=DEFAULT2024SETTINGS["final_score"][0],  # type: ignore # type: ignore
     help="The metric to use for evaluating agents. Can be one of: utility, advantage, partner_welfare, welfare",
 )
 @click.option(
     "--stat",
-    default="mean",
+    default=DEFAULT2024SETTINGS["final_score"][1],  # type: ignore # type: ignore
     help="The statistic applied to the metric to evaluate agents. Can be one of: mean, median, std, min, max",
 )
 @click.option(
@@ -192,7 +197,7 @@ def main():
 )
 @click.option(
     "--known-partner/--unknown-partner",
-    default=False,
+    default=DEFAULT2024SETTINGS["known_partner"],  # type: ignore
     help="Can the agent know its partner type?",
 )
 @click.option(
@@ -203,58 +208,80 @@ def main():
 @click.option(
     "--timelimit",
     "-t",
-    default=60,
+    default=DEFAULT2024SETTINGS["time_limit"]  # type: ignore
+    if not isinstance(DEFAULT2024SETTINGS["time_limit"], Iterable)  # type: ignore
+    else -1,
     type=float,
     help="Number of seconds allowed in every negotiation. Negative numbers mean no-limit",
 )
 @click.option(
     "--min-timelimit",
-    default=-1,
+    default=DEFAULT2024SETTINGS["time_limit"][0]  # type: ignore
+    if isinstance(DEFAULT2024SETTINGS["time_limit"], Iterable)  # type: ignore
+    else -1,
     type=int,
     help="Minimum number of seconds in every scenario. Only used of --timelimit is zero or negative",
 )
 @click.option(
     "--max-timelimit",
-    default=-1,
+    default=DEFAULT2024SETTINGS["time_limit"][1]  # type: ignore
+    if isinstance(DEFAULT2024SETTINGS["time_limit"], Iterable)  # type: ignore
+    else -1,
     type=int,
     help="Max number of seconds in every scenario. Only used of --timelimit is zero or negative",
 )
 @click.option(
     "--steps",
     "-s",
-    default=-1,
+    default=DEFAULT2024SETTINGS["n_steps"]  # type: ignore
+    if not isinstance(DEFAULT2024SETTINGS["n_steps"], Iterable)  # type: ignore
+    else -1,
     type=int,
     help="Number of negotiation rounds allowed in every negotiation. Negative numbers mean no-limit",
 )
 @click.option(
     "--min-steps",
-    default=100,
+    default=DEFAULT2024SETTINGS["n_steps"][0]  # type: ignore
+    if isinstance(DEFAULT2024SETTINGS["n_steps"], Iterable)  # type: ignore
+    else -1,
     type=int,
     help="Minimum number of steps in every scenario. Only used of --steps is zero or negative",
 )
 @click.option(
     "--max-steps",
-    default=10_000,
+    default=DEFAULT2024SETTINGS["n_steps"][1]  # type: ignore
+    if isinstance(DEFAULT2024SETTINGS["n_steps"], Iterable)  # type: ignore
+    else -1,
     type=int,
     help="Max number of steps in every scenario. Only used of --steps is zero or negative",
 )
 @click.option(
     "--pend",
-    default=0,
+    default=DEFAULT2024SETTINGS["pend"]  # type: ignore
+    if not isinstance(DEFAULT2024SETTINGS["pend"], Iterable)  # type: ignore
+    else -1,
     type=float,
     help="Probability of ending the negotiation at every round",
 )
 @click.option(
     "--min-pend",
-    default=0,
-    type=int,
+    default=DEFAULT2024SETTINGS["pend"][0]  # type: ignore
+    if isinstance(DEFAULT2024SETTINGS["pend"], Iterable)  # type: ignore
+    else -1,
     help="Minimum pend in every scenario. Only used of --pend is zero or negative",
 )
 @click.option(
     "--max-pend",
-    default=0,
-    type=int,
+    default=DEFAULT2024SETTINGS["pend"][1]  # type: ignore
+    if isinstance(DEFAULT2024SETTINGS["pend"], Iterable)  # type: ignore
+    else -1,
     help="Max pend in every scenario. Only used of --pend is zero or negative",
+)
+@click.option(
+    "--self-play/--no-self-play",
+    default=DEFAULT2024SETTINGS["self_play"],  # type: ignore
+    type=bool,
+    help="Allow self-play during the tournament",
 )
 @click.option(
     "--plot",
@@ -278,31 +305,53 @@ def main():
     help="Number of negotiations after which to save stats",
 )
 @click.option(
-    "--type",
-    default="arbitrary",
+    "--generator",
+    default=DEFAULT2024SETTINGS["scenario_generator"],  # type: ignore
     type=str,
-    help="Type of scenarios to use. Available options are: zerosum, monotonic, arbitrary",
+    help="The method to generate scenarios. Default is mix which generates a mix of scenario types containing zero-sum, monotonic and general scenarios",
+)
+@click.option(
+    "--zerosum",
+    "-z",
+    default=DEFAULT2024SETTINGS["generator_params"].get("zerosum_fraction", 0.05),  # type: ignore
+    type=float,
+    help="Fraction of zero-sum scenarios (used when generator=mix)",
+)
+@click.option(
+    "--monotonic",
+    "-m",
+    default=DEFAULT2024SETTINGS["generator_params"].get("monotonic_fraction", 0.25),  # type: ignore
+    type=float,
+    help="Fraction of monotonic scenarios (used when generator=mix)",
+)
+@click.option(
+    "--curve",
+    "-c",
+    default=DEFAULT2024SETTINGS["generator_params"].get("curve_fraction", 0.5),  # type: ignore
+    type=float,
+    help="Fraction of monotonic and general scenarios generated using a Pareto curve not piecewise linear Pareto (used when generator=mix)",
 )
 @click.option(
     "--rotate/--no-rotate",
-    default=True,
+    default=DEFAULT2024SETTINGS["rotate_ufuns"],  # type: ignore
     help="Rotate utility functions when creating scenarios for the tournament",
 )
 @click.option(
-    "--self-play/--no-self-play",
-    default=True,
-    help="Allow each agent to negotiate with itself or not",
-)
-@click.option(
     "--randomize/--no-randomize",
-    default=True,
+    default=DEFAULT2024SETTINGS["randomize_runs"],  # type: ignore
     help="Randomize the order of negotiations or not",
 )
-# @click.option(
-#     "--raise-exceptions/--ignore-exceptions",
-#     default=True,
-#     help="Whether to ignore agent exceptions",
-# )
+@click.option(
+    "--raise-exceptions/--ignore-exceptions",
+    default=True,
+    help="Whether to ignore agent exceptions",
+)
+@click.option(
+    "--settings-file",
+    default=None,
+    type=click.Path(exists=True, dir_okay=False),
+    help="Path to a yaml/json file containing parameters to pass to the generator",
+)
 @click.option(
     "--path",
     default="",
@@ -312,9 +361,10 @@ def main():
 @click_config_file.configuration_option()
 def tournament2024(
     parallel,
-    type,
+    generator,
     name,
     repetitions,
+    raise_exceptions,
     competitors,
     verbosity,
     path,
@@ -341,7 +391,22 @@ def tournament2024(
     max_outcomes,
     scenarios,
     small,
+    settings_file,
+    zerosum,
+    monotonic,
+    curve,
 ):
+    generator_params = dict()
+    # read settings of the scenario generator from the settings file if available
+    if settings_file:
+        generator_params = load(settings_file)
+    # override settings with the appropriate ones based on the generator
+    if generator == "mix":
+        generator_params.update(
+            zerosum_fraction=zerosum,
+            monotonic_fraction=monotonic,
+            curve_fraction=curve,
+        )
     if small:
         scenarios = 3
         steps = 100
@@ -436,7 +501,9 @@ def tournament2024(
         save_every=save_every,
         known_partner=known_partner,
         final_score=(metric, stat),
-        scenario_generator=type,
+        scenario_generator=generator,
+        generator_params=generator_params,
+        raise_exceptions=raise_exceptions,
     )
     if verbosity <= 0:
         print(results.final_scores)
