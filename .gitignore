@@ -113,3 +113,4 @@ scratch/min_stats_g.csv
 ./build
 build/*
 .envrc
+tmp/
