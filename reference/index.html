@@ -37,9 +37,6 @@
                             <li class="navitem">
                                 <a href="../faq/" class="nav-link">FAQ</a>
                             </li>
-                            <li class="navitem">
-                                <a href="../01.develop_an_agent/" class="nav-link">Tutorials</a>
-                            </li>
                             <li class="navitem active">
                                 <a href="./" class="nav-link">Reference</a>
                             </li>
@@ -52,7 +49,7 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../01.develop_an_agent/" class="nav-link">
+                                <a rel="prev" href="../faq/" class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
@@ -89,7 +86,77 @@
               </ul>
             </li>
             
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.make_scenarios" class="nav-link">make_scenarios</a>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.DEFAULT_AN2024_COMPETITORS" class="nav-link">DEFAULT_AN2024_COMPETITORS</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.DEFAULT_TOURNAMENT_PATH" class="nav-link">DEFAULT_TOURNAMENT_PATH</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.DEFAULT2024SETTINGS" class="nav-link">DEFAULT2024SETTINGS</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.Boulware" class="nav-link">Boulware</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.Linear" class="nav-link">Linear</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.Conceder" class="nav-link">Conceder</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.NaiveTitForTat" class="nav-link">NaiveTitForTat</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.MiCRO" class="nav-link">MiCRO</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.MiCRO.__call__" class="nav-link">__call__()</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.ScenarioGenerator" class="nav-link">ScenarioGenerator</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.mixed_scenarios" class="nav-link">mixed_scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.pie_scenarios" class="nav-link">pie_scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.arbitrary_pie_scenarios" class="nav-link">arbitrary_pie_scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.monotonic_pie_scenarios" class="nav-link">monotonic_pie_scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.zerosum_pie_scenarios" class="nav-link">zerosum_pie_scenarios</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -99,8 +166,9 @@
                     <div class="col-md-9" role="main">
 
 <h2 id="anl">ANL</h2>
-<p>The core functionality of this package is provided by NegMAS.</p>
-<h3 id="anl2024">ANL2024</h3>
+<p>This package provides a wrapper around NegMAS functionality to generate and run tournaments a la ANL 2024 competition.
+You mostly only need to use <code>anl2024_tournament</code> in your code. The other helpers are provided to allow for a finer control over the scenarios used.</p>
+<h3 id="tournaments">Tournaments</h3>
 <h4 id="function-anl2024_tournament">function: anl2024_tournament</h4>
 
 
@@ -111,10 +179,1732 @@
 
 <a id="anl.anl2024.anl2024_tournament"></a>
   <div class="doc doc-contents first">
+  
+      <p>Runs an ANL 2024 tournament</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>n_scenarios</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of negotiation scenarios</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_scenarios&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_outcomes</code></td>
+          <td>
+                <code>int | tuple[int, int] | list[int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes (or a min/max tuple of n. outcomes) for each scenario</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_outcomes&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>competitors</code></td>
+          <td>
+                <code>tuple[type[<span title="negmas.negotiators.Negotiator">Negotiator</span>] | str, ...] | list[type[<span title="negmas.negotiators.Negotiator">Negotiator</span>] | str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>list of competitor agents</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT_AN2024_COMPETITORS" href="#anl.anl2024.DEFAULT_AN2024_COMPETITORS">DEFAULT_AN2024_COMPETITORS</a></code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>competitor_params</code></td>
+          <td>
+                <code><span title="typing.Sequence">Sequence</span>[dict | None] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, parameters to construct each competitor</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>rotate_ufuns</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, each scenario will be tried with both orders of the ufuns.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;rotate_ufuns&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_repetitions</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of times to repeat each negotiation</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_repetitions&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_steps</code></td>
+          <td>
+                <code>int | tuple[int, int] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of steps/rounds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_steps&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>time_limit</code></td>
+          <td>
+                <code>float | tuple[float, float] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of seconds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;time_limit&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pend</code></td>
+          <td>
+                <code>float | tuple[float, float]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Probability of ending the negotiation every step/round (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;pend&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pend_per_second</code></td>
+          <td>
+                <code>float | tuple[float, float]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Probability of ending the negotiation every second (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;pend_per_second&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>step_time_limit</code></td>
+          <td>
+                <code>float | tuple[float, float] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Time limit for every negotiation step (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;step_time_limit&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>negotiator_time_limit</code></td>
+          <td>
+                <code>float | tuple[float, float] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Time limit for all actions of every negotiator (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;negotiator_time_limit&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code>str | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Name of the tournament</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>nologs</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, no logs will be saved</p>
+            </div>
+          </td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>njobs</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of parallel jobs to use. -1 for serial and 0 for all cores</p>
+            </div>
+          </td>
+          <td>
+                <code>0</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>plot_fraction</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Fraction of negotiations to plot. Only used if not nologs</p>
+            </div>
+          </td>
+          <td>
+                <code>0.2</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>verbosity</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Verbosity level. The higher the more verbose</p>
+            </div>
+          </td>
+          <td>
+                <code>1</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>self_play</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Allow negotiators to run against themselves.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;self_play&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>randomize_runs</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Randomize the order of negotiations</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;randomize_runs&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>save_every</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Save logs every this number of negotiations</p>
+            </div>
+          </td>
+          <td>
+                <code>0</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>save_stats</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Save statistics for scenarios</p>
+            </div>
+          </td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>known_partner</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Allow negotiators to know the type of their partner (through their ID)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;known_partner&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>final_score</code></td>
+          <td>
+                <code>tuple[str, str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The metric and statistic used to calculate the score. Metrics are: advantage, utility, welfare, partner_welfare and Stats are: median, mean, std, min, max</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;final_score&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>base_path</code></td>
+          <td>
+                <code><span title="pathlib.Path">Path</span> | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Folder in which to generate the logs folder for this tournament. Default is ~/negmas/anl2024/tournaments</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>scenario_generator</code></td>
+          <td>
+                <code>str | <a class="autorefs autorefs-internal" title="anl.anl2024.runner.ScenarioGenerator" href="#anl.anl2024.ScenarioGenerator">ScenarioGenerator</a></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>An alternative method for generating bilateral negotiation scenarios. Must receive the number of scenarios and number of outcomes.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;scenario_generator&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>generator_params</code></td>
+          <td>
+                <code>dict[str, <span title="typing.Any">Any</span>] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Parameters passed to the scenario generator</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>plot_params</code></td>
+          <td>
+                <code>dict[str, <span title="typing.Any">Any</span>] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, overrides plotting parameters. See <code>nemgas.sao.SAOMechanism.plot()</code> for all parameters</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code><span title="negmas.tournaments.neg.simple.SimpleTournamentResults">SimpleTournamentResults</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Tournament results as a <code>SimpleTournamentResults</code> object.</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
           <details class="quote">
-            <summary>Source code in <code>anl\anl2024\runner.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 86</span>
+            <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">447</span>
+<span class="normal">448</span>
+<span class="normal">449</span>
+<span class="normal">450</span>
+<span class="normal">451</span>
+<span class="normal">452</span>
+<span class="normal">453</span>
+<span class="normal">454</span>
+<span class="normal">455</span>
+<span class="normal">456</span>
+<span class="normal">457</span>
+<span class="normal">458</span>
+<span class="normal">459</span>
+<span class="normal">460</span>
+<span class="normal">461</span>
+<span class="normal">462</span>
+<span class="normal">463</span>
+<span class="normal">464</span>
+<span class="normal">465</span>
+<span class="normal">466</span>
+<span class="normal">467</span>
+<span class="normal">468</span>
+<span class="normal">469</span>
+<span class="normal">470</span>
+<span class="normal">471</span>
+<span class="normal">472</span>
+<span class="normal">473</span>
+<span class="normal">474</span>
+<span class="normal">475</span>
+<span class="normal">476</span>
+<span class="normal">477</span>
+<span class="normal">478</span>
+<span class="normal">479</span>
+<span class="normal">480</span>
+<span class="normal">481</span>
+<span class="normal">482</span>
+<span class="normal">483</span>
+<span class="normal">484</span>
+<span class="normal">485</span>
+<span class="normal">486</span>
+<span class="normal">487</span>
+<span class="normal">488</span>
+<span class="normal">489</span>
+<span class="normal">490</span>
+<span class="normal">491</span>
+<span class="normal">492</span>
+<span class="normal">493</span>
+<span class="normal">494</span>
+<span class="normal">495</span>
+<span class="normal">496</span>
+<span class="normal">497</span>
+<span class="normal">498</span>
+<span class="normal">499</span>
+<span class="normal">500</span>
+<span class="normal">501</span>
+<span class="normal">502</span>
+<span class="normal">503</span>
+<span class="normal">504</span>
+<span class="normal">505</span>
+<span class="normal">506</span>
+<span class="normal">507</span>
+<span class="normal">508</span>
+<span class="normal">509</span>
+<span class="normal">510</span>
+<span class="normal">511</span>
+<span class="normal">512</span>
+<span class="normal">513</span>
+<span class="normal">514</span>
+<span class="normal">515</span>
+<span class="normal">516</span>
+<span class="normal">517</span>
+<span class="normal">518</span>
+<span class="normal">519</span>
+<span class="normal">520</span>
+<span class="normal">521</span>
+<span class="normal">522</span>
+<span class="normal">523</span>
+<span class="normal">524</span>
+<span class="normal">525</span>
+<span class="normal">526</span>
+<span class="normal">527</span>
+<span class="normal">528</span>
+<span class="normal">529</span>
+<span class="normal">530</span>
+<span class="normal">531</span>
+<span class="normal">532</span>
+<span class="normal">533</span>
+<span class="normal">534</span>
+<span class="normal">535</span>
+<span class="normal">536</span>
+<span class="normal">537</span>
+<span class="normal">538</span>
+<span class="normal">539</span>
+<span class="normal">540</span>
+<span class="normal">541</span>
+<span class="normal">542</span>
+<span class="normal">543</span>
+<span class="normal">544</span>
+<span class="normal">545</span>
+<span class="normal">546</span>
+<span class="normal">547</span>
+<span class="normal">548</span>
+<span class="normal">549</span>
+<span class="normal">550</span>
+<span class="normal">551</span>
+<span class="normal">552</span>
+<span class="normal">553</span>
+<span class="normal">554</span>
+<span class="normal">555</span>
+<span class="normal">556</span>
+<span class="normal">557</span>
+<span class="normal">558</span>
+<span class="normal">559</span>
+<span class="normal">560</span>
+<span class="normal">561</span>
+<span class="normal">562</span>
+<span class="normal">563</span>
+<span class="normal">564</span>
+<span class="normal">565</span>
+<span class="normal">566</span>
+<span class="normal">567</span>
+<span class="normal">568</span>
+<span class="normal">569</span>
+<span class="normal">570</span>
+<span class="normal">571</span>
+<span class="normal">572</span>
+<span class="normal">573</span>
+<span class="normal">574</span>
+<span class="normal">575</span>
+<span class="normal">576</span>
+<span class="normal">577</span>
+<span class="normal">578</span>
+<span class="normal">579</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">anl2024_tournament</span><span class="p">(</span>
+    <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;n_scenarios&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;n_outcomes&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">competitors</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">Negotiator</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
+    <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">Negotiator</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_AN2024_COMPETITORS</span><span class="p">,</span>
+    <span class="n">rotate_ufuns</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;rotate_ufuns&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">n_repetitions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;n_repetitions&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;n_steps&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;time_limit&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">pend</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;pend&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">pend_per_second</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;pend_per_second&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">step_time_limit</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+    <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;step_time_limit&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">negotiator_time_limit</span><span class="p">:</span> <span class="nb">float</span>
+    <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">]</span>
+    <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;negotiator_time_limit&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">self_play</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;self_play&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">randomize_runs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;randomize_runs&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">known_partner</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;known_partner&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">final_score</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;final_score&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">scenario_generator</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="o">|</span> <span class="n">ScenarioGenerator</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;scenario_generator&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">generator_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;generator_params&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">competitor_params</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">nologs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
+    <span class="n">njobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">plot_fraction</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
+    <span class="n">verbosity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="n">save_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="n">save_stats</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">base_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">plot_params</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+    <span class="n">raise_exceptions</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimpleTournamentResults</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Runs an ANL 2024 tournament</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_scenarios: Number of negotiation scenarios</span>
+<span class="sd">        n_outcomes: Number of outcomes (or a min/max tuple of n. outcomes) for each scenario</span>
+<span class="sd">        competitors: list of competitor agents</span>
+<span class="sd">        competitor_params: If given, parameters to construct each competitor</span>
+<span class="sd">        rotate_ufuns: If given, each scenario will be tried with both orders of the ufuns.</span>
+<span class="sd">        n_repetitions: Number of times to repeat each negotiation</span>
+<span class="sd">        n_steps: Number of steps/rounds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        time_limit: Number of seconds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        pend: Probability of ending the negotiation every step/round (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        pend_per_second: Probability of ending the negotiation every second (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        step_time_limit: Time limit for every negotiation step (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        negotiator_time_limit: Time limit for all actions of every negotiator (None for no-limit and a 2-valued tuple for sampling from a range)</span>
+<span class="sd">        name: Name of the tournament</span>
+<span class="sd">        nologs: If given, no logs will be saved</span>
+<span class="sd">        njobs: Number of parallel jobs to use. -1 for serial and 0 for all cores</span>
+<span class="sd">        plot_fraction: Fraction of negotiations to plot. Only used if not nologs</span>
+<span class="sd">        verbosity: Verbosity level. The higher the more verbose</span>
+<span class="sd">        self_play: Allow negotiators to run against themselves.</span>
+<span class="sd">        randomize_runs: Randomize the order of negotiations</span>
+<span class="sd">        save_every: Save logs every this number of negotiations</span>
+<span class="sd">        save_stats: Save statistics for scenarios</span>
+<span class="sd">        known_partner: Allow negotiators to know the type of their partner (through their ID)</span>
+<span class="sd">        final_score: The metric and statistic used to calculate the score. Metrics are: advantage, utility, welfare, partner_welfare and Stats are: median, mean, std, min, max</span>
+<span class="sd">        base_path: Folder in which to generate the logs folder for this tournament. Default is ~/negmas/anl2024/tournaments</span>
+<span class="sd">        scenario_generator: An alternative method for generating bilateral negotiation scenarios. Must receive the number of scenarios and number of outcomes.</span>
+<span class="sd">        generator_params: Parameters passed to the scenario generator</span>
+<span class="sd">        plot_params: If given, overrides plotting parameters. See `nemgas.sao.SAOMechanism.plot()` for all parameters</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        Tournament results as a `SimpleTournamentResults` object.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">generator_params</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">generator_params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">()</span>
+    <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">scenario_generator</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+        <span class="n">scenario_generator</span> <span class="o">=</span> <span class="n">GENERAROR_MAP</span><span class="p">[</span><span class="n">scenario_generator</span><span class="p">]</span>
+    <span class="n">all_outcomes</span> <span class="o">=</span> <span class="ow">not</span> <span class="n">scenario_generator</span> <span class="o">==</span> <span class="n">zerosum_pie_scenarios</span>
+    <span class="k">if</span> <span class="n">nologs</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="kc">None</span>
+    <span class="k">elif</span> <span class="n">base_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_path</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">unique_name</span><span class="p">(</span><span class="s2">&quot;anl&quot;</span><span class="p">))</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span> <span class="o">=</span> <span class="n">DEFAULT_TOURNAMENT_PATH</span> <span class="o">/</span> <span class="p">(</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">unique_name</span><span class="p">(</span><span class="s2">&quot;anl&quot;</span><span class="p">))</span>
+    <span class="n">params</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">ylimits</span><span class="o">=</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span>
+        <span class="n">mark_offers_view</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">mark_pareto_points</span><span class="o">=</span><span class="n">all_outcomes</span><span class="p">,</span>
+        <span class="n">mark_all_outcomes</span><span class="o">=</span><span class="n">all_outcomes</span><span class="p">,</span>
+        <span class="n">mark_nash_points</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">mark_kalai_points</span><span class="o">=</span><span class="n">all_outcomes</span><span class="p">,</span>
+        <span class="n">mark_max_welfare_points</span><span class="o">=</span><span class="n">all_outcomes</span><span class="p">,</span>
+        <span class="n">show_agreement</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_pareto_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">show_nash_distance</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_kalai_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">show_max_welfare_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">show_max_relative_welfare_distance</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">show_end_reason</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_annotations</span><span class="o">=</span><span class="ow">not</span> <span class="n">all_outcomes</span><span class="p">,</span>
+        <span class="n">show_reserved</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_total_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_relative_time</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">show_n_steps</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+    <span class="k">if</span> <span class="n">plot_params</span><span class="p">:</span>
+        <span class="n">params</span> <span class="o">=</span> <span class="n">params</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">plot_params</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">cartesian_tournament</span><span class="p">(</span>
+        <span class="n">competitors</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">competitors</span><span class="p">),</span>
+        <span class="n">scenarios</span><span class="o">=</span><span class="n">scenario_generator</span><span class="p">(</span><span class="n">n_scenarios</span><span class="p">,</span> <span class="n">n_outcomes</span><span class="p">,</span> <span class="o">**</span><span class="n">generator_params</span><span class="p">),</span>
+        <span class="n">competitor_params</span><span class="o">=</span><span class="n">competitor_params</span><span class="p">,</span>
+        <span class="n">rotate_ufuns</span><span class="o">=</span><span class="n">rotate_ufuns</span><span class="p">,</span>
+        <span class="n">n_repetitions</span><span class="o">=</span><span class="n">n_repetitions</span><span class="p">,</span>
+        <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
+        <span class="n">njobs</span><span class="o">=</span><span class="n">njobs</span><span class="p">,</span>
+        <span class="n">mechanism_type</span><span class="o">=</span><span class="n">SAOMechanism</span><span class="p">,</span>
+        <span class="n">n_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">,</span>
+        <span class="n">time_limit</span><span class="o">=</span><span class="n">time_limit</span><span class="p">,</span>
+        <span class="n">pend</span><span class="o">=</span><span class="n">pend</span><span class="p">,</span>
+        <span class="n">pend_per_second</span><span class="o">=</span><span class="n">pend_per_second</span><span class="p">,</span>
+        <span class="n">step_time_limit</span><span class="o">=</span><span class="n">step_time_limit</span><span class="p">,</span>
+        <span class="n">negotiator_time_limit</span><span class="o">=</span><span class="n">negotiator_time_limit</span><span class="p">,</span>
+        <span class="n">mechanism_params</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>
+        <span class="n">plot_fraction</span><span class="o">=</span><span class="n">plot_fraction</span><span class="p">,</span>
+        <span class="n">verbosity</span><span class="o">=</span><span class="n">verbosity</span><span class="p">,</span>
+        <span class="n">self_play</span><span class="o">=</span><span class="n">self_play</span><span class="p">,</span>
+        <span class="n">randomize_runs</span><span class="o">=</span><span class="n">randomize_runs</span><span class="p">,</span>
+        <span class="n">save_every</span><span class="o">=</span><span class="n">save_every</span><span class="p">,</span>
+        <span class="n">save_stats</span><span class="o">=</span><span class="n">save_stats</span><span class="p">,</span>
+        <span class="n">final_score</span><span class="o">=</span><span class="n">final_score</span><span class="p">,</span>
+        <span class="n">id_reveals_type</span><span class="o">=</span><span class="n">known_partner</span><span class="p">,</span>
+        <span class="n">name_reveals_type</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">plot_params</span><span class="o">=</span><span class="n">params</span><span class="p">,</span>
+        <span class="n">raise_exceptions</span><span class="o">=</span><span class="n">raise_exceptions</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div><h4 id="constant-default_an2024_competitors">constant: DEFAULT_AN2024_COMPETITORS</h4>
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<a id="anl.anl2024.DEFAULT_AN2024_COMPETITORS"></a>
+  <div class="doc doc-contents first">
+  
+      <p>Default set of negotiators (agents) used as competitors</p>
+  </div>
+
+</div><h4 id="constant-default_tournament_path">constant: DEFAULT_TOURNAMENT_PATH</h4>
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<a id="anl.anl2024.DEFAULT_TOURNAMENT_PATH"></a>
+  <div class="doc doc-contents first">
+  
+      <p>Default location to store tournament logs</p>
+  </div>
+
+</div><h4 id="constant-default2024settings">constant: DEFAULT2024SETTINGS</h4>
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<a id="anl.anl2024.DEFAULT2024SETTINGS"></a>
+  <div class="doc doc-contents first">
+  
+      <p>Default settings for ANL 2024</p>
+  </div>
+
+</div><h3 id="example-negotiator">Example Negotiator</h3>
+<p>The package provides few example negotiators. Of special importance is the <code>MiCRO</code> negotiator which provides a full implementation of a recently proposed behavioral strategy.
+Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
+<h4 id="class-boulware">class: Boulware</h4>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.Boulware"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.BoulwareTBNegotiator">BoulwareTBNegotiator</span></code></p>
+
+  
+      <p>Time-based boulware negotiation strategy</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">88</span>
+<span class="normal">89</span>
+<span class="normal">90</span>
+<span class="normal">91</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Boulware</span><span class="p">(</span><span class="n">BoulwareTBNegotiator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Time-based boulware negotiation strategy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+</div><h4 id="class-linear">class: Linear</h4>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.Linear"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.LinearTBNegotiator">LinearTBNegotiator</span></code></p>
+
+  
+      <p>Time-based linear negotiation strategy</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">74</span>
+<span class="normal">75</span>
+<span class="normal">76</span>
+<span class="normal">77</span>
+<span class="normal">78</span>
+<span class="normal">79</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Linear</span><span class="p">(</span><span class="n">LinearTBNegotiator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Time-based linear negotiation strategy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="o">...</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+</div><h4 id="class-conceder">class: Conceder</h4>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.Conceder"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.ConcederTBNegotiator">ConcederTBNegotiator</span></code></p>
+
+  
+      <p>Time-based conceder negotiation strategy</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">82</span>
+<span class="normal">83</span>
+<span class="normal">84</span>
+<span class="normal">85</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">Conceder</span><span class="p">(</span><span class="n">ConcederTBNegotiator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Time-based conceder negotiation strategy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+</div><h4 id="class-naivetitfortat">class: NaiveTitForTat</h4>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.NaiveTitForTat"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.NaiveTitForTatNegotiator">NaiveTitForTatNegotiator</span></code></p>
+
+  
+      <p>A simple behavioral strategy that assumes a zero-sum game</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">17</span>
+<span class="normal">18</span>
+<span class="normal">19</span>
+<span class="normal">20</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">NaiveTitForTat</span><span class="p">(</span><span class="n">NaiveTitForTatNegotiator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A simple behavioral strategy that assumes a zero-sum game</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+</div><h4 id="class-micro">class: MiCRO</h4>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.MiCRO"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.SAONegotiator">SAONegotiator</span></code></p>
+
+  
+      <p>A simple implementation of the MiCRO negotiation strategy</p>
+
+<details class="remarks" open>
+  <summary>Remarks</summary>
+  <ul>
+<li>This is a simplified implementation of the MiCRO strategy.</li>
+<li>It is not guaranteed to exactly match the published work.</li>
+<li>MiCRO was introduced here:
+  de Jonge, Dave. "An Analysis of the Linear Bilateral ANAC Domains Using the MiCRO Benchmark Strategy."
+  Proceedings of the Thirty-First International Joint Conference on Artificial Intelligence, IJCAI. 2022.</li>
+</ul>
+</details>
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 94</span>
+<span class="normal"> 95</span>
+<span class="normal"> 96</span>
+<span class="normal"> 97</span>
+<span class="normal"> 98</span>
+<span class="normal"> 99</span>
+<span class="normal">100</span>
+<span class="normal">101</span>
+<span class="normal">102</span>
+<span class="normal">103</span>
+<span class="normal">104</span>
+<span class="normal">105</span>
+<span class="normal">106</span>
+<span class="normal">107</span>
+<span class="normal">108</span>
+<span class="normal">109</span>
+<span class="normal">110</span>
+<span class="normal">111</span>
+<span class="normal">112</span>
+<span class="normal">113</span>
+<span class="normal">114</span>
+<span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span>
+<span class="normal">162</span>
+<span class="normal">163</span>
+<span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">class</span> <span class="nc">MiCRO</span><span class="p">(</span><span class="n">SAONegotiator</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    A simple implementation of the MiCRO negotiation strategy</span>
+
+<span class="sd">    Remarks:</span>
+<span class="sd">        - This is a simplified implementation of the MiCRO strategy.</span>
+<span class="sd">        - It is not guaranteed to exactly match the published work.</span>
+<span class="sd">        - MiCRO was introduced here:</span>
+<span class="sd">          de Jonge, Dave. &quot;An Analysis of the Linear Bilateral ANAC Domains Using the MiCRO Benchmark Strategy.&quot;</span>
+<span class="sd">          Proceedings of the Thirty-First International Joint Conference on Artificial Intelligence, IJCAI. 2022.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+
+        <span class="c1"># initialize local variables</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_received</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_sent</span> <span class="o">=</span> <span class="nb">set</span><span class="p">(),</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">SAOState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SAOResponse</span><span class="p">:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;The main implementation of the MiCRO strategy&quot;&quot;&quot;</span>
+        <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span>
+        <span class="c1"># initialize the sorter (This should better be done in on_negotiation_start() to allow for reuse but this is not needed in ANL)</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="c1"># A sorter, sorts a ufun and can be used to get outcomes using their utiility</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span> <span class="o">=</span> <span class="n">PresortingInverseUtilityFunction</span><span class="p">(</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="p">,</span> <span class="n">rational_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">eps</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">rel_eps</span><span class="o">=-</span><span class="mi">1</span>
+            <span class="p">)</span>
+            <span class="c1"># Initialize the sorter. This is an O(nlog n) operation where n is the number of outcomes</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+        <span class="n">offer</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">current_offer</span>
+        <span class="c1"># check whether the offer I received is acceptable</span>
+        <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseType</span><span class="o">.</span><span class="n">REJECT_OFFER</span>
+        <span class="c1"># check if the offer is acceptable (if one is received)</span>
+
+        <span class="c1"># find my next offer (or best so far if I am not conceding)</span>
+        <span class="n">will_concede</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sent</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_received</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">will_concede</span><span class="p">:</span>
+            <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span><span class="o">.</span><span class="n">outcome_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="c1"># If I cannot concede, I will use my best offer so far (last one I sent)</span>
+            <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span><span class="o">.</span><span class="n">outcome_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span><span class="p">)</span>
+            <span class="k">if</span> <span class="n">outcome</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+                <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span><span class="o">.</span><span class="n">outcome_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                <span class="n">will_concede</span> <span class="o">=</span> <span class="kc">False</span>
+
+        <span class="c1"># If I received something, check for acceptance</span>
+        <span class="k">if</span> <span class="n">offer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_received</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">offer</span><span class="p">)</span>
+            <span class="c1"># The Acceptance Policy of MiCRO</span>
+            <span class="c1"># accept if the offer is not worse than my next offer if I am conceding or the best so far if I am not</span>
+            <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">is_not_worse</span><span class="p">(</span><span class="n">offer</span><span class="p">,</span> <span class="n">outcome</span><span class="p">):</span>
+                <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">ACCEPT_OFFER</span><span class="p">,</span> <span class="n">offer</span><span class="p">)</span>
+
+        <span class="c1"># I will repeat a past offer in any of the following conditions:</span>
+        <span class="c1"># 1. My next offer is worse than disagreement</span>
+        <span class="c1"># 2. I am not ready to concede (i.e. I already sent more unique offers than the unique offers I received)</span>
+        <span class="c1"># The only way, outcome will still be None is if I have no rational outcomes at all. Should never happen in ANL 2024</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">will_concede</span> <span class="ow">or</span> <span class="n">outcome</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">is_worse</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_sent</span><span class="p">())</span>
+        <span class="c1"># I am willing and can concede. Concede by one outcome</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span> <span class="o">+=</span> <span class="mi">1</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_sent</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">outcome</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">sample_sent</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">Outcome</span> <span class="o">|</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># Get an outcome from the set I sent so far (or my best if I sent nothing)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sent</span><span class="p">):</span>
+            <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span><span class="o">.</span><span class="n">best</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sent</span><span class="p">))</span>
+</code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+
+<h2 id="anl.anl2024.negotiators.MiCRO.__call__" class="doc doc-heading">
+          <code class="highlight language-python"><span class="fm">__call__</span><span class="p">(</span><span class="n">state</span><span class="p">)</span></code>
+
+</h2>
+
+
+  <div class="doc doc-contents ">
+  
+      <p>The main implementation of the MiCRO strategy</p>
+
+          <details class="quote">
+            <summary>Source code in <code>anl/anl2024/negotiators/builtins.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">115</span>
+<span class="normal">116</span>
+<span class="normal">117</span>
+<span class="normal">118</span>
+<span class="normal">119</span>
+<span class="normal">120</span>
+<span class="normal">121</span>
+<span class="normal">122</span>
+<span class="normal">123</span>
+<span class="normal">124</span>
+<span class="normal">125</span>
+<span class="normal">126</span>
+<span class="normal">127</span>
+<span class="normal">128</span>
+<span class="normal">129</span>
+<span class="normal">130</span>
+<span class="normal">131</span>
+<span class="normal">132</span>
+<span class="normal">133</span>
+<span class="normal">134</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">:</span> <span class="n">SAOState</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SAOResponse</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;The main implementation of the MiCRO strategy&quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span>
+    <span class="c1"># initialize the sorter (This should better be done in on_negotiation_start() to allow for reuse but this is not needed in ANL)</span>
+    <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="c1"># A sorter, sorts a ufun and can be used to get outcomes using their utiility</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span> <span class="o">=</span> <span class="n">PresortingInverseUtilityFunction</span><span class="p">(</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="p">,</span> <span class="n">rational_only</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">eps</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span> <span class="n">rel_eps</span><span class="o">=-</span><span class="mi">1</span>
+        <span class="p">)</span>
+        <span class="c1"># Initialize the sorter. This is an O(nlog n) operation where n is the number of outcomes</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span><span class="o">.</span><span class="n">init</span><span class="p">()</span>
+    <span class="n">offer</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">current_offer</span>
+    <span class="c1"># check whether the offer I received is acceptable</span>
+    <span class="n">response</span> <span class="o">=</span> <span class="n">ResponseType</span><span class="o">.</span><span class="n">REJECT_OFFER</span>
+    <span class="c1"># check if the offer is acceptable (if one is received)</span>
+
+    <span class="c1"># find my next offer (or best so far if I am not conceding)</span>
+    <span class="n">will_concede</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_sent</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_received</span><span class="p">)</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">will_concede</span><span class="p">:</span>
+        <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span><span class="o">.</span><span class="n">outcome_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If I cannot concede, I will use my best offer so far (last one I sent)</span>
+        <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span><span class="o">.</span><span class="n">outcome_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">outcome</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">sorter</span><span class="o">.</span><span class="n">outcome_at</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+            <span class="n">will_concede</span> <span class="o">=</span> <span class="kc">False</span>
+
+    <span class="c1"># If I received something, check for acceptance</span>
+    <span class="k">if</span> <span class="n">offer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">_received</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">offer</span><span class="p">)</span>
+        <span class="c1"># The Acceptance Policy of MiCRO</span>
+        <span class="c1"># accept if the offer is not worse than my next offer if I am conceding or the best so far if I am not</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">is_not_worse</span><span class="p">(</span><span class="n">offer</span><span class="p">,</span> <span class="n">outcome</span><span class="p">):</span>
+            <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">ACCEPT_OFFER</span><span class="p">,</span> <span class="n">offer</span><span class="p">)</span>
+
+    <span class="c1"># I will repeat a past offer in any of the following conditions:</span>
+    <span class="c1"># 1. My next offer is worse than disagreement</span>
+    <span class="c1"># 2. I am not ready to concede (i.e. I already sent more unique offers than the unique offers I received)</span>
+    <span class="c1"># The only way, outcome will still be None is if I have no rational outcomes at all. Should never happen in ANL 2024</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">will_concede</span> <span class="ow">or</span> <span class="n">outcome</span> <span class="ow">is</span> <span class="kc">None</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">is_worse</span><span class="p">(</span><span class="n">outcome</span><span class="p">,</span> <span class="kc">None</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">sample_sent</span><span class="p">())</span>
+    <span class="c1"># I am willing and can concede. Concede by one outcome</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">next_indx</span> <span class="o">+=</span> <span class="mi">1</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_sent</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">outcome</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div>
+
+
+
+  </div>
+
+  </div>
+
+</div><h3 id="helpers-scenario-generation">Helpers (Scenario Generation)</h3>
+<h4 id="type-scenariogenerator">type: ScenarioGenerator</h4>
+
+
+<div class="doc doc-object doc-attribute">
+
+
+
+<a id="anl.anl2024.ScenarioGenerator"></a>
+  <div class="doc doc-contents first">
+  
+      <p>Type of callable that can be used for generating scenarios. It must receive the number of scenarios and number of outcomes (as int, tuple or list) and return a list of <code>Scenario</code> s</p>
+  </div>
+
+</div><h4 id="function-mixed_scenarios">function: mixed_scenarios</h4>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="anl.anl2024.mixed_scenarios"></a>
+  <div class="doc doc-contents first">
+  
+      <p>Generates a mix of zero-sum, monotonic and general scenarios</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>n_scenarios</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of scenarios to genearate</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_scenarios&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_outcomes</code></td>
+          <td>
+                <code>int | tuple[int, int] | list[int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes (or a list of range thereof).</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_outcomes&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>reserved_ranges</code></td>
+          <td>
+                <code><span title="anl.anl2024.runner.ReservedRanges">ReservedRanges</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>the range allowed for reserved values for each ufun.
+             Note that the upper limit will be overridden to guarantee
+             the existence of at least one rational outcome</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;reserved_ranges&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>log_uniform</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Use log-uniform instead of uniform sampling if n_outcomes is a tuple giving a range.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;outcomes_log_uniform&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>zerosum_fraction</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Fraction of zero-sum scenarios. These are original DivideThePie scenarios</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;zerosum_fraction&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>monotonic_fraction</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Fraction of scenarios where each ufun is a monotonic function of the received pie.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;monotonic_fraction&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>curve_fraction</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Fraction of general and monotonic scenarios that use a curve for Pareto generation instead of
+            a piecewise linear Pareto frontier.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;curve_fraction&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pareto_first</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, the Pareto frontier will always be in the first set of outcomes</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;pareto_first&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_ufuns</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of ufuns to generate per scenario</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_ufuns&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_pareto</code></td>
+          <td>
+                <code>int | float | tuple[float | int, float | int] | list[int | float]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes on the Pareto frontier in general scenarios.
+    Can be specified as a number, a tuple of a min and max to sample within, a list of possibilities.
+    Each value can either be an integer &gt; 1 or a fraction of the number of outcomes in the scenario.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;n_pareto&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pareto_log_uniform</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Use log-uniform instead of uniform sampling if n_pareto is a tuple</p>
+            </div>
+          </td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
+                <code>list[<span title="negmas.inout.Scenario">Scenario</span>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list <code>Scenario</code> s</p>
+            </div>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+          <details class="quote">
+            <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">270</span>
+<span class="normal">271</span>
+<span class="normal">272</span>
+<span class="normal">273</span>
+<span class="normal">274</span>
+<span class="normal">275</span>
+<span class="normal">276</span>
+<span class="normal">277</span>
+<span class="normal">278</span>
+<span class="normal">279</span>
+<span class="normal">280</span>
+<span class="normal">281</span>
+<span class="normal">282</span>
+<span class="normal">283</span>
+<span class="normal">284</span>
+<span class="normal">285</span>
+<span class="normal">286</span>
+<span class="normal">287</span>
+<span class="normal">288</span>
+<span class="normal">289</span>
+<span class="normal">290</span>
+<span class="normal">291</span>
+<span class="normal">292</span>
+<span class="normal">293</span>
+<span class="normal">294</span>
+<span class="normal">295</span>
+<span class="normal">296</span>
+<span class="normal">297</span>
+<span class="normal">298</span>
+<span class="normal">299</span>
+<span class="normal">300</span>
+<span class="normal">301</span>
+<span class="normal">302</span>
+<span class="normal">303</span>
+<span class="normal">304</span>
+<span class="normal">305</span>
+<span class="normal">306</span>
+<span class="normal">307</span>
+<span class="normal">308</span>
+<span class="normal">309</span>
+<span class="normal">310</span>
+<span class="normal">311</span>
+<span class="normal">312</span>
+<span class="normal">313</span>
+<span class="normal">314</span>
+<span class="normal">315</span>
+<span class="normal">316</span>
+<span class="normal">317</span>
+<span class="normal">318</span>
+<span class="normal">319</span>
+<span class="normal">320</span>
+<span class="normal">321</span>
+<span class="normal">322</span>
+<span class="normal">323</span>
+<span class="normal">324</span>
+<span class="normal">325</span>
+<span class="normal">326</span>
+<span class="normal">327</span>
+<span class="normal">328</span>
+<span class="normal">329</span>
+<span class="normal">330</span>
+<span class="normal">331</span>
+<span class="normal">332</span>
+<span class="normal">333</span>
+<span class="normal">334</span>
+<span class="normal">335</span>
+<span class="normal">336</span>
+<span class="normal">337</span>
+<span class="normal">338</span>
+<span class="normal">339</span>
+<span class="normal">340</span>
+<span class="normal">341</span>
+<span class="normal">342</span>
+<span class="normal">343</span>
+<span class="normal">344</span>
+<span class="normal">345</span>
+<span class="normal">346</span>
+<span class="normal">347</span>
+<span class="normal">348</span>
+<span class="normal">349</span>
+<span class="normal">350</span>
+<span class="normal">351</span>
+<span class="normal">352</span>
+<span class="normal">353</span>
+<span class="normal">354</span>
+<span class="normal">355</span>
+<span class="normal">356</span>
+<span class="normal">357</span>
+<span class="normal">358</span>
+<span class="normal">359</span>
+<span class="normal">360</span>
+<span class="normal">361</span>
+<span class="normal">362</span>
+<span class="normal">363</span>
+<span class="normal">364</span>
+<span class="normal">365</span>
+<span class="normal">366</span>
+<span class="normal">367</span>
+<span class="normal">368</span>
+<span class="normal">369</span>
+<span class="normal">370</span>
+<span class="normal">371</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">mixed_scenarios</span><span class="p">(</span>
+    <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;n_scenarios&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span>
+    <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span>
+    <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;n_outcomes&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">reserved_ranges</span><span class="p">:</span> <span class="n">ReservedRanges</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;reserved_ranges&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">log_uniform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;outcomes_log_uniform&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">zerosum_fraction</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;generator_params&quot;</span><span class="p">][</span><span class="s2">&quot;zerosum_fraction&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">monotonic_fraction</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;generator_params&quot;</span><span class="p">][</span><span class="s2">&quot;monotonic_fraction&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">curve_fraction</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;generator_params&quot;</span><span class="p">][</span><span class="s2">&quot;curve_fraction&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">pareto_first</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;generator_params&quot;</span><span class="p">][</span><span class="s2">&quot;pareto_first&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">n_ufuns</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;n_ufuns&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">n_pareto</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">,</span> <span class="nb">float</span> <span class="o">|</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span> <span class="o">|</span> <span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT2024SETTINGS</span><span class="p">[</span><span class="s2">&quot;generator_params&quot;</span><span class="p">][</span><span class="s2">&quot;n_pareto&quot;</span><span class="p">],</span>  <span class="c1"># type: ignore</span>
+    <span class="n">pareto_log_uniform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scenario</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Generates a mix of zero-sum, monotonic and general scenarios</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_scenarios: Number of scenarios to genearate</span>
+<span class="sd">        n_outcomes: Number of outcomes (or a list of range thereof).</span>
+<span class="sd">        reserved_ranges: the range allowed for reserved values for each ufun.</span>
+<span class="sd">                         Note that the upper limit will be overridden to guarantee</span>
+<span class="sd">                         the existence of at least one rational outcome</span>
+<span class="sd">        log_uniform: Use log-uniform instead of uniform sampling if n_outcomes is a tuple giving a range.</span>
+<span class="sd">        zerosum_fraction: Fraction of zero-sum scenarios. These are original DivideThePie scenarios</span>
+<span class="sd">        monotonic_fraction: Fraction of scenarios where each ufun is a monotonic function of the received pie.</span>
+<span class="sd">        curve_fraction: Fraction of general and monotonic scenarios that use a curve for Pareto generation instead of</span>
+<span class="sd">                        a piecewise linear Pareto frontier.</span>
+<span class="sd">        pareto_first: If given, the Pareto frontier will always be in the first set of outcomes</span>
+<span class="sd">        n_ufuns: Number of ufuns to generate per scenario</span>
+<span class="sd">        n_pareto: Number of outcomes on the Pareto frontier in general scenarios.</span>
+<span class="sd">                Can be specified as a number, a tuple of a min and max to sample within, a list of possibilities.</span>
+<span class="sd">                Each value can either be an integer &gt; 1 or a fraction of the number of outcomes in the scenario.</span>
+<span class="sd">        pareto_log_uniform: Use log-uniform instead of uniform sampling if n_pareto is a tuple</span>
+
+<span class="sd">    Returns:</span>
+<span class="sd">        A list `Scenario` s</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">assert</span> <span class="n">zerosum_fraction</span> <span class="o">+</span> <span class="n">monotonic_fraction</span> <span class="o">&lt;=</span> <span class="mf">1.0</span>
+    <span class="n">nongeneral_fraction</span> <span class="o">=</span> <span class="n">zerosum_fraction</span> <span class="o">+</span> <span class="n">monotonic_fraction</span>
+    <span class="n">ufun_sets</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_scenarios</span><span class="p">):</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">intin</span><span class="p">(</span><span class="n">n_outcomes</span><span class="p">,</span> <span class="n">log_uniform</span><span class="p">)</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;S&quot;</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">nongeneral_fraction</span><span class="p">:</span>
+            <span class="n">n_pareto_selected</span> <span class="o">=</span> <span class="n">n</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DivideThePieGen&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">n_pareto</span><span class="p">,</span> <span class="n">Iterable</span><span class="p">):</span>
+                <span class="n">n_pareto</span> <span class="o">=</span> <span class="nb">type</span><span class="p">(</span><span class="n">n_pareto</span><span class="p">)(</span>
+                    <span class="nb">int</span><span class="p">(</span><span class="n">_</span> <span class="o">*</span> <span class="n">n</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span> <span class="k">if</span> <span class="n">_</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">n_pareto</span>  <span class="c1"># type: ignore</span>
+                <span class="p">)</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">n_pareto</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="mf">0.5</span> <span class="o">+</span> <span class="n">n_pareto</span> <span class="o">*</span> <span class="n">n</span><span class="p">)</span> <span class="k">if</span> <span class="n">n_pareto</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="k">else</span> <span class="nb">int</span><span class="p">(</span><span class="n">n_pareto</span><span class="p">)</span>
+            <span class="n">n_pareto_selected</span> <span class="o">=</span> <span class="n">intin</span><span class="p">(</span><span class="n">n_pareto</span><span class="p">,</span> <span class="n">log_uniform</span><span class="o">=</span><span class="n">pareto_log_uniform</span><span class="p">)</span>  <span class="c1"># type: ignore</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="n">zerosum_fraction</span><span class="p">:</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">generate_utility_values</span><span class="p">(</span>
+                <span class="n">n_pareto_selected</span><span class="p">,</span>
+                <span class="n">n</span><span class="p">,</span>
+                <span class="n">n_ufuns</span><span class="o">=</span><span class="n">n_ufuns</span><span class="p">,</span>
+                <span class="n">pareto_first</span><span class="o">=</span><span class="n">pareto_first</span><span class="p">,</span>
+                <span class="n">pareto_generator</span><span class="o">=</span><span class="s2">&quot;zero_sum&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+            <span class="n">name</span> <span class="o">=</span> <span class="s2">&quot;DivideThePie&quot;</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">vals</span> <span class="o">=</span> <span class="n">generate_utility_values</span><span class="p">(</span>
+                <span class="n">n_pareto_selected</span><span class="p">,</span>
+                <span class="n">n</span><span class="p">,</span>
+                <span class="n">n_ufuns</span><span class="o">=</span><span class="n">n_ufuns</span><span class="p">,</span>
+                <span class="n">pareto_first</span><span class="o">=</span><span class="n">pareto_first</span><span class="p">,</span>
+                <span class="n">pareto_generator</span><span class="o">=</span><span class="s2">&quot;curve&quot;</span>
+                <span class="k">if</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="n">curve_fraction</span>
+                <span class="k">else</span> <span class="s2">&quot;piecewise_linear&quot;</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="n">issues</span> <span class="o">=</span> <span class="p">(</span><span class="n">make_issue</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)],</span> <span class="s2">&quot;portions&quot;</span><span class="p">),)</span>
+        <span class="n">ufuns</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="n">U</span><span class="p">(</span>
+                <span class="n">values</span><span class="o">=</span><span class="p">(</span>
+                    <span class="n">TableFun</span><span class="p">(</span>
+                        <span class="p">{</span><span class="n">_</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="n">vals</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">k</span><span class="p">])</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">issues</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">all</span><span class="p">)}</span>
+                    <span class="p">),</span>
+                <span class="p">),</span>
+                <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uname</span><span class="si">}{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="c1"># reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),</span>
+                <span class="n">outcome_space</span><span class="o">=</span><span class="n">make_os</span><span class="p">(</span><span class="n">issues</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">name</span><span class="si">}{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">uname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">))</span>
+            <span class="c1"># for k, (uname, r) in enumerate(zip((&quot;First&quot;, &quot;Second&quot;), reserved_ranges))</span>
+        <span class="p">)</span>
+        <span class="n">sample_reserved_values</span><span class="p">(</span><span class="n">ufuns</span><span class="p">,</span> <span class="n">reserved_ranges</span><span class="o">=</span><span class="n">reserved_ranges</span><span class="p">)</span>
+        <span class="n">ufun_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ufuns</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">Scenario</span><span class="p">(</span>
+            <span class="n">outcome_space</span><span class="o">=</span><span class="n">ufuns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outcome_space</span><span class="p">,</span>  <span class="c1"># type: ignore We are sure this is not None</span>
+            <span class="n">ufuns</span><span class="o">=</span><span class="n">ufuns</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">ufuns</span> <span class="ow">in</span> <span class="n">ufun_sets</span>
+    <span class="p">]</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div><h4 id="function-pie_scenarios">function: pie_scenarios</h4>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="anl.anl2024.pie_scenarios"></a>
+  <div class="doc doc-contents first">
+  
+      <p>Creates single-issue scenarios with arbitrary/monotonically increasing utility functions</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>n_scenarios</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of scenarios to create</p>
+            </div>
+          </td>
+          <td>
+                <code>20</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_outcomes</code></td>
+          <td>
+                <code>int | tuple[int, int] | list[int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes per scenario. If a tuple it will be interpreted as a min/max range to sample n. outcomes from.
+        If a list, samples from this list will be used (with replacement).</p>
+            </div>
+          </td>
+          <td>
+                <code>100</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>reserved_ranges</code></td>
+          <td>
+                <code><span title="anl.anl2024.runner.ReservedRanges">ReservedRanges</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Ranges of reserved values for first and second negotiators</p>
+            </div>
+          </td>
+          <td>
+                <code>((0.0, 0.999999), (0.0, 0.999999))</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>log_uniform</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</p>
+            </div>
+          </td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>monotonic</code></td>
+          <td>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If true all ufuns are monotonically increasing in the portion of the pie</p>
+            </div>
+          </td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="remarks" open>
+  <summary>Remarks</summary>
+  <ul>
+<li>When n_outcomes is a tuple, the number of outcomes for each scenario will be sampled independently.</li>
+</ul>
+</details>
+          <details class="quote">
+            <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"> 63</span>
+<span class="normal"> 64</span>
+<span class="normal"> 65</span>
+<span class="normal"> 66</span>
+<span class="normal"> 67</span>
+<span class="normal"> 68</span>
+<span class="normal"> 69</span>
+<span class="normal"> 70</span>
+<span class="normal"> 71</span>
+<span class="normal"> 72</span>
+<span class="normal"> 73</span>
+<span class="normal"> 74</span>
+<span class="normal"> 75</span>
+<span class="normal"> 76</span>
+<span class="normal"> 77</span>
+<span class="normal"> 78</span>
+<span class="normal"> 79</span>
+<span class="normal"> 80</span>
+<span class="normal"> 81</span>
+<span class="normal"> 82</span>
+<span class="normal"> 83</span>
+<span class="normal"> 84</span>
+<span class="normal"> 85</span>
+<span class="normal"> 86</span>
 <span class="normal"> 87</span>
 <span class="normal"> 88</span>
 <span class="normal"> 89</span>
@@ -163,61 +1953,136 @@
 <span class="normal">132</span>
 <span class="normal">133</span>
 <span class="normal">134</span>
-<span class="normal">135</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">anl2024_tournament</span><span class="p">(</span>
+<span class="normal">135</span>
+<span class="normal">136</span>
+<span class="normal">137</span>
+<span class="normal">138</span>
+<span class="normal">139</span>
+<span class="normal">140</span>
+<span class="normal">141</span>
+<span class="normal">142</span>
+<span class="normal">143</span>
+<span class="normal">144</span>
+<span class="normal">145</span>
+<span class="normal">146</span>
+<span class="normal">147</span>
+<span class="normal">148</span>
+<span class="normal">149</span>
+<span class="normal">150</span>
+<span class="normal">151</span>
+<span class="normal">152</span>
+<span class="normal">153</span>
+<span class="normal">154</span>
+<span class="normal">155</span>
+<span class="normal">156</span>
+<span class="normal">157</span>
+<span class="normal">158</span>
+<span class="normal">159</span>
+<span class="normal">160</span>
+<span class="normal">161</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">pie_scenarios</span><span class="p">(</span>
     <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
-    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="n">competitors</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">Negotiator</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">,</span> <span class="o">...</span><span class="p">]</span>
-    <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">type</span><span class="p">[</span><span class="n">Negotiator</span><span class="p">]</span> <span class="o">|</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="n">DEFAULT_AN2024_COMPETITORS</span><span class="p">,</span>
-    <span class="n">competitor_params</span><span class="p">:</span> <span class="n">Sequence</span><span class="p">[</span><span class="nb">dict</span> <span class="o">|</span> <span class="kc">None</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">rotate_ufuns</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">n_repetitions</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-    <span class="n">n_steps</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
-    <span class="n">time_limit</span><span class="p">:</span> <span class="nb">float</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">pend</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
-    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-    <span class="n">nologs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">njobs</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">plot_fraction</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.2</span><span class="p">,</span>
-    <span class="n">verbosity</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-    <span class="n">self_play</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">randomize_runs</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">save_every</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span>
-    <span class="n">save_stats</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
-    <span class="n">known_partner</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">False</span><span class="p">,</span>
-    <span class="n">final_score</span><span class="p">:</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;advantage&quot;</span><span class="p">,</span> <span class="s2">&quot;mean&quot;</span><span class="p">),</span>
-    <span class="n">base_path</span><span class="p">:</span> <span class="n">Path</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-<span class="p">)</span> <span class="o">-&gt;</span> <span class="n">SimpleTournamentResults</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">nologs</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="kc">None</span>
-    <span class="k">elif</span> <span class="n">base_path</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="n">base_path</span><span class="p">)</span><span class="o">/</span> <span class="p">(</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">unique_name</span><span class="p">(</span><span class="s2">&quot;anl&quot;</span><span class="p">))</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">path</span> <span class="o">=</span> <span class="n">DEFAULT_TOURNAMENT_PATH</span> <span class="o">/</span> <span class="p">(</span><span class="n">name</span> <span class="k">if</span> <span class="n">name</span> <span class="k">else</span> <span class="n">unique_name</span><span class="p">(</span><span class="s2">&quot;anl&quot;</span><span class="p">))</span>
-    <span class="k">return</span> <span class="n">cartesian_tournament</span><span class="p">(</span>
-        <span class="n">competitors</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span><span class="n">competitors</span><span class="p">),</span>
-        <span class="n">scenarios</span><span class="o">=</span><span class="n">make_scenarios</span><span class="p">(</span><span class="n">n_outcomes</span><span class="o">=</span><span class="n">n_outcomes</span><span class="p">,</span> <span class="n">n_scenarios</span><span class="o">=</span><span class="n">n_scenarios</span><span class="p">),</span>
-        <span class="n">competitor_params</span><span class="o">=</span><span class="n">competitor_params</span><span class="p">,</span>
-        <span class="n">rotate_ufuns</span><span class="o">=</span><span class="n">rotate_ufuns</span><span class="p">,</span>
-        <span class="n">n_repetitions</span><span class="o">=</span><span class="n">n_repetitions</span><span class="p">,</span>
-        <span class="n">path</span><span class="o">=</span><span class="n">path</span><span class="p">,</span>
-        <span class="n">njobs</span><span class="o">=</span><span class="n">njobs</span><span class="p">,</span>
-        <span class="n">mechanism_type</span><span class="o">=</span><span class="n">SAOMechanism</span><span class="p">,</span>
-        <span class="n">mechanism_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">time_limit</span><span class="o">=</span><span class="n">time_limit</span><span class="p">,</span> <span class="n">n_steps</span><span class="o">=</span><span class="n">n_steps</span><span class="p">,</span> <span class="n">pend</span><span class="o">=</span><span class="n">pend</span><span class="p">),</span>
-        <span class="n">plot_fraction</span><span class="o">=</span><span class="n">plot_fraction</span><span class="p">,</span>
-        <span class="n">verbosity</span><span class="o">=</span><span class="n">verbosity</span><span class="p">,</span>
-        <span class="n">self_play</span><span class="o">=</span><span class="n">self_play</span><span class="p">,</span>
-        <span class="n">randomize_runs</span><span class="o">=</span><span class="n">randomize_runs</span><span class="p">,</span>
-        <span class="n">save_every</span><span class="o">=</span><span class="n">save_every</span><span class="p">,</span>
-        <span class="n">save_stats</span><span class="o">=</span><span class="n">save_stats</span><span class="p">,</span>
-        <span class="n">final_score</span><span class="o">=</span><span class="n">final_score</span><span class="p">,</span>
-        <span class="n">id_reveals_type</span><span class="o">=</span><span class="n">known_partner</span><span class="p">,</span>
-        <span class="n">name_reveals_type</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-    <span class="p">)</span>
+    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">reserved_ranges</span><span class="p">:</span> <span class="n">ReservedRanges</span> <span class="o">=</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.999999</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.999999</span><span class="p">)),</span>
+    <span class="n">log_uniform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+    <span class="n">monotonic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scenario</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates single-issue scenarios with arbitrary/monotonically increasing utility functions</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_scenarios: Number of scenarios to create</span>
+<span class="sd">        n_outcomes: Number of outcomes per scenario. If a tuple it will be interpreted as a min/max range to sample n. outcomes from.</span>
+<span class="sd">                    If a list, samples from this list will be used (with replacement).</span>
+<span class="sd">        reserved_ranges: Ranges of reserved values for first and second negotiators</span>
+<span class="sd">        log_uniform: If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</span>
+<span class="sd">        monotonic: If true all ufuns are monotonically increasing in the portion of the pie</span>
+
+<span class="sd">    Remarks:</span>
+<span class="sd">        - When n_outcomes is a tuple, the number of outcomes for each scenario will be sampled independently.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ufun_sets</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="n">base_name</span> <span class="o">=</span> <span class="s2">&quot;DivideTyePie&quot;</span> <span class="k">if</span> <span class="n">monotonic</span> <span class="k">else</span> <span class="s2">&quot;S&quot;</span>
+
+    <span class="k">def</span> <span class="nf">normalize</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+        <span class="n">mn</span><span class="p">,</span> <span class="n">mx</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">x</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
+        <span class="k">return</span> <span class="p">((</span><span class="n">x</span> <span class="o">-</span> <span class="n">mn</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="n">mx</span> <span class="o">-</span> <span class="n">mn</span><span class="p">))</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">make_monotonic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">axis</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">i</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[::</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="n">r</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mf">0.33</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">r</span> <span class="o">&lt;</span> <span class="mf">0.67</span><span class="p">:</span>
+            <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">pass</span>
+        <span class="k">return</span> <span class="n">normalize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="n">max_jitter_level</span> <span class="o">=</span> <span class="mf">0.8</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_scenarios</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">intin</span><span class="p">(</span><span class="n">n_outcomes</span><span class="p">,</span> <span class="n">log_uniform</span><span class="p">)</span>
+        <span class="n">issues</span> <span class="o">=</span> <span class="p">(</span>
+            <span class="n">make_issue</span><span class="p">(</span>
+                <span class="p">[</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)],</span>
+                <span class="s2">&quot;portions&quot;</span> <span class="k">if</span> <span class="ow">not</span> <span class="n">monotonic</span> <span class="k">else</span> <span class="s2">&quot;i1&quot;</span><span class="p">,</span>
+            <span class="p">),</span>
+        <span class="p">)</span>
+        <span class="c1"># funs = [</span>
+        <span class="c1">#     dict(</span>
+        <span class="c1">#         zip(</span>
+        <span class="c1">#             issues[0].all,</span>
+        <span class="c1">#             # adjust(np.asarray([random.random() for _ in range(n)])),</span>
+        <span class="c1">#             generate(n, i),</span>
+        <span class="c1">#         )</span>
+        <span class="c1">#     )</span>
+        <span class="c1">#     for i in range(2)</span>
+        <span class="c1"># ]</span>
+        <span class="n">os</span> <span class="o">=</span> <span class="n">make_os</span><span class="p">(</span><span class="n">issues</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">base_name</span><span class="si">}{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="n">outcomes</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">enumerate_or_sample</span><span class="p">())</span>
+        <span class="n">ufuns</span> <span class="o">=</span> <span class="n">U</span><span class="o">.</span><span class="n">generate_bilateral</span><span class="p">(</span>
+            <span class="n">outcomes</span><span class="p">,</span>
+            <span class="n">conflict_level</span><span class="o">=</span><span class="mf">0.5</span> <span class="o">+</span> <span class="mf">0.5</span> <span class="o">*</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span>
+            <span class="n">conflict_delta</span><span class="o">=</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">(),</span>
+        <span class="p">)</span>
+        <span class="n">jitter_level</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">max_jitter_level</span>
+        <span class="n">funs</span> <span class="o">=</span> <span class="p">[</span>
+            <span class="n">np</span><span class="o">.</span><span class="n">asarray</span><span class="p">([</span><span class="nb">float</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="n">_</span><span class="p">))</span> <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">outcomes</span><span class="p">])</span>
+            <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="n">jitter_level</span>
+            <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">ufuns</span>
+        <span class="p">]</span>
+
+        <span class="k">if</span> <span class="n">monotonic</span><span class="p">:</span>
+            <span class="n">funs</span> <span class="o">=</span> <span class="p">[</span><span class="n">make_monotonic</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">x</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">funs</span><span class="p">)]</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">funs</span> <span class="o">=</span> <span class="p">[</span><span class="n">normalize</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">funs</span><span class="p">]</span>
+        <span class="n">ufuns</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
+            <span class="n">U</span><span class="p">(</span>
+                <span class="n">values</span><span class="o">=</span><span class="p">(</span><span class="n">TableFun</span><span class="p">(</span><span class="nb">dict</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">issues</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">all</span><span class="p">,</span> <span class="n">vals</span><span class="p">))),),</span>
+                <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uname</span><span class="si">}{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
+                <span class="n">outcome_space</span><span class="o">=</span><span class="n">os</span><span class="p">,</span>
+                <span class="c1"># reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),</span>
+            <span class="p">)</span>
+            <span class="k">for</span> <span class="p">(</span><span class="n">uname</span><span class="p">,</span> <span class="n">vals</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">((</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">),</span> <span class="n">funs</span><span class="p">)</span>
+            <span class="c1"># for (uname, r, vals) in zip((&quot;First&quot;, &quot;Second&quot;), reserved_ranges, funs)</span>
+        <span class="p">)</span>
+        <span class="n">sample_reserved_values</span><span class="p">(</span><span class="n">ufuns</span><span class="p">,</span> <span class="n">reserved_ranges</span><span class="o">=</span><span class="n">reserved_ranges</span><span class="p">)</span>
+        <span class="n">ufun_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ufuns</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="p">[</span>
+        <span class="n">Scenario</span><span class="p">(</span>
+            <span class="n">outcome_space</span><span class="o">=</span><span class="n">ufuns</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">outcome_space</span><span class="p">,</span>  <span class="c1"># type: ignore We are sure this is not None</span>
+            <span class="n">ufuns</span><span class="o">=</span><span class="n">ufuns</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="k">for</span> <span class="n">ufuns</span> <span class="ow">in</span> <span class="n">ufun_sets</span>
+    <span class="p">]</span>
 </code></pre></div></td></tr></table></div>
           </details>
   </div>
 
-</div><h4 id="function-make_scenarios">function: make_scenarios</h4>
+</div><h4 id="function-arbitrary_pie_scenarios">function: arbitrary_pie_scenarios</h4>
 
 
 
@@ -225,81 +2090,282 @@
 
 
 
-<a id="anl.anl2024.make_scenarios"></a>
+<a id="anl.anl2024.arbitrary_pie_scenarios"></a>
   <div class="doc doc-contents first">
-  
-      <p>Creates <code>n_scenarios</code> scenarios of the divide-the-pie domain all of <code>n_outcomes</code>
-outcomes and with different reserved value combinations that fall within <code>reserved_ranges</code></p>
 
           <details class="quote">
-            <summary>Source code in <code>anl\anl2024\runner.py</code></summary>
-            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">46</span>
-<span class="normal">47</span>
-<span class="normal">48</span>
-<span class="normal">49</span>
-<span class="normal">50</span>
-<span class="normal">51</span>
-<span class="normal">52</span>
-<span class="normal">53</span>
-<span class="normal">54</span>
-<span class="normal">55</span>
-<span class="normal">56</span>
-<span class="normal">57</span>
-<span class="normal">58</span>
-<span class="normal">59</span>
-<span class="normal">60</span>
-<span class="normal">61</span>
-<span class="normal">62</span>
-<span class="normal">63</span>
-<span class="normal">64</span>
-<span class="normal">65</span>
-<span class="normal">66</span>
-<span class="normal">67</span>
-<span class="normal">68</span>
-<span class="normal">69</span>
-<span class="normal">70</span>
-<span class="normal">71</span>
-<span class="normal">72</span>
-<span class="normal">73</span>
-<span class="normal">74</span>
-<span class="normal">75</span>
-<span class="normal">76</span>
-<span class="normal">77</span>
-<span class="normal">78</span>
-<span class="normal">79</span>
-<span class="normal">80</span>
-<span class="normal">81</span>
-<span class="normal">82</span>
-<span class="normal">83</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">make_scenarios</span><span class="p">(</span>
-    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+            <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">164</span>
+<span class="normal">165</span>
+<span class="normal">166</span>
+<span class="normal">167</span>
+<span class="normal">168</span>
+<span class="normal">169</span>
+<span class="normal">170</span>
+<span class="normal">171</span>
+<span class="normal">172</span>
+<span class="normal">173</span>
+<span class="normal">174</span>
+<span class="normal">175</span>
+<span class="normal">176</span>
+<span class="normal">177</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">arbitrary_pie_scenarios</span><span class="p">(</span>
     <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
-    <span class="n">reserved_ranges</span><span class="p">:</span> <span class="n">RESERVED_RANGES</span> <span class="o">=</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">)),</span>
+    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">reserved_ranges</span><span class="p">:</span> <span class="n">ReservedRanges</span> <span class="o">=</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.999999</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.999999</span><span class="p">)),</span>
+    <span class="n">log_uniform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
 <span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scenario</span><span class="p">]:</span>
-<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates `n_scenarios` scenarios of the divide-the-pie domain all of `n_outcomes`</span>
-<span class="sd">    outcomes and with different reserved value combinations that fall within `reserved_ranges`</span>
-<span class="sd">    &quot;&quot;&quot;</span>
-    <span class="n">issues</span> <span class="o">=</span> <span class="p">(</span>
-        <span class="n">make_issue</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">n_outcomes</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_outcomes</span><span class="p">)],</span> <span class="s2">&quot;portions&quot;</span><span class="p">),</span>
+    <span class="k">return</span> <span class="n">pie_scenarios</span><span class="p">(</span>
+        <span class="n">n_scenarios</span><span class="p">,</span>
+        <span class="n">n_outcomes</span><span class="p">,</span>
+        <span class="n">reserved_ranges</span><span class="o">=</span><span class="n">reserved_ranges</span><span class="p">,</span>
+        <span class="n">log_uniform</span><span class="o">=</span><span class="n">log_uniform</span><span class="p">,</span>
+        <span class="n">monotonic</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">ufun_sets</span> <span class="o">=</span> <span class="p">[</span>
-        <span class="nb">tuple</span><span class="p">(</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div><h4 id="function-monotonic_pie_scenarios">function: monotonic_pie_scenarios</h4>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="anl.anl2024.monotonic_pie_scenarios"></a>
+  <div class="doc doc-contents first">
+
+          <details class="quote">
+            <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">180</span>
+<span class="normal">181</span>
+<span class="normal">182</span>
+<span class="normal">183</span>
+<span class="normal">184</span>
+<span class="normal">185</span>
+<span class="normal">186</span>
+<span class="normal">187</span>
+<span class="normal">188</span>
+<span class="normal">189</span>
+<span class="normal">190</span>
+<span class="normal">191</span>
+<span class="normal">192</span>
+<span class="normal">193</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">monotonic_pie_scenarios</span><span class="p">(</span>
+    <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">reserved_ranges</span><span class="p">:</span> <span class="n">ReservedRanges</span> <span class="o">=</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.999999</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.999999</span><span class="p">)),</span>
+    <span class="n">log_uniform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scenario</span><span class="p">]:</span>
+    <span class="k">return</span> <span class="n">pie_scenarios</span><span class="p">(</span>
+        <span class="n">n_scenarios</span><span class="p">,</span>
+        <span class="n">n_outcomes</span><span class="p">,</span>
+        <span class="n">reserved_ranges</span><span class="o">=</span><span class="n">reserved_ranges</span><span class="p">,</span>
+        <span class="n">log_uniform</span><span class="o">=</span><span class="n">log_uniform</span><span class="p">,</span>
+        <span class="n">monotonic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+    <span class="p">)</span>
+</code></pre></div></td></tr></table></div>
+          </details>
+  </div>
+
+</div><h4 id="function-zerosum_pie_scenarios">function: zerosum_pie_scenarios</h4>
+
+
+
+<div class="doc doc-object doc-function">
+
+
+
+<a id="anl.anl2024.zerosum_pie_scenarios"></a>
+  <div class="doc doc-contents first">
+  
+      <p>Creates scenarios all of the DivideThePie variety with proportions giving utility</p>
+
+
+
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>n_scenarios</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of scenarios to create</p>
+            </div>
+          </td>
+          <td>
+                <code>20</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_outcomes</code></td>
+          <td>
+                <code>int | tuple[int, int] | list[int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes per scenario (if a tuple it will be interpreted as a min/max range to sample n. outcomes from).</p>
+            </div>
+          </td>
+          <td>
+                <code>100</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>reserved_ranges</code></td>
+          <td>
+                <code><span title="anl.anl2024.runner.ReservedRanges">ReservedRanges</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Ranges of reserved values for first and second negotiators</p>
+            </div>
+          </td>
+          <td>
+                <code>((0.0, 0.499999), (0.0, 0.499999))</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>log_uniform</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</p>
+            </div>
+          </td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
+<details class="remarks" open>
+  <summary>Remarks</summary>
+  <ul>
+<li>When n_outcomes is a tuple, the number of outcomes for each outcome will be sampled independently</li>
+</ul>
+</details>
+          <details class="quote">
+            <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
+            <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal">374</span>
+<span class="normal">375</span>
+<span class="normal">376</span>
+<span class="normal">377</span>
+<span class="normal">378</span>
+<span class="normal">379</span>
+<span class="normal">380</span>
+<span class="normal">381</span>
+<span class="normal">382</span>
+<span class="normal">383</span>
+<span class="normal">384</span>
+<span class="normal">385</span>
+<span class="normal">386</span>
+<span class="normal">387</span>
+<span class="normal">388</span>
+<span class="normal">389</span>
+<span class="normal">390</span>
+<span class="normal">391</span>
+<span class="normal">392</span>
+<span class="normal">393</span>
+<span class="normal">394</span>
+<span class="normal">395</span>
+<span class="normal">396</span>
+<span class="normal">397</span>
+<span class="normal">398</span>
+<span class="normal">399</span>
+<span class="normal">400</span>
+<span class="normal">401</span>
+<span class="normal">402</span>
+<span class="normal">403</span>
+<span class="normal">404</span>
+<span class="normal">405</span>
+<span class="normal">406</span>
+<span class="normal">407</span>
+<span class="normal">408</span>
+<span class="normal">409</span>
+<span class="normal">410</span>
+<span class="normal">411</span>
+<span class="normal">412</span>
+<span class="normal">413</span>
+<span class="normal">414</span>
+<span class="normal">415</span>
+<span class="normal">416</span>
+<span class="normal">417</span>
+<span class="normal">418</span>
+<span class="normal">419</span>
+<span class="normal">420</span>
+<span class="normal">421</span>
+<span class="normal">422</span>
+<span class="normal">423</span>
+<span class="normal">424</span>
+<span class="normal">425</span>
+<span class="normal">426</span>
+<span class="normal">427</span>
+<span class="normal">428</span>
+<span class="normal">429</span></pre></div></td><td class="code"><div><pre><span></span><code><span class="k">def</span> <span class="nf">zerosum_pie_scenarios</span><span class="p">(</span>
+    <span class="n">n_scenarios</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="n">n_outcomes</span><span class="p">:</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="o">*</span><span class="p">,</span>
+    <span class="n">reserved_ranges</span><span class="p">:</span> <span class="n">ReservedRanges</span> <span class="o">=</span> <span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.499999</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">0.499999</span><span class="p">)),</span>
+    <span class="n">log_uniform</span><span class="p">:</span> <span class="nb">bool</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scenario</span><span class="p">]:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Creates scenarios all of the DivideThePie variety with proportions giving utility</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        n_scenarios: Number of scenarios to create</span>
+<span class="sd">        n_outcomes: Number of outcomes per scenario (if a tuple it will be interpreted as a min/max range to sample n. outcomes from).</span>
+<span class="sd">        reserved_ranges: Ranges of reserved values for first and second negotiators</span>
+<span class="sd">        log_uniform: If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</span>
+
+<span class="sd">    Remarks:</span>
+<span class="sd">        - When n_outcomes is a tuple, the number of outcomes for each outcome will be sampled independently</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ufun_sets</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_scenarios</span><span class="p">):</span>
+        <span class="n">n</span> <span class="o">=</span> <span class="n">intin</span><span class="p">(</span><span class="n">n_outcomes</span><span class="p">,</span> <span class="n">log_uniform</span><span class="p">)</span>
+        <span class="n">issues</span> <span class="o">=</span> <span class="p">(</span><span class="n">make_issue</span><span class="p">([</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">n</span><span class="o">-</span><span class="mi">1</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">)],</span> <span class="s2">&quot;portions&quot;</span><span class="p">),)</span>
+        <span class="n">ufuns</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span>
             <span class="n">U</span><span class="p">(</span>
                 <span class="n">values</span><span class="o">=</span><span class="p">(</span>
                     <span class="n">TableFun</span><span class="p">(</span>
                         <span class="p">{</span>
-                            <span class="n">_</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">n_outcomes</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>
+                            <span class="n">_</span><span class="p">:</span> <span class="nb">float</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="nb">str</span><span class="p">(</span><span class="n">_</span><span class="p">)</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;_&quot;</span><span class="p">)[</span><span class="n">k</span><span class="p">])</span> <span class="o">/</span> <span class="p">(</span><span class="n">n</span> <span class="o">-</span> <span class="mi">1</span><span class="p">))</span>
                             <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">issues</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">all</span>
                         <span class="p">}</span>
                     <span class="p">),</span>
                 <span class="p">),</span>
                 <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">uname</span><span class="si">}{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span>
-                <span class="n">reserved_value</span><span class="o">=</span><span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1e-8</span> <span class="o">+</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">*</span> <span class="p">(</span><span class="n">r</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">r</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1e-8</span><span class="p">)),</span>
+                <span class="c1"># reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),</span>
                 <span class="n">outcome_space</span><span class="o">=</span><span class="n">make_os</span><span class="p">(</span><span class="n">issues</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="sa">f</span><span class="s2">&quot;DivideTyePie</span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">),</span>
             <span class="p">)</span>
-            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="p">(</span><span class="n">uname</span><span class="p">,</span> <span class="n">r</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="nb">zip</span><span class="p">((</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">),</span> <span class="n">reserved_ranges</span><span class="p">))</span>
+            <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">uname</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">((</span><span class="s2">&quot;First&quot;</span><span class="p">,</span> <span class="s2">&quot;Second&quot;</span><span class="p">))</span>
+            <span class="c1"># for k, (uname, r) in enumerate(zip((&quot;First&quot;, &quot;Second&quot;), reserved_ranges))</span>
         <span class="p">)</span>
-        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_scenarios</span><span class="p">)</span>
-    <span class="p">]</span>
+        <span class="n">sample_reserved_values</span><span class="p">(</span>
+            <span class="n">ufuns</span><span class="p">,</span>
+            <span class="n">pareto</span><span class="o">=</span><span class="nb">tuple</span><span class="p">(</span>
+                <span class="nb">tuple</span><span class="p">(</span><span class="n">u</span><span class="p">(</span><span class="n">_</span><span class="p">)</span> <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">ufuns</span><span class="p">)</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="n">make_os</span><span class="p">(</span><span class="n">issues</span><span class="p">)</span><span class="o">.</span><span class="n">enumerate_or_sample</span><span class="p">()</span>
+            <span class="p">),</span>
+            <span class="n">reserved_ranges</span><span class="o">=</span><span class="n">reserved_ranges</span><span class="p">,</span>
+        <span class="p">)</span>
+        <span class="n">ufun_sets</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">ufuns</span><span class="p">)</span>
 
     <span class="k">return</span> <span class="p">[</span>
         <span class="n">Scenario</span><span class="p">(</span>
