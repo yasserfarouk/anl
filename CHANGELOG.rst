@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.1.3 (2023.12.23)
+------------------
+
+* Defaulting to no-plotting on windows to avoid an error caused by tkinter
+* Retry scenario generation on failure. This is useful for piece-wise linear which will fail (by design) if n_pareto happened to be less than n_segments + 1
+
 0.1.2 (2023.12.18)
 ------------------
 
