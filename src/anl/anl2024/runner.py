@@ -60,6 +60,43 @@ DEFAULT_TOURNAMENT_PATH = Path.home() / "negmas" / "anl2024" / "tournaments"
 ReservedRanges = tuple[tuple[float, ...], ...]
 
 
+DEFAULT2024SETTINGS = dict(
+    n_ufuns=2,
+    n_scenarios=50,
+    n_outcomes=(900, 1100),
+    n_steps=(10, 10_000),
+    n_repetitions=5,
+    reserved_ranges=((0.0, 1.0), (0.0, 1.0)),
+    competitors=DEFAULT_AN2024_COMPETITORS,
+    rotate_ufuns=True,
+    time_limit=60,
+    pend=0,
+    pend_per_second=0,
+    step_time_limit=None,
+    negotiator_time_limit=None,
+    self_play=True,
+    randomize_runs=True,
+    known_partner=False,
+    final_score=("advantage", "mean"),
+    scenario_generator="mix",
+    outcomes_log_uniform=True,
+    generator_params=dict(
+        reserved_ranges=((0.0, 1.0), (0.0, 1.0)),
+        log_uniform=False,
+        zerosum_fraction=0.05,
+        monotonic_fraction=0.25,
+        curve_fraction=0.5,
+        pareto_first=False,
+        n_pareto=(0.005, 0.25),
+    ),
+)
+"""Default settings for ANL 2024"""
+
+
+ScenarioGenerator = Callable[[int, int | tuple[int, int] | list[int]], list[Scenario]]
+"""Type of callable that can be used for generating scenarios. It must receive the number of scenarios and number of outcomes (as int, tuple or list) and return a list of `Scenario` s"""
+
+
 def pie_scenarios(
     n_scenarios: int = 20,
     n_outcomes: int | tuple[int, int] | list[int] = 100,
@@ -234,143 +271,6 @@ def sample_reserved_values(
     return reserved
 
 
-DEFAULT2024SETTINGS = dict(
-    n_ufuns=2,
-    n_scenarios=50,
-    n_outcomes=(900, 1100),
-    n_steps=(10, 10_000),
-    n_repetitions=5,
-    reserved_ranges=((0.0, 1.0), (0.0, 1.0)),
-    competitors=DEFAULT_AN2024_COMPETITORS,
-    rotate_ufuns=True,
-    time_limit=60,
-    pend=0,
-    pend_per_second=0,
-    step_time_limit=None,
-    negotiator_time_limit=None,
-    self_play=True,
-    randomize_runs=True,
-    known_partner=False,
-    final_score=("advantage", "mean"),
-    scenario_generator="mix",
-    outcomes_log_uniform=True,
-    generator_params=dict(
-        reserved_ranges=((0.0, 1.0), (0.0, 1.0)),
-        log_uniform=False,
-        zerosum_fraction=0.05,
-        monotonic_fraction=0.25,
-        curve_fraction=0.5,
-        pareto_first=False,
-        n_pareto=(0.005, 0.5),
-    ),
-)
-"""Default settings for ANL 2024"""
-
-
-def mixed_scenarios(
-    n_scenarios: int = DEFAULT2024SETTINGS["n_scenarios"],  # type: ignore
-    n_outcomes: int
-    | tuple[int, int]
-    | list[int] = DEFAULT2024SETTINGS["n_outcomes"],  # type: ignore
-    *,
-    reserved_ranges: ReservedRanges = DEFAULT2024SETTINGS["reserved_ranges"],  # type: ignore
-    log_uniform: bool = DEFAULT2024SETTINGS["outcomes_log_uniform"],  # type: ignore
-    zerosum_fraction: float = DEFAULT2024SETTINGS["generator_params"]["zerosum_fraction"],  # type: ignore
-    monotonic_fraction: float = DEFAULT2024SETTINGS["generator_params"]["monotonic_fraction"],  # type: ignore
-    curve_fraction: float = DEFAULT2024SETTINGS["generator_params"]["curve_fraction"],  # type: ignore
-    pareto_first: bool = DEFAULT2024SETTINGS["generator_params"]["pareto_first"],  # type: ignore
-    n_ufuns: int = DEFAULT2024SETTINGS["n_ufuns"],  # type: ignore
-    n_pareto: int | float | tuple[float | int, float | int] | list[int | float] = DEFAULT2024SETTINGS["generator_params"]["n_pareto"],  # type: ignore
-    pareto_log_uniform: bool = True,
-) -> list[Scenario]:
-    """Generates a mix of zero-sum, monotonic and general scenarios
-
-    Args:
-        n_scenarios: Number of scenarios to genearate
-        n_outcomes: Number of outcomes (or a list of range thereof).
-        reserved_ranges: the range allowed for reserved values for each ufun.
-                         Note that the upper limit will be overridden to guarantee
-                         the existence of at least one rational outcome
-        log_uniform: Use log-uniform instead of uniform sampling if n_outcomes is a tuple giving a range.
-        zerosum_fraction: Fraction of zero-sum scenarios. These are original DivideThePie scenarios
-        monotonic_fraction: Fraction of scenarios where each ufun is a monotonic function of the received pie.
-        curve_fraction: Fraction of general and monotonic scenarios that use a curve for Pareto generation instead of
-                        a piecewise linear Pareto frontier.
-        pareto_first: If given, the Pareto frontier will always be in the first set of outcomes
-        n_ufuns: Number of ufuns to generate per scenario
-        n_pareto: Number of outcomes on the Pareto frontier in general scenarios.
-                Can be specified as a number, a tuple of a min and max to sample within, a list of possibilities.
-                Each value can either be an integer > 1 or a fraction of the number of outcomes in the scenario.
-        pareto_log_uniform: Use log-uniform instead of uniform sampling if n_pareto is a tuple
-
-    Returns:
-        A list `Scenario` s
-    """
-    assert zerosum_fraction + monotonic_fraction <= 1.0
-    nongeneral_fraction = zerosum_fraction + monotonic_fraction
-    ufun_sets = []
-    for i in range(n_scenarios):
-        r = random.random()
-        n = intin(n_outcomes, log_uniform)
-        name = "S"
-        if r < nongeneral_fraction:
-            n_pareto_selected = n
-            name = "DivideThePieGen"
-        else:
-            if isinstance(n_pareto, Iterable):
-                n_pareto = type(n_pareto)(
-                    int(_ * n + 0.5) if _ < 1 else int(_) for _ in n_pareto  # type: ignore
-                )
-            else:
-                n_pareto = int(0.5 + n_pareto * n) if n_pareto < 1 else int(n_pareto)
-            n_pareto_selected = intin(n_pareto, log_uniform=pareto_log_uniform)  # type: ignore
-        if r < zerosum_fraction:
-            vals = generate_utility_values(
-                n_pareto_selected,
-                n,
-                n_ufuns=n_ufuns,
-                pareto_first=pareto_first,
-                pareto_generator="zero_sum",
-            )
-            name = "DivideThePie"
-        else:
-            vals = generate_utility_values(
-                n_pareto_selected,
-                n,
-                n_ufuns=n_ufuns,
-                pareto_first=pareto_first,
-                pareto_generator="curve"
-                if random.random() < curve_fraction
-                else "piecewise_linear",
-            )
-
-        issues = (make_issue([f"{i}_{n-1 - i}" for i in range(n)], "portions"),)
-        ufuns = tuple(
-            U(
-                values=(
-                    TableFun(
-                        {_: float(vals[i][k]) for i, _ in enumerate(issues[0].all)}
-                    ),
-                ),
-                name=f"{uname}{i}",
-                # reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),
-                outcome_space=make_os(issues, name=f"{name}{i}"),
-            )
-            for k, uname in enumerate(("First", "Second"))
-            # for k, (uname, r) in enumerate(zip(("First", "Second"), reserved_ranges))
-        )
-        sample_reserved_values(ufuns, reserved_ranges=reserved_ranges)
-        ufun_sets.append(ufuns)
-
-    return [
-        Scenario(
-            outcome_space=ufuns[0].outcome_space,  # type: ignore We are sure this is not None
-            ufuns=ufuns,
-        )
-        for ufuns in ufun_sets
-    ]
-
-
 def zerosum_pie_scenarios(
     n_scenarios: int = 20,
     n_outcomes: int | tuple[int, int] | list[int] = 100,
@@ -429,8 +329,120 @@ def zerosum_pie_scenarios(
     ]
 
 
-ScenarioGenerator = Callable[[int, int | tuple[int, int] | list[int]], list[Scenario]]
-"""Type of callable that can be used for generating scenarios. It must receive the number of scenarios and number of outcomes (as int, tuple or list) and return a list of `Scenario` s"""
+def mixed_scenarios(
+    n_scenarios: int = DEFAULT2024SETTINGS["n_scenarios"],  # type: ignore
+    n_outcomes: int
+    | tuple[int, int]
+    | list[int] = DEFAULT2024SETTINGS["n_outcomes"],  # type: ignore
+    *,
+    reserved_ranges: ReservedRanges = DEFAULT2024SETTINGS["reserved_ranges"],  # type: ignore
+    log_uniform: bool = DEFAULT2024SETTINGS["outcomes_log_uniform"],  # type: ignore
+    zerosum_fraction: float = DEFAULT2024SETTINGS["generator_params"]["zerosum_fraction"],  # type: ignore
+    monotonic_fraction: float = DEFAULT2024SETTINGS["generator_params"]["monotonic_fraction"],  # type: ignore
+    curve_fraction: float = DEFAULT2024SETTINGS["generator_params"]["curve_fraction"],  # type: ignore
+    pareto_first: bool = DEFAULT2024SETTINGS["generator_params"]["pareto_first"],  # type: ignore
+    n_ufuns: int = DEFAULT2024SETTINGS["n_ufuns"],  # type: ignore
+    n_pareto: int | float | tuple[float | int, float | int] | list[int | float] = DEFAULT2024SETTINGS["generator_params"]["n_pareto"],  # type: ignore
+    pareto_log_uniform: bool = False,
+    n_trials=10,
+) -> list[Scenario]:
+    """Generates a mix of zero-sum, monotonic and general scenarios
+
+    Args:
+        n_scenarios: Number of scenarios to genearate
+        n_outcomes: Number of outcomes (or a list of range thereof).
+        reserved_ranges: the range allowed for reserved values for each ufun.
+                         Note that the upper limit will be overridden to guarantee
+                         the existence of at least one rational outcome
+        log_uniform: Use log-uniform instead of uniform sampling if n_outcomes is a tuple giving a range.
+        zerosum_fraction: Fraction of zero-sum scenarios. These are original DivideThePie scenarios
+        monotonic_fraction: Fraction of scenarios where each ufun is a monotonic function of the received pie.
+        curve_fraction: Fraction of general and monotonic scenarios that use a curve for Pareto generation instead of
+                        a piecewise linear Pareto frontier.
+        pareto_first: If given, the Pareto frontier will always be in the first set of outcomes
+        n_ufuns: Number of ufuns to generate per scenario
+        n_pareto: Number of outcomes on the Pareto frontier in general scenarios.
+                Can be specified as a number, a tuple of a min and max to sample within, a list of possibilities.
+                Each value can either be an integer > 1 or a fraction of the number of outcomes in the scenario.
+        pareto_log_uniform: Use log-uniform instead of uniform sampling if n_pareto is a tuple
+        n_trials: Number of times to retry generating each scenario if failures occures
+
+    Returns:
+        A list `Scenario` s
+    """
+    assert zerosum_fraction + monotonic_fraction <= 1.0
+    nongeneral_fraction = zerosum_fraction + monotonic_fraction
+    ufun_sets = []
+    for i in range(n_scenarios):
+        r = random.random()
+        n = intin(n_outcomes, log_uniform)
+        name = "S"
+        if r < nongeneral_fraction:
+            n_pareto_selected = n
+            name = "DivideThePieGen"
+        else:
+            if isinstance(n_pareto, Iterable):
+                n_pareto = type(n_pareto)(
+                    int(_ * n + 0.5) if _ < 1 else int(_) for _ in n_pareto  # type: ignore
+                )
+            else:
+                n_pareto = int(0.5 + n_pareto * n) if n_pareto < 1 else int(n_pareto)
+            n_pareto_selected = intin(n_pareto, log_uniform=pareto_log_uniform)  # type: ignore
+        for _ in range(n_trials):
+            try:
+                if r < zerosum_fraction:
+                    vals = generate_utility_values(
+                        n_pareto_selected,
+                        n,
+                        n_ufuns=n_ufuns,
+                        pareto_first=pareto_first,
+                        pareto_generator="zero_sum",
+                    )
+                    name = "DivideThePie"
+                else:
+                    if n_pareto_selected < 2:
+                        n_pareto_selected = 2
+                    vals = generate_utility_values(
+                        n_pareto_selected,
+                        n,
+                        n_ufuns=n_ufuns,
+                        pareto_first=pareto_first,
+                        pareto_generator="curve"
+                        if random.random() < curve_fraction
+                        else "piecewise_linear",
+                    )
+                break
+            except:
+                continue
+        else:
+            continue
+
+        issues = (make_issue([f"{i}_{n-1 - i}" for i in range(n)], "portions"),)
+        ufuns = tuple(
+            U(
+                values=(
+                    TableFun(
+                        {_: float(vals[i][k]) for i, _ in enumerate(issues[0].all)}
+                    ),
+                ),
+                name=f"{uname}{i}",
+                # reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),
+                outcome_space=make_os(issues, name=f"{name}{i}"),
+            )
+            for k, uname in enumerate(("First", "Second"))
+            # for k, (uname, r) in enumerate(zip(("First", "Second"), reserved_ranges))
+        )
+        sample_reserved_values(ufuns, reserved_ranges=reserved_ranges)
+        ufun_sets.append(ufuns)
+
+    return [
+        Scenario(
+            outcome_space=ufuns[0].outcome_space,  # type: ignore We are sure this is not None
+            ufuns=ufuns,
+        )
+        for ufuns in ufun_sets
+    ]
+
 
 GENERAROR_MAP = dict(
     monotonic=monotonic_pie_scenarios,
