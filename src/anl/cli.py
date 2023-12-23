@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 """The ANL universal command line tool"""
 import math
-
-# import os
 import sys
 from collections import defaultdict
 from functools import partial
@@ -115,17 +113,6 @@ click.option = partial(click.option, show_default=True)
 @click.group()
 def main():
     pass
-
-
-# def _path(path) -> Path:
-#     """Creates an absolute path from given path which can be a string"""
-#     if isinstance(path, Path):
-#         return path.absolute()
-#     path.replace("/", os.sep)
-#     if isinstance(path, str):
-#         if path.startswith("~"):
-#             path = Path.home() / (os.sep.join(path.split(os.sep)[1:]))
-#     return Path(path).absolute()
 
 
 @main.command(help="Runs an ANL 2024 tournament")
@@ -286,7 +273,7 @@ def main():
 @click.option(
     "--plot",
     "-p",
-    default=0.1,
+    default=0.1 if sys.platform in ("darwin", "linux") else 0,
     type=float,
     help="Fraction of negotiations to plot and save",
 )
@@ -333,7 +320,7 @@ def main():
 )
 @click.option(
     "--rotate/--no-rotate",
-    default=DEFAULT2024SETTINGS["rotate_ufuns"],  # type: ignore
+    default=min(DEFAULT2024SETTINGS["rotate_ufuns"], 5),  # type: ignore
     help="Rotate utility functions when creating scenarios for the tournament",
 )
 @click.option(
