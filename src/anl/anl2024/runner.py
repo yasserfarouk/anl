@@ -44,12 +44,12 @@ __all__ = [
 ]
 
 DEFAULT_AN2024_COMPETITORS = (
+    NashSeeker,
+    MiCRO,
+    Boulware,
     Conceder,
     Linear,
-    Boulware,
     NaiveTitForTat,
-    MiCRO,
-    NashSeeker,
     # StochasticLinear,
     # StochasticConceder,
     # StochasticBoulware,
