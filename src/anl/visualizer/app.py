@@ -124,7 +124,7 @@ def run(base: Path = DEFAULT_TOURNAMENT_PATH):
             for _ in trace_df.itertuples(index=False)
         ]
         results = load(results_path)
-        if st.sidebar.checkbox("Show 2D Plot", value=True):
+        if st.sidebar.checkbox("Show Side-by-Side Plots", value=False):
             plot_offline_run(
                 trace,
                 ids=results["negotiator_ids"],
@@ -134,25 +134,38 @@ def run(base: Path = DEFAULT_TOURNAMENT_PATH):
                 broken=results["broken"],
                 has_error=results["has_error"],
                 timedout=results["timedout"],
-                only2d=True,
             )
             st.pyplot(plt.gcf())
-        if st.sidebar.checkbox("Show Negotiator Offers", value=True):
-            plot_offline_run(
-                trace,
-                ids=results["negotiator_ids"],
-                names=results["negotiator_names"],
-                ufuns=scenario.ufuns,  # type: ignore
-                agreement=results["agreement"],
-                broken=results["broken"],
-                has_error=results["has_error"],
-                timedout=results["timedout"],
-                no2d=True,
-                simple_offers_view=st.sidebar.checkbox(
-                    "Simple Offers View", value=False
-                ),
-            )
-            st.pyplot(plt.gcf())
+        else:
+            if st.sidebar.checkbox("Show 2D Plot", value=True):
+                plot_offline_run(
+                    trace,
+                    ids=results["negotiator_ids"],
+                    names=results["negotiator_names"],
+                    ufuns=scenario.ufuns,  # type: ignore
+                    agreement=results["agreement"],
+                    broken=results["broken"],
+                    has_error=results["has_error"],
+                    timedout=results["timedout"],
+                    only2d=True,
+                )
+                st.pyplot(plt.gcf())
+            if st.sidebar.checkbox("Show Negotiator Offers", value=True):
+                plot_offline_run(
+                    trace,
+                    ids=results["negotiator_ids"],
+                    names=results["negotiator_names"],
+                    ufuns=scenario.ufuns,  # type: ignore
+                    agreement=results["agreement"],
+                    broken=results["broken"],
+                    has_error=results["has_error"],
+                    timedout=results["timedout"],
+                    no2d=True,
+                    simple_offers_view=st.sidebar.checkbox(
+                        "Simple Offers View", value=False
+                    ),
+                )
+                st.pyplot(plt.gcf())
 
         if st.sidebar.checkbox("Show Results Details", value=True):
             st.write("Results for this Negotiation:")
