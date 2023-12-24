@@ -34,19 +34,6 @@
                             <li class="navitem active">
                                 <a href="." class="nav-link">Index</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li>
-    <a href="Tutorials/Installation/" class="dropdown-item">Installation</a>
-</li>
-                                    
-<li>
-    <a href="Tutorials/Tutorial-MyFirstNegotiator/" class="dropdown-item">My First Negotiator</a>
-</li>
-                                </ul>
-                            </li>
                             <li class="navitem">
                                 <a href="faq/" class="nav-link">FAQ</a>
                             </li>
@@ -67,7 +54,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a rel="next" href="Tutorials/Installation/" class="nav-link">
+                                <a rel="next" href="faq/" class="nav-link">
                                     Next <i class="fa fa-arrow-right"></i>
                                 </a>
                             </li>
@@ -91,11 +78,19 @@
             
             <li class="nav-item" data-level="1"><a href="#anl-documentation" class="nav-link">ANL Documentation</a>
               <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#tutorials" class="nav-link">Tutorials</a>
+            <li class="nav-item" data-level="2"><a href="#installation" class="nav-link">Installation</a>
               <ul class="nav flex-column">
               </ul>
             </li>
             <li class="nav-item" data-level="2"><a href="#documentation" class="nav-link">Documentation</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#cli" class="nav-link">CLI</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#visualizer" class="nav-link">Visualizer</a>
               <ul class="nav flex-column">
               </ul>
             </li>
@@ -118,13 +113,46 @@ called <code>anlXXXX</code> for the competition run in year XXXX. For example an
 </ol>
 <p>The official website for the ANL competition is:
 <a href="https://scml.cs.brown.edu/anl">https://scml.cs.brown.edu/anl</a></p>
-<h2 id="tutorials">Tutorials</h2>
-<p>Please find tutorials on ANL under the tab "Tutorials." You can find there how to install ANL and how to build your first Negotiator.</p>
+<h2 id="installation">Installation</h2>
+<pre><code>pip install anl
+</code></pre>
+<p>You can also install the in-development version with::</p>
+<pre><code>pip install https://github.com/autoneg/anl/archive/master.zip
+</code></pre>
 <h2 id="documentation">Documentation</h2>
 <ul>
 <li>Documentation for the ANL package: <a href="https://yasserfarouk.github.io/anl/">https://yasserfarouk.github.io/anl/</a></li>
 <li>Documentation for the NegMAS library: <a href="https://negmas.readthedocs.io">https://negmas.readthedocs.io</a></li>
-</ul></div>
+</ul>
+<h2 id="cli">CLI</h2>
+<p>After installation, you can try running a tournament using the CLI:</p>
+<pre><code class="language-bash">anl tournament2024
+</code></pre>
+<p>To find all the parameters you can customize for running tournaments run:</p>
+<pre><code class="language-bash">anl tournament2024 --help
+</code></pre>
+<p>You can run the following command to check the versions of ANL and NegMAS on your machine:</p>
+<pre><code class="language-bash">anl version
+</code></pre>
+<p>You should get at least these versions:</p>
+<pre><code class="language-bash">anl: 0.1.5 (NegMAS: 0.10.9)
+</code></pre>
+<p>Other than the two commands mentioned above (tournament2024, version), you can use the CLI to generate and save scenarios which you can later reuse with the tournament2024 command using --scenarios-path.
+As an example:</p>
+<pre><code class="language-bash">anl make-scenarios myscenarios --scenarios=5
+anl tournament2024 --scenarios-path=myscenarios --scenarios=0
+</code></pre>
+<p>The first command will create 5 scenarios and save them under <code>myscenarios</code>. The second command will use these scenarios without generating any new scenarios to run a tournament.</p>
+<h2 id="visualizer">Visualizer</h2>
+<p><img alt="visualizer" src="visualizer.png" />
+ANL comes with a simple visualizer that can be used to visualize logs from tournaments after the fact.</p>
+<p>To start the visualizer type:</p>
+<pre><code class="language-bash">anlv show
+</code></pre>
+<p>This will allow you to select any tournament that is stored in the default location (~/negmas/anl2024/tournaments).
+You can also show the tournament stored in a specific location '_path' using:</p>
+<pre><code class="language-bash">anlv show _path
+</code></pre></div>
             </div>
         </div>
 
@@ -207,5 +235,5 @@ called <code>anlXXXX</code> for the competition run in year XXXX. For example an
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-12-22 16:29:29.796333+00:00
+Build Date UTC : 2023-12-24 12:11:46.856712+00:00
 -->

@@ -34,19 +34,6 @@
                             <li class="navitem">
                                 <a href=".." class="nav-link">Index</a>
                             </li>
-                            <li class="dropdown">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Tutorials <b class="caret"></b></a>
-                                <ul class="dropdown-menu">
-                                    
-<li>
-    <a href="../Tutorials/Installation/" class="dropdown-item">Installation</a>
-</li>
-                                    
-<li>
-    <a href="../Tutorials/Tutorial-MyFirstNegotiator/" class="dropdown-item">My First Negotiator</a>
-</li>
-                                </ul>
-                            </li>
                             <li class="navitem active">
                                 <a href="./" class="nav-link">FAQ</a>
                             </li>
@@ -62,7 +49,7 @@
                             </a>
                         </li>
                             <li class="nav-item">
-                                <a rel="prev" href="../Tutorials/Tutorial-MyFirstNegotiator/" class="nav-link">
+                                <a rel="prev" href=".." class="nav-link">
                                     <i class="fa fa-arrow-left"></i> Previous
                                 </a>
                             </li>
@@ -93,14 +80,152 @@
               <ul class="nav flex-column">
               </ul>
             </li>
+            
+            <li class="nav-item" data-level="2"><a href="#how-can-i-access-a-data-file-in-my-package" class="nav-link">How can I access a data file in my package?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#can-my-agent-pass-data-to-my-other-agents-between-negotiations" class="nav-link">Can my agent pass data to my other agents between negotiations?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#can-my-agent-read-data-from-the-hdd-outside-my-agents-folder" class="nav-link">Can my agent read data from the HDD outside my agent's folder?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#can-my-agent-write-data-to-the-hdd-during-the-negotiation" class="nav-link">Can my agent write data to the HDD during the negotiation?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#can-i-print-to-the-screen-to-debug-my-agent" class="nav-link">Can I print to the screen to debug my agent?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#can-i-write-arbitrary-code-in-my-module-besides-the-negotiator-class-definition" class="nav-link">Can I write arbitrary code in my module besides the negotiator class definition?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#i-ran-a-simulation-using-anl-tournament2024-command-where-are-my-log-files" class="nav-link">I ran a simulation using "anl tournament2024" command. Where are my log files?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            
+            <li class="nav-item" data-level="2"><a href="#i-implement-my-agent-using-multiple-files-how-should-i-import-them" class="nav-link">I implement my agent using multiple files. How should I import them?</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
         </ul>
     </div>
 </div></div>
                     <div class="col-md-9" role="main">
 
 <h2 id="faq">FAQ</h2>
-<p>The Frequently Asked Questions (FAQ) for the ANL competition will be collected in <a href="https://docs.google.com/document/d/10g72tdiWYKsHqJz-6R7JUnj7kCR4cKXP6_sMQyi0tYs/edit?usp=sharing">this document</a>.</p>
-<p>If you have further questions, please get in contact with the organisers.</p></div>
+<h2 id="how-can-i-access-a-data-file-in-my-package">How can I access a data file in my package?</h2>
+<p>When your agent is submitted, it is run in an environment different from that in which the tournament
+will be run. This means that you <strong>cannot</strong> use hardcoded paths in your agent. Moreover, you (and we) do
+not know in advance what will be the current directory when the tournament is run. For this reason, it is
+<strong>required</strong> that if you access any files in your agent, you should use a path relative to the file in which
+the code accessing these files is located. Please note that accessing ANY FILES outside the directory of
+your agent is <strong>prohibited</strong> and <strong>will lead to immediate disqualification</strong> for obvious security reasons.
+There are no second chances in this one.</p>
+<p>Let's assume that your file structure is something like that:</p>
+<pre><code>base
+├── sub
+│   ├── myagent.py
+│   └── otherfiles.py
+├── data
+│   └── myfile.csv
+└── tests
+</code></pre>
+<p>Now you want to access the file <em>myfile.csv</em> when you are inside <em>myagent.py</em>. To do so you can use the following code::</p>
+<pre><code>import pathlib
+path_2_myfile = pathlib.Path(__file__).parent.parent / "data" / "myfile.csv"
+</code></pre>
+<h2 id="can-my-agent-pass-data-to-my-other-agents-between-negotiations">Can my agent pass data to my other agents between negotiations?</h2>
+<p><strong>NO</strong> Passing data to your agents between negotiations will lead to disqualification.</p>
+<h2 id="can-my-agent-read-data-from-the-hdd-outside-my-agents-folder">Can my agent read data from the HDD outside my agent's folder?</h2>
+<p><strong>NO</strong> Your agent can only read files that you submitted to us in your zip file.
+It cannot modify these files in anyway during the competition.
+It cannot read from anywhere else in secondary storage. Trying to do
+so will lead to disqualification.</p>
+<h2 id="can-my-agent-write-data-to-the-hdd-during-the-negotiation">Can my agent write data to the HDD during the negotiation?</h2>
+<p><strong>NO</strong> The agent is not allowed to write anything to the hard disk during the
+competition.</p>
+<h2 id="can-i-print-to-the-screen-to-debug-my-agent">Can I print to the screen to debug my agent?</h2>
+<p><strong>PLEASE DO NOT</strong></p>
+<p>Printing to the screen in your agent will prevent us from monitoring the progress of tournament
+runs and will slow down the process. Moreover, it is not useful anyway because the tournaments are run in
+parallel.</p>
+<p>If you really need to print something (e.g. for debugging purposes), please remove all print
+statements before submission. We will never touch your code after submission so we cannot remove them.</p>
+<h2 id="can-i-write-arbitrary-code-in-my-module-besides-the-negotiator-class-definition">Can I write arbitrary code in my module besides the negotiator class definition?</h2>
+<p>When python imports your module, it runs everything in it so the top level code should be only one of these:</p>
+<pre><code>- Class definitions
+- Function definitions
+- Variable definitions
+- Arbitrary code that runs in few milliseconds and prints nothing
+</code></pre>
+<p>Any other code <em>must</em> be protected inside::</p>
+<pre><code>if __name__ == "__main__"
+</code></pre>
+<p>For example, if you want to run a simulation to test your agent. <em>DO NOT USE SOMETHING LIKE THIS</em>::</p>
+<pre><code>anl2024_tournament(....)
+</code></pre>
+<p>But something like this::</p>
+<pre><code>def main():
+    anl2024_tournament(....)
+
+if __name__ == "__main__":
+    main()
+</code></pre>
+<p>This way, importing your module will not run the world simulation.</p>
+<h2 id="i-ran-a-simulation-using-anl-tournament2024-command-where-are-my-log-files">I ran a simulation using "anl tournament2024" command. Where are my log files?</h2>
+<p>If you did not pass "--no-log", you will find the log files
+at <em>~/negmas/anl2024/[date-time-uuid]</em></p>
+<h2 id="i-implement-my-agent-using-multiple-files-how-should-i-import-them">I implement my agent using multiple files. How should I import them?</h2>
+<p>Assume that you have the following file structure</p>
+<pre><code>base
+├── subfolder
+│   └── component2.py
+├── component1.py
+└── agent.py
+</code></pre>
+<p>In your <code>agent.py</code> file, you want to import your other files::</p>
+<pre><code>import component1
+import subfolder.component2
+</code></pre>
+<p>This will <strong>not</strong> work because in the actual competition <code>component1.py</code> and
+<code>component2.py</code> will not be in python path.</p>
+<p>There are two ways to solve it:</p>
+<p>The clean way is to use relative imports. You will need to turn your agent int a package
+by adding empty <code>__init__.py</code> files to every folder you want to import from::</p>
+<pre><code>base
+├── sub
+│   ├── __init__.py
+│   └── component2.py
+├── __init__.py
+├── component1.py
+└── agent.py
+</code></pre>
+<p>You can now change your import to::</p>
+<pre><code>import .component1
+import .subfolder.component2
+</code></pre>
+<p>Notice the extra dot (<code>.</code>)</p>
+<p>Another way that does not require any modification of your file structure is to add the following lines
+<strong>before</strong> your imports::</p>
+<pre><code>import os, sys
+sys.path.append(os.path.dirname(__file__))
+</code></pre>
+<p>Note that the later method has the disadvantage of putting your components at the <strong>end</strong> of the path which
+means that if you have any classes, functions, etc with a name that is defined in <em>any</em> module that appears
+earlier in the path, yours will be hidden.</p></div>
             </div>
         </div>
 
