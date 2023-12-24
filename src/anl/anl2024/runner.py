@@ -21,6 +21,7 @@ from anl.anl2024.negotiators.builtins import (
     Linear,
     MiCRO,
     NaiveTitForTat,
+    NashSeeker,
 )
 
 # from anl.anl2024.negotiators.builtin import (
@@ -48,6 +49,7 @@ DEFAULT_AN2024_COMPETITORS = (
     Boulware,
     NaiveTitForTat,
     MiCRO,
+    NashSeeker,
     # StochasticLinear,
     # StochasticConceder,
     # StochasticBoulware,
@@ -392,8 +394,8 @@ def mixed_scenarios(
             try:
                 if r < zerosum_fraction:
                     vals = generate_utility_values(
-                        n_pareto_selected,
-                        n,
+                        n_pareto=n_pareto_selected,
+                        n_outcomes=n,
                         n_ufuns=n_ufuns,
                         pareto_first=pareto_first,
                         pareto_generator="zero_sum",
@@ -403,8 +405,8 @@ def mixed_scenarios(
                     if n_pareto_selected < 2:
                         n_pareto_selected = 2
                     vals = generate_utility_values(
-                        n_pareto_selected,
-                        n,
+                        n_pareto=n_pareto_selected,
+                        n_outcomes=n,
                         n_ufuns=n_ufuns,
                         pareto_first=pareto_first,
                         pareto_generator="curve"
@@ -457,6 +459,7 @@ DEFAULT2024GENERATOR = mixed_scenarios
 
 
 def anl2024_tournament(
+    scenarios: tuple[Scenario, ...] | list[Scenario] = tuple(),
     n_scenarios: int = DEFAULT2024SETTINGS["n_scenarios"],  # type: ignore
     n_outcomes: int | tuple[int, int] | list[int] = DEFAULT2024SETTINGS["n_outcomes"],  # type: ignore
     competitors: tuple[type[Negotiator] | str, ...]
@@ -496,7 +499,8 @@ def anl2024_tournament(
     """Runs an ANL 2024 tournament
 
     Args:
-        n_scenarios: Number of negotiation scenarios
+        scenarios: A list of predefined scenarios to use for the tournament
+        n_scenarios: Number of negotiation scenarios to generate specifically for this tournament
         n_outcomes: Number of outcomes (or a min/max tuple of n. outcomes) for each scenario
         competitors: list of competitor agents
         competitor_params: If given, parameters to construct each competitor
@@ -561,10 +565,21 @@ def anl2024_tournament(
     )
     if plot_params:
         params = params.update(plot_params)
+    scenarios = list(scenarios) + list(
+        scenario_generator(n_scenarios, n_outcomes, **generator_params)
+    )
+    private_infos = [
+        tuple(
+            dict(opponent_ufun=U(values=_.values, weights=_.weights, bias=_._bias, reserved_value=0, outcome_space=_.outcome_space))  # type: ignore
+            for _ in s.ufuns[::-1]
+        )
+        for s in scenarios
+    ]
     return cartesian_tournament(
         competitors=tuple(competitors),
-        scenarios=scenario_generator(n_scenarios, n_outcomes, **generator_params),
+        scenarios=scenarios,
         competitor_params=competitor_params,
+        private_infos=private_infos,  # type: ignore
         rotate_ufuns=rotate_ufuns,
         n_repetitions=n_repetitions,
         path=path,
