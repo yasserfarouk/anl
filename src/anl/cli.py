@@ -2,18 +2,22 @@
 """The ANL universal command line tool"""
 import math
 import sys
+import warnings
 from collections import defaultdict
 from functools import partial
+from itertools import chain
 from pathlib import Path
 from time import perf_counter
 from typing import Iterable, List
 
 import click
 import click_config_file
+import matplotlib.pyplot as plt
 import negmas
 from negmas.helpers import humanize_time, unique_name
 from negmas.helpers.inout import load
 from negmas.helpers.types import get_class
+from negmas.inout import Scenario
 from rich import print
 
 import anl
@@ -21,6 +25,7 @@ from anl import DEFAULT_AN2024_COMPETITORS
 from anl.anl2024.runner import (
     DEFAULT2024SETTINGS,
     DEFAULT_TOURNAMENT_PATH,
+    GENERAROR_MAP,
     anl2024_tournament,
 )
 
@@ -35,6 +40,16 @@ def default_log_path():
 
 DB_FOLDER = default_log_path().parent / "runsdb"
 DB_NAME = "rundb.csv"
+
+
+def read_range(x, min_x, max_x):
+    if x > 0:
+        return x
+    if min_x < 0 and max_x < 0:
+        return min_x
+    if min_x == max_x:
+        return min_x
+    return (min_x, max_x)
 
 
 def save_run_info(
@@ -149,7 +164,7 @@ def main():
 @click.option(
     "--scenarios",
     "-S",
-    default=DEFAULT2024SETTINGS["n_scenarios"],  # type: ignore
+    default=min(5, DEFAULT2024SETTINGS["n_scenarios"]),  # type: ignore
     type=int,
     help="Number of scenarios to generate",
 )
@@ -320,7 +335,7 @@ def main():
 )
 @click.option(
     "--rotate/--no-rotate",
-    default=min(DEFAULT2024SETTINGS["rotate_ufuns"], 5),  # type: ignore
+    default=DEFAULT2024SETTINGS["rotate_ufuns"],  # type: ignore
     help="Rotate utility functions when creating scenarios for the tournament",
 )
 @click.option(
@@ -329,9 +344,22 @@ def main():
     help="Randomize the order of negotiations or not",
 )
 @click.option(
+    "--two/--cartesian",
+    default=False,  # type: ignore
+    help="If --two is passed, a single negotiation will be conducted between the first two in the competitors list."
+    " This is equivalent to passing --scenarios=1, --no-rotate --competitors=A;B --repetitions=1."
+    " If only one competitor is given it is run against itself (with --self-platy assumed).",
+)
+@click.option(
     "--raise-exceptions/--ignore-exceptions",
     default=True,
     help="Whether to ignore agent exceptions",
+)
+@click.option(
+    "--scenarios-path",
+    default=None,
+    type=click.Path(exists=True, dir_okay=True, file_okay=False),
+    help="Path containing folders each representing a negotiation scenario.",
 )
 @click.option(
     "--settings-file",
@@ -382,7 +410,22 @@ def tournament2024(
     zerosum,
     monotonic,
     curve,
+    two,
+    scenarios_path,
 ):
+    if two:
+        competitorslst = competitors.split(";")
+        scenarios = 1
+        rotate = False
+        repetitions = 1
+        parallel = False
+        if len(competitorslst) == 1:
+            competitorslst = [competitorslst[0], competitorslst[0]]
+            self_play = True
+        else:
+            competitorslst = competitorslst[:2]
+            self_play = False
+        competitors = ";".join(competitorslst)
     generator_params = dict()
     # read settings of the scenario generator from the settings file if available
     if settings_file:
@@ -395,19 +438,11 @@ def tournament2024(
             curve_fraction=curve,
         )
     if small:
-        scenarios = 3
+        scenarios = max(scenarios, 3)
         steps = 100
         outcomes = 1000
         timelimit = 30
-
-    def read_range(x, min_x, max_x):
-        if x > 0:
-            return x
-        if min_x < 0 and max_x < 0:
-            return min_x
-        if min_x == max_x:
-            return min_x
-        return (min_x, max_x)
+        competitors = ";".join(competitors.split(";")[:3])
 
     steps = read_range(steps, min_steps, max_steps)
     outcomes = read_range(outcomes, min_outcomes, max_outcomes)
@@ -437,7 +472,7 @@ def tournament2024(
         sys.exit()
 
     for i, cp in enumerate(all_competitors):
-        all_competitors[i] = find_type_name(cp)
+        all_competitors[i] = find_type_name(cp)  # type: ignore
 
     if not all_competitors:
         all_competitors = DEFAULT_AN2024_COMPETITORS
@@ -459,7 +494,27 @@ def tournament2024(
             f"[red]ERROR[/red] You specified no way to end the negotiation. You MUST pass either --steps, --timelimit or --pend (or the --min, --max versions of them)"
         )
         sys.exit(1)
-    print(f"Will use {scenarios} scenarios of {outcomes} outcomes each.")
+    loaded_scenarios = []
+    if scenarios:
+        print(f"Will generate {scenarios} scenarios of {outcomes} outcomes each.")
+    if scenarios_path is not None:
+        for path in chain([scenarios_path], Path(scenarios_path).glob("**/*")):
+            path = Path(path)
+            if not path.is_dir():
+                continue
+            if not Scenario.is_loadable(path):
+                print(f"{path} is not loadable")
+                continue
+            try:
+                scenario = Scenario.load(path, safe_parsing=False)
+                if scenario:
+                    loaded_scenarios.append(scenario)
+            except Exception as e:
+                warnings.warn(f"Could not load scenario from {path}. Error: {str(e)}")
+
+        print(
+            f"Will use {len(loaded_scenarios)} scenarios loaded from {scenarios_path}."
+        )
     print(f"Negotiations will end if any of the following conditions is satisfied:")
     if steps is not None:
         print(f"\tN. Rounds: {steps}")
@@ -467,11 +522,17 @@ def tournament2024(
         print(f"\tN. Seconds: {timelimit}")
     if pend is not None and (isinstance(pend, tuple) or pend > 0):
         print(f"\tProbability of ending each round : {pend}")
+    if len(loaded_scenarios) + scenarios == 0:
+        print(
+            f"You must either pass --scenarios with the number of scenarios to be generated or pass --scenarios-path with a folder containing scenarios to use.\nYou are passing {scenarios=}, {scenarios_path=}. \nWill exit"
+        )
+        exit()
     tic = perf_counter()
     results = anl2024_tournament(
+        scenarios=loaded_scenarios,
         n_scenarios=scenarios,
         n_outcomes=outcomes,
-        competitors=all_competitors,
+        competitors=all_competitors,  # type: ignore
         competitor_params=all_competitors_params,
         rotate_ufuns=rotate,
         n_repetitions=repetitions,
@@ -499,7 +560,145 @@ def tournament2024(
         print(f"Detailed logs are stored at: {DEFAULT_TOURNAMENT_PATH / name}")
 
 
-@main.command(help="Prints ANL version and NegMAS version")
+@main.command(
+    help="Generates sceanrios a la ANL.\n\nYou must pass the path to save the scenarios into as the first parameter"
+)
+@click.argument(
+    "path",
+    type=click.Path(file_okay=False),
+)
+@click.option(
+    "--outcomes",
+    "-o",
+    default=DEFAULT2024SETTINGS["n_outcomes"] if not isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
+    type=int,
+    help="Number of outcomes in every scenario. If negative or zero, --min-outcomes and --max-outcomes will beused",
+)
+@click.option(
+    "--min-outcomes",
+    default=DEFAULT2024SETTINGS["n_outcomes"][0] if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
+    type=int,
+    help="Minimum number of outcomes in every scenario. Only used of --outcomes is zero or negative",
+)
+@click.option(
+    "--max-outcomes",
+    default=DEFAULT2024SETTINGS["n_outcomes"][1] if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
+    type=int,
+    help="Max number of outcomes in every scenario. Only used of --outcomes is zero or negative",
+)
+@click.option(
+    "--scenarios",
+    "-S",
+    default=min(5, DEFAULT2024SETTINGS["n_scenarios"]),  # type: ignore
+    type=int,
+    help="Number of scenarios to generate",
+)
+@click.option(
+    "--generator",
+    default=DEFAULT2024SETTINGS["scenario_generator"],  # type: ignore
+    type=str,
+    help="The method to generate scenarios. Default is mix which generates a mix of scenario types containing zero-sum, monotonic and general scenarios",
+)
+@click.option(
+    "--zerosum",
+    "-z",
+    default=DEFAULT2024SETTINGS["generator_params"].get("zerosum_fraction", 0.05),  # type: ignore
+    type=float,
+    help="Fraction of zero-sum scenarios (used when generator=mix)",
+)
+@click.option(
+    "--monotonic",
+    "-m",
+    default=DEFAULT2024SETTINGS["generator_params"].get("monotonic_fraction", 0.25),  # type: ignore
+    type=float,
+    help="Fraction of monotonic scenarios (used when generator=mix)",
+)
+@click.option(
+    "--curve",
+    "-c",
+    default=DEFAULT2024SETTINGS["generator_params"].get("curve_fraction", 0.5),  # type: ignore
+    type=float,
+    help="Fraction of monotonic and general scenarios generated using a Pareto curve not piecewise linear Pareto (used when generator=mix)",
+)
+@click.option(
+    "--settings-file",
+    default=None,
+    type=click.Path(exists=True, dir_okay=False),
+    help="Path to a yaml/json file containing parameters to pass to the generator",
+)
+@click.option(
+    "--plot",
+    "-p",
+    default=0.1 if sys.platform in ("darwin", "linux") else 0,
+    type=float,
+    help="Fraction of negotiations to plot and save",
+)
+@click_config_file.configuration_option()
+def make_scenarios(
+    path,
+    scenarios,
+    outcomes,
+    min_outcomes,
+    max_outcomes,
+    generator,
+    settings_file,
+    zerosum,
+    monotonic,
+    curve,
+    plot,
+):
+    if scenarios == 0:
+        print(f"You must pass --scenarios with the number of scenarios to be generated")
+        exit()
+    generator_params = dict()
+    # read settings of the scenario generator from the settings file if available
+    if settings_file:
+        generator_params = load(settings_file)
+    # override settings with the appropriate ones based on the generator
+    if generator == "mix":
+        generator_params.update(
+            zerosum_fraction=zerosum,
+            monotonic_fraction=monotonic,
+            curve_fraction=curve,
+        )
+
+    outcomes = read_range(outcomes, min_outcomes, max_outcomes)
+
+    print(f"Will generate {scenarios} scenarios of {outcomes} outcomes each.")
+    scenario_generator = GENERAROR_MAP[generator]
+    scenarios = scenario_generator(
+        n_scenarios=scenarios, n_outcomes=outcomes, **generator_params
+    )
+    path = Path(path)
+    for s in scenarios:
+        mypath = path / s.outcome_space.name  # type: ignore
+        s.dumpas(mypath)  # type: ignore
+        if plot:
+            m = negmas.SAOMechanism(outcome_space=s.outcome_space, time_limit=1)
+            for n, u in zip(("First", "Second"), s.ufuns):
+                m.add(negmas.AspirationNegotiator(name=n), ufun=u)
+            m.plot(
+                save_fig=True,
+                path=mypath,
+                fig_name="fig.png",
+                only2d=True,
+                show_annotations=False,
+                show_agreement=False,
+                show_pareto_distance=False,
+                show_nash_distance=False,
+                show_kalai_distance=False,
+                show_max_welfare_distance=False,
+                show_max_relative_welfare_distance=False,
+                show_end_reason=False,
+                show_last_negotiator=False,
+                show_reserved=True,
+                show_total_time=False,
+                show_relative_time=False,
+                show_n_steps=False,
+            )
+            plt.close()
+
+
 def version():
     print(f"anl: {anl.__version__} (NegMAS: {negmas.__version__})")
 
