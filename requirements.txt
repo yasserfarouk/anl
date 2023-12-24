@@ -8,6 +8,7 @@ joblib
 cloudpickle
 mip
 papermill
+streamlit
 -e .
 
 

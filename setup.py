@@ -64,17 +64,21 @@ setup(
         "pytest",
         "hypothesis",
         "prettytable",
-        "negmas>=0.10.8",
+        "negmas>=0.10.9",
         "tqdm",
         "joblib",
         "jupyter",
         "gif",
+        "streamlit",
     ],
     extras_require={},
     setup_requires=["pytest-runner"],
     entry_points={
         "console_scripts": [
             "anl = anl.cli:main",
+            "anlv = anl.visualizer.cli:main",
+            "anlvis = anl.visualizer.cli:main",
+            "anl-vis = anl.visualizer.cli:main",
         ]
     },
 )
