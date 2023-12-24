@@ -1,6 +1,22 @@
 Changelog
 =========
 
+0.1.5 (2023.12.24)
+------------------
+
+* Changing default order of agents
+* Adding a basic visualizer
+* Adding make-scenarios to the CLI
+* Passing opponent ufun in the private info
+* Separating implementation of builtin agents
+* requiring NegMAS 0.10.9
+
+0.1.4 (2023.12.24)
+------------------
+
+* Retrying scenario generation if it failed
+* Defaulting to no plotting in windows
+
 0.1.3 (2023.12.23)
 ------------------
 
