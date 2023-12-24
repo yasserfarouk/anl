@@ -115,3 +115,5 @@ build/*
 .envrc
 tmp/
 /docs/site/
+/docs/site/*
+**/docs/site
