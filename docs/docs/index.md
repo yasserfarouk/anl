@@ -31,7 +31,7 @@ You can also install the in-development version with::
 
 ## CLI
 
-After installation, you can try running a tournament using the CLI as:
+After installation, you can try running a tournament using the CLI:
 
 ```bash
 anl tournament2024
@@ -52,5 +52,32 @@ anl version
 You should get at least these versions:
 
 ```bash
-anl: 0.1.3 (NegMAS: 0.10.8)
+anl: 0.1.5 (NegMAS: 0.10.9)
+```
+
+Other than the two commands mentioned above (tournament2024, version), you can use the CLI to generate and save scenarios which you can later reuse with the tournament2024 command using --scenarios-path.
+As an example:
+
+```bash
+anl make-scenarios myscenarios --scenarios=5
+anl tournament2024 --scenarios-path=myscenarios --scenarios=0
+```
+The first command will create 5 scenarios and save them under `myscenarios`. The second command will use these scenarios without generating any new scenarios to run a tournament.
+
+
+## Visualizer
+
+![visualizer](visualizer.png)
+ANL comes with a simple visualizer that can be used to visualize logs from tournaments after the fact.
+
+To start the visualizer type:
+
+```bash
+anlv show
+```
+This will allow you to select any tournament that is stored in the default location (~/negmas/anl2024/tournaments).
+You can also show the tournament stored in a specific location '_path' using:
+
+```bash
+anlv show _path
 ```

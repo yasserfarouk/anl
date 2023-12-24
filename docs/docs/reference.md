@@ -16,26 +16,28 @@ You mostly only need to use `anl2024_tournament` in your code. The other helpers
 #### constant: DEFAULT2024SETTINGS
 ::: anl.anl2024.DEFAULT2024SETTINGS
 
-### Example Negotiator
+### Example Negotiators
 
 The package provides few example negotiators. Of special importance is the `MiCRO` negotiator which provides a full implementation of a recently proposed behavioral strategy.
 Other negotiators are just wrappers over negotiators provided by NegMAS.
 
 #### class: Boulware
-::: anl.anl2024.negotiators.Boulware
+::: anl.anl2024.negotiators.builtins.wrappers.Boulware
 
 #### class: Linear
-::: anl.anl2024.negotiators.Linear
+::: anl.anl2024.negotiators.builtins.wrappers.Linear
 
 #### class: Conceder
-::: anl.anl2024.negotiators.Conceder
+::: anl.anl2024.negotiators.builtins.wrappers.Conceder
 
 #### class: NaiveTitForTat
-::: anl.anl2024.negotiators.NaiveTitForTat
+::: anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat
 
 #### class: MiCRO
-::: anl.anl2024.negotiators.MiCRO
+::: anl.anl2024.negotiators.builtins.micro.MiCRO
 
+#### class: NashSeeker
+::: anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker
 
 
 ### Helpers (Scenario Generation)
