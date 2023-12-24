@@ -114,4 +114,4 @@ scratch/min_stats_g.csv
 build/*
 .envrc
 tmp/
-docs/site/
+/docs/site/
