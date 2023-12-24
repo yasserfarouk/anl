@@ -26,7 +26,7 @@ class NashSeeker(SAONegotiator):
         self._nash_factor = nash_factor
         self._best: Outcome = None  # type: ignore
 
-    def on_negotiation_start(self, state) -> None:
+    def on_preferences_changed(self, changes):
         # This callback is called at the start of the negotiation after the ufun is set
         assert self.ufun is not None and self.ufun.outcome_space is not None
         # save my best outcome for later use
