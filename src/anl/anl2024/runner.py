@@ -52,7 +52,7 @@ DEFAULT_AN2024_COMPETITORS = (
     NaiveTitForTat,
     # StochasticLinear,
     # StochasticConceder,
-    # StochasticBoulware,
+    # StochasticBoulware
 )
 """Default set of negotiators (agents) used as competitors"""
 
