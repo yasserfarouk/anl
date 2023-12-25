@@ -42,10 +42,11 @@ class NashSeeker(SAONegotiator):
         frontier_outcomes = [outcomes[_] for _ in frontier_indices]
         my_frontier_utils = [_[0] for _ in frontier_utils]
         nash = nash_points(ufuns, frontier_utils)  # type: ignore
-        if not nash:
-            raise ValueError(f"Cannot find the Nash Bargaining Solution.")
-        # find my utility at the Nash Bargaining Solution.
-        my_nash_utility = nash[0][0][0]
+        if nash:
+            # find my utility at the Nash Bargaining Solution.
+            my_nash_utility = nash[0][0][0]
+        else:
+            my_nash_utility = 0.5 * (float(self.ufun.max()) + self.ufun.reserved_value)
         # Set the acceptable utility limit
         self._min_acceptable = my_nash_utility * self._nash_factor
         # Set the set of outcomes to offer from
