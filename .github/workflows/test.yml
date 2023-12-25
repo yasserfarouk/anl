@@ -30,7 +30,6 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel pytest
           python -m pip install --upgrade  virtualenv
           python -m pip install -r requirements.txt
-          python -m pip install -r requirements-dev.txt
           python -m ipykernel install --user --name=anl
       - name: "Run pytest for ${{ matrix.python-version }}"
         run: "python -m pytest tests"
