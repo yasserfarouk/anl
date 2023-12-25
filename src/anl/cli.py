@@ -438,13 +438,16 @@ def tournament2024(
             curve_fraction=curve,
         )
     if small:
-        scenarios = max(scenarios, 3)
-        steps = 100
-        outcomes = 1000
+        scenarios = min(scenarios, 2)
+        steps = -1
+        min_steps, max_steps = (10, 1000)
+        outcomes = 100
         timelimit = 30
+        repetitions = 1
         competitors = ";".join(competitors.split(";")[:3])
 
     steps = read_range(steps, min_steps, max_steps)
+    print(steps)
     outcomes = read_range(outcomes, min_outcomes, max_outcomes)
     timelimit = read_range(timelimit, min_timelimit, max_timelimit)
     pend = read_range(pend, min_pend, max_pend)
