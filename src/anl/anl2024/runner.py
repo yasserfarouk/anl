@@ -20,7 +20,6 @@ from anl.anl2024.negotiators.builtins import (
     Conceder,
     Linear,
     MiCRO,
-    NaiveTitForTat,
     NashSeeker,
 )
 
@@ -28,6 +27,7 @@ from anl.anl2024.negotiators.builtins import (
 #     StochasticBoulware,
 #     StochasticConceder,
 #     StochasticLinear,
+# NaiveTitForTat,
 # )
 
 __all__ = [
@@ -49,7 +49,7 @@ DEFAULT_AN2024_COMPETITORS = (
     Boulware,
     Conceder,
     Linear,
-    NaiveTitForTat,
+    # NaiveTitForTat,
     # StochasticLinear,
     # StochasticConceder,
     # StochasticBoulware
@@ -70,7 +70,7 @@ DEFAULT2024SETTINGS = dict(
     n_repetitions=5,
     reserved_ranges=((0.0, 1.0), (0.0, 1.0)),
     competitors=DEFAULT_AN2024_COMPETITORS,
-    rotate_ufuns=True,
+    rotate_ufuns=False,
     time_limit=60,
     pend=0,
     pend_per_second=0,
