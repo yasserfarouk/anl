@@ -10,3 +10,7 @@ pytest-coverage
 pytest-repeat
 jupyter
 ipykernel
+mkdocs
+mkdocstrings
+mkdocs-include-markdown-plugin
+
