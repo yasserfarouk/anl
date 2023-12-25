@@ -27,6 +27,7 @@ class NashSeeker(SAONegotiator):
         self._best: Outcome = None  # type: ignore
 
     def on_preferences_changed(self, changes):
+        _ = changes  # silenting a typing warning
         # This callback is called at the start of the negotiation after the ufun is set
         assert self.ufun is not None and self.ufun.outcome_space is not None
         # save my best outcome for later use

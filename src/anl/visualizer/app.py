@@ -71,6 +71,7 @@ def read_score_dfs(
         for p in selected_partners:
             cond &= details.negotiator_types.str.contains(p)
         details = details.loc[cond, :]
+        assert all_scores is not None
         all_scores = all_scores.loc[all_scores.partners.isin(set(selected_partners)), :]
     if selected_strategies is not None:
         assert all_scores is not None
@@ -103,8 +104,8 @@ def read_scenarios_with_steps(
     assert (
         n_scenarios_found == n_scenarios
     ), f"Found {n_scenarios_found} scenarios in details but we should only find {n_scenarios}"
-    min_n_steps = details.groupby(["scenario"])["n_steps"].min().rename("n_steps_min")
-    max_n_steps = details.groupby(["scenario"])["n_steps"].max().rename("n_steps_max")
+    min_n_steps = details.groupby(["scenario"])["n_steps"].min().rename("n_steps_min")  # type: ignore
+    max_n_steps = details.groupby(["scenario"])["n_steps"].max().rename("n_steps_max")  # type: ignore
     all_n_steps = pd.concat(
         (min_n_steps, max_n_steps), axis=1, ignore_index=False, join="outer"
     )
@@ -116,7 +117,7 @@ def read_scenarios_with_steps(
 def make_scenario_stats(
     scenarios: list[str],
     details: pd.DataFrame,
-    grouper: str or list[str] = "scenario",
+    grouper: str | list[str] = "scenario",
     fields=(
         "n_steps",
         "time_limit",
@@ -137,7 +138,7 @@ def make_scenario_stats(
         "max_welfare_optimality",
         "has_error",
     ),
-) -> dict[str, int]:
+) -> pd.DataFrame:
     if "DoneConversion" not in details.columns:
         for x in ("negotiator_types", "negotiator_ids", "negotiator_names"):
             if x in grouper:
@@ -196,7 +197,7 @@ def run(base: Path = DEFAULT_TOURNAMENT_PATH):
     )
     scores = dfs.final_scores
     steps_of = read_scenarios_with_steps(scenarios, dfs.details)
-    scenarios_of = dict(zip(steps_of.values(), steps_of.keys()))
+    # scenarios_of = dict(zip(steps_of.values(), steps_of.keys()))
     if st.sidebar.checkbox("Show Final Scores", value=True):
         st.write("**Final Scores**")
         st.dataframe(scores)
@@ -426,7 +427,7 @@ def run(base: Path = DEFAULT_TOURNAMENT_PATH):
         negotiation_set = st.sidebar.multiselect("Negotiation", all_negotiations)
         n_cols = st.sidebar.slider("N. Columns", 1, 4, value=1)
         negs_for_col = distribute_integer_randomly(
-            len(negotiation_set), n_cols, min_per_bin=None
+            len(negotiation_set), n_cols, min_per_bin=None  # type: ignore
         )
         negs_for_col = [_ for _ in negs_for_col if _]
         n_cols = len(negs_for_col)
