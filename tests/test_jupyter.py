@@ -3,7 +3,7 @@ from pathlib import Path
 import papermill as pm
 import pytest
 
-from .switches import anl_RUN_NOTEBOOKS
+from .switches import ANL_RUN_NOTEBOOKS
 
 
 def notebooks():
@@ -11,8 +11,8 @@ def notebooks():
     return list(_ for _ in base.glob("**/*.ipynb") if "checkpoints" not in str(_))
 
 
-@pytest.mark.skipif(
-    condition=not anl_RUN_NOTEBOOKS,
+@pytest.mark.skip(
+    # condition=not ANL_RUN_NOTEBOOKS,
     reason="Environment set to ignore running notebook tests. See switches.py",
 )
 @pytest.mark.parametrize("notebook", notebooks())
