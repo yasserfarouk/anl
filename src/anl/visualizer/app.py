@@ -14,14 +14,29 @@ from negmas.plots.util import TraceElement, plot_offline_run
 from anl import DEFAULT_TOURNAMENT_PATH
 
 
-def tournaments(base: Path = DEFAULT_TOURNAMENT_PATH):
+def is_tournament_folder(base: Path):
+    if not base.is_dir():
+        return False
     for mark in ("negotiations", "results", "scenarios"):
         path = base / mark
         if not (path.exists() and path.is_dir()):
-            break
-    else:
+            return False
+    for mark in ("scores.csv", "type_scores.csv", "details.csv", "all_scores.csv"):
+        path = base / mark
+        if not (path.exists() and path.is_file()):
+            return False
+    return True
+
+
+def tournaments(base: Path = DEFAULT_TOURNAMENT_PATH):
+    if is_tournament_folder(base):
         return base.absolute().parent, [base.name]
-    return base.absolute(), sorted([_.name for _ in base.glob("*") if _.is_dir()])[::-1]
+    return (
+        base.absolute(),
+        sorted(
+            [_.relative_to(base) for _ in base.glob("**/*") if is_tournament_folder(_)]
+        )[::-1],
+    )
 
 
 @st.cache_data
