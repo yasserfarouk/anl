@@ -18,6 +18,7 @@ from negmas.helpers import humanize_time, unique_name
 from negmas.helpers.inout import load
 from negmas.helpers.types import get_class
 from negmas.inout import Scenario
+from negmas.plots.util import plot_offline_run
 from rich import print
 
 import anl
@@ -715,10 +716,15 @@ def make_scenarios(
         mypath = path / s.outcome_space.name  # type: ignore
         s.dumpas(mypath)  # type: ignore
         if plot:
-            m = negmas.SAOMechanism(outcome_space=s.outcome_space, time_limit=1)
-            for n, u in zip(("First", "Second"), s.ufuns):
-                m.add(negmas.AspirationNegotiator(name=n), ufun=u)
-            m.plot(
+            plot_offline_run(
+                trace=[],
+                ids=["First", "Second"],
+                ufuns=s.ufuns,  # type: ignore
+                agreement=None,
+                timedout=False,
+                broken=False,
+                has_error=False,
+                names=["First", "Second"],
                 save_fig=True,
                 path=mypath,
                 fig_name="fig.png",
@@ -731,7 +737,6 @@ def make_scenarios(
                 show_max_welfare_distance=False,
                 show_max_relative_welfare_distance=False,
                 show_end_reason=False,
-                show_last_negotiator=False,
                 show_reserved=True,
                 show_total_time=False,
                 show_relative_time=False,
