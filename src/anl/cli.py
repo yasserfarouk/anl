@@ -177,10 +177,18 @@ def main():
 )
 @click.option(
     "--competitors",
-    default=";".join(_().type_name for _ in DEFAULT2024SETTINGS["competitors"]),  # type: ignore # type: ignore
+    default=";".join(_().type_name.split(".")[-1] for _ in DEFAULT2024SETTINGS["competitors"]),  # type: ignore # type: ignore
     help="A semicolon (;) separated list of agent types to use for the competition. You"
     " can also pass the special value default for the default builtin"
     " agents",
+)
+@click.option(
+    "--params",
+    default="",
+    help="A string encoding the parameters to pass for negotiators. Default is None. The format of this string is:\n"
+    "'competitor:key:value,key:value,..key:value;competitor:key:value,key:value,...key:value\n"
+    "For example:\nRVFitter:enable_logging:True:e:4.0;NashSeeker:nash_factor:1.0\nmeans: RVFitter's params are dict(enable_logging=True, e=True)"
+    " and NashSeeker's params are dict(nash_factor=1.0)\n\nBe sure to use the python-correct format for values. For example put strings in single quots.",
 )
 @click.option(
     "--metric",
@@ -381,6 +389,7 @@ def tournament2024(
     repetitions,
     raise_exceptions,
     competitors,
+    params,
     verbosity,
     path,
     metric,
@@ -442,12 +451,10 @@ def tournament2024(
         steps = -1
         min_steps, max_steps = (10, 1000)
         outcomes = 100
-        timelimit = 30
         repetitions = 1
         competitors = ";".join(competitors.split(";")[:3])
 
     steps = read_range(steps, min_steps, max_steps)
-    print(steps)
     outcomes = read_range(outcomes, min_outcomes, max_outcomes)
     timelimit = read_range(timelimit, min_timelimit, max_timelimit)
     pend = read_range(pend, min_pend, max_pend)
@@ -457,6 +464,31 @@ def tournament2024(
         name = unique_name(base="", rand_digits=0)
 
     all_competitors = competitors.split(";")
+    all_params = [dict() for _ in all_competitors]
+    if params:
+        paramslst: list[str] = params.split(";")
+
+        def parse_params(s: str, k: str) -> dict:
+            vals = s.split(":")
+            if len(vals) % 2 == 1:
+                print(
+                    f"[red]ERROR[red]: failed to parse {s} (the paramters of {k})"
+                    f" in given competitor params {params} because it has an odd "
+                    f"number of ':' separated parts ({len(vals)=}, {len(vals) % 2=}, {vals=})."
+                )
+                exit(1)
+            d = dict()
+            for i in range(0, len(vals), 2):
+                d[vals[i]] = eval(vals[i + 1])
+            return d
+
+        params_map = defaultdict(dict)
+        for s in paramslst:
+            k, _, v = s.partition(":")
+            params_map[k] = parse_params(v, k)
+
+        for i, c in enumerate(all_competitors):
+            all_params[i] = params_map.get(c, dict())
 
     def find_type_name(stem: str):
         for pre in (
@@ -479,10 +511,16 @@ def tournament2024(
 
     if not all_competitors:
         all_competitors = DEFAULT_AN2024_COMPETITORS
-    all_competitors_params = [dict() for _ in range(len(all_competitors))]
 
     print(f"Tournament will be run between {len(all_competitors)} agents: ")
     print(all_competitors)
+    n_params = sum(len(_) for _ in all_params)
+    if n_params > 0:
+        print(f"Will use the following competitor parameters:")
+        for c, p in zip(all_competitors, all_params):
+            if not p:
+                continue
+            print(f"{c}:\n\t{p}")
     if not isinstance(steps, tuple) and steps <= 0:
         steps = None
     if not isinstance(timelimit, tuple) and timelimit <= 0:
@@ -536,7 +574,7 @@ def tournament2024(
         n_scenarios=scenarios,
         n_outcomes=outcomes,
         competitors=all_competitors,  # type: ignore
-        competitor_params=all_competitors_params,
+        competitor_params=all_params,
         rotate_ufuns=rotate,
         n_repetitions=repetitions,
         n_steps=steps,
@@ -702,6 +740,7 @@ def make_scenarios(
             plt.close()
 
 
+@main.command(help="Displays ANL and NegMAS versions")
 def version():
     print(f"anl: {anl.__version__} (NegMAS: {negmas.__version__})")
 

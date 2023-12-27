@@ -21,6 +21,7 @@ from anl.anl2024.negotiators.builtins import (
     Linear,
     MiCRO,
     NashSeeker,
+    RVFitter,
 )
 
 # from anl.anl2024.negotiators.builtin import (
@@ -44,6 +45,7 @@ __all__ = [
 ]
 
 DEFAULT_AN2024_COMPETITORS = (
+    RVFitter,
     NashSeeker,
     MiCRO,
     Boulware,

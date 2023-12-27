@@ -14,7 +14,6 @@ from negmas.plots.util import TraceElement, plot_offline_run
 from anl import DEFAULT_TOURNAMENT_PATH
 
 
-@st.cache_data
 def tournaments(base: Path = DEFAULT_TOURNAMENT_PATH):
     for mark in ("negotiations", "results", "scenarios"):
         path = base / mark
@@ -179,6 +178,9 @@ metrics = [
 
 
 def run(base: Path = DEFAULT_TOURNAMENT_PATH):
+    st.set_page_config(
+        page_title="your_title", layout="wide", initial_sidebar_state="auto"
+    )
     st.write("### ANL Tournament Visualizer")
     base, t = tournaments(base)
     tournament = st.sidebar.selectbox("Tournament", t)
@@ -323,6 +325,8 @@ def run(base: Path = DEFAULT_TOURNAMENT_PATH):
                 return
             col1, col2 = st.columns(2)
             show_2d = show_offers = simple_offers = False
+            x_var_offers = "relative_time"
+
             with col1:
                 side_by_side = st.checkbox(
                     "Side-by-Side",
@@ -336,7 +340,7 @@ def run(base: Path = DEFAULT_TOURNAMENT_PATH):
             if side_by_side:
                 pass
             else:
-                col1, col2, col3 = st.columns(3)
+                col1, col2, col3, col4 = st.columns(4)
                 with col1:
                     show_2d = st.checkbox(
                         "2D Plot",
@@ -355,6 +359,14 @@ def run(base: Path = DEFAULT_TOURNAMENT_PATH):
                             "Simple",
                             value=False,
                             key=f"simple_{indx}_{k}",
+                        )
+                with col4:
+                    if show_offers:
+                        x_var_offers = st.selectbox(
+                            "X-variable",
+                            options=("relative_time", "time", "step"),
+                            index=0,
+                            key=f"xvar_offers_{indx}_{k}",
                         )
 
             # first_type = "_".join(parts[1:3])
@@ -415,6 +427,7 @@ def run(base: Path = DEFAULT_TOURNAMENT_PATH):
                         no2d=True,
                         simple_offers_view=simple_offers,
                         ylimits=(0, 1),
+                        xdim=x_var_offers if x_var_offers else "relative_time",
                     )
                     st.pyplot(plt.gcf())
 

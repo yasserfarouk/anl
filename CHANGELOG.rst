@@ -1,6 +1,30 @@
 Changelog
 =========
 
+0.1.6 (2023.12.27)
+------------------
+
+* Improved visualizer
+    - Adding filtering by scenario or strategy to the main view.
+    - Adding new options to show scenario statistics, scenario x strategy statistics, and cases with no agreements at all.
+    - You can show multiple negotiations together
+    - You can show the descriptive statistics of any metric according to strategy or scenario
+    - More plotting options for metrics
+
+* Improved CLI
+    - Adding the ability to pass parameters to competitors in the CLI.
+    - Removing NaiveTitForTat from the default set of competitors
+    - Making small tournaments even smaller
+
+* New and improved strategies
+    - Adding RVFitter strategy which showcases simple implementation of curve fitting for reserved value estimation and using logging.
+    - Adding more comments to NashSeeker strategy
+    - Simplified implementation of MiCRO
+    - Adding a simple test for MiCRO
+    - Avoid failure when Nash cannot be found in NashSeeker
+
+* Migrating to NegMAS 0.10.11. Needed for logging (and 0.10.10 is needed for self.oppponent_ufun)
+
 0.1.5 (2023.12.24)
 ------------------
 

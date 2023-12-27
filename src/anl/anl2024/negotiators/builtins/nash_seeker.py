@@ -32,10 +32,12 @@ class NashSeeker(SAONegotiator):
         assert self.ufun is not None and self.ufun.outcome_space is not None
         # save my best outcome for later use
         self._best = self.ufun.best()
+        # check that I have access to  the opponent ufun
+        assert self.opponent_ufun is not None
         # set the reserved value of the opponent
-        self.private_info["opponent_ufun"].reserved_value = self._opponent_r
+        self.opponent_ufun.reserved_value = self._opponent_r
         # consider my and my parther's ufuns
-        ufuns = (self.ufun, self.private_info["opponent_ufun"])
+        ufuns = (self.ufun, self.opponent_ufun)
         # list all outcomes
         outcomes = list(self.ufun.outcome_space.enumerate_or_sample())
         # find the pareto-front and the nash point
