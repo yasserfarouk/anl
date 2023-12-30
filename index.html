@@ -38,6 +38,9 @@
                                 <a href="faq/" class="nav-link">FAQ</a>
                             </li>
                             <li class="navitem">
+                                <a href="tutorials/tutorial/" class="nav-link">Tutorial</a>
+                            </li>
+                            <li class="navitem">
                                 <a href="reference/" class="nav-link">Reference</a>
                             </li>
                         </ul>
@@ -114,11 +117,11 @@ called <code>anlXXXX</code> for the competition run in year XXXX. For example an
 <p>The official website for the ANL competition is:
 <a href="https://scml.cs.brown.edu/anl">https://scml.cs.brown.edu/anl</a></p>
 <h2 id="installation">Installation</h2>
-<pre><code>pip install anl
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>anl
+</span></code></pre></div>
 <p>You can also install the in-development version with::</p>
-<pre><code>pip install https://github.com/autoneg/anl/archive/master.zip
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span>https://github.com/autoneg/anl/archive/master.zip
+</span></code></pre></div>
 <h2 id="documentation">Documentation</h2>
 <ul>
 <li>Documentation for the ANL package: <a href="https://yasserfarouk.github.io/anl/">https://yasserfarouk.github.io/anl/</a></li>
@@ -126,33 +129,33 @@ called <code>anlXXXX</code> for the competition run in year XXXX. For example an
 </ul>
 <h2 id="cli">CLI</h2>
 <p>After installation, you can try running a tournament using the CLI:</p>
-<pre><code class="language-bash">anl tournament2024
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>anl<span class="w"> </span>tournament2024
+</span></code></pre></div>
 <p>To find all the parameters you can customize for running tournaments run:</p>
-<pre><code class="language-bash">anl tournament2024 --help
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>anl<span class="w"> </span>tournament2024<span class="w"> </span>--help
+</span></code></pre></div>
 <p>You can run the following command to check the versions of ANL and NegMAS on your machine:</p>
-<pre><code class="language-bash">anl version
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>anl<span class="w"> </span>version
+</span></code></pre></div>
 <p>You should get at least these versions:</p>
-<pre><code class="language-bash">anl: 0.1.5 (NegMAS: 0.10.9)
-</code></pre>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>anl:<span class="w"> </span><span class="m">0</span>.1.5<span class="w"> </span><span class="o">(</span>NegMAS:<span class="w"> </span><span class="m">0</span>.10.9<span class="o">)</span>
+</span></code></pre></div>
 <p>Other than the two commands mentioned above (tournament2024, version), you can use the CLI to generate and save scenarios which you can later reuse with the tournament2024 command using --scenarios-path.
 As an example:</p>
-<pre><code class="language-bash">anl make-scenarios myscenarios --scenarios=5
-anl tournament2024 --scenarios-path=myscenarios --scenarios=0
-</code></pre>
-<p>The first command will create 5 scenarios and save them under <code>myscenarios</code>. The second command will use these scenarios without generating any new scenarios to run a tournament.</p>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>anl<span class="w"> </span>make-scenarios<span class="w"> </span>myscenarios<span class="w"> </span>--scenarios<span class="o">=</span><span class="m">5</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>anl<span class="w"> </span>tournament2024<span class="w"> </span>--scenarios-path<span class="o">=</span>myscenarios<span class="w"> </span>--scenarios<span class="o">=</span><span class="m">0</span>
+</span></code></pre></div>
+The first command will create 5 scenarios and save them under <code>myscenarios</code>. The second command will use these scenarios without generating any new scenarios to run a tournament.</p>
 <h2 id="visualizer">Visualizer</h2>
 <p><img alt="visualizer" src="visualizer.png" />
 ANL comes with a simple visualizer that can be used to visualize logs from tournaments after the fact.</p>
 <p>To start the visualizer type:</p>
-<pre><code class="language-bash">anlv show
-</code></pre>
-<p>This will allow you to select any tournament that is stored in the default location (~/negmas/anl2024/tournaments).
-You can also show the tournament stored in a specific location '_path' using:</p>
-<pre><code class="language-bash">anlv show _path
-</code></pre></div>
+<p><div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>anlv<span class="w"> </span>show
+</span></code></pre></div>
+This will allow you to select any tournament that is stored in the default location (~/negmas/anl2024/tournaments).
+You can also show the tournament stored in a specific location 'your-tournament-path' using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>anlv<span class="w"> </span>show<span class="w"> </span>your-tournament-path
+</span></code></pre></div></div>
             </div>
         </div>
 
@@ -235,5 +238,5 @@ You can also show the tournament stored in a specific location '_path' using:</p
 
 <!--
 MkDocs version : 1.5.3
-Build Date UTC : 2023-12-24 12:11:46.856712+00:00
+Build Date UTC : 2023-12-30 23:47:54.152452+00:00
 -->

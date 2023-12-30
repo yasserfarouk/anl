@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        <link rel="canonical" href="https://yasserfarouk.github.io/anl/tutorials/04.ideas/">
+        <link rel="shortcut icon" href="../../img/favicon.ico">
+        <title>04.ideas - ANL Documentation</title>
+        <link href="../../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="../..">ANL Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href="../.." class="nav-link">Index</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../faq/" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../tutorial/" class="nav-link">Tutorial</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../../reference/" class="nav-link">Reference</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="2"><a href="#ideas-for-developing-your-agent" class="nav-link">Ideas for developing your agent</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h2 id="ideas-for-developing-your-agent">Ideas for developing your agent</h2>
+<p>This section of the tutorials will discuss some possible ideas for
+developing your agent. It is completely optional to read this but it may
+provide some directions that help you in your quest. We will assume that
+you are using the component based approach discussed in the second
+tutorial.</p>
+<p>Let’s start by reminding ourselves of the agent decomposition used by
+built in agents (check this <code>video &lt;https://youtu.be/3xwR-aPZSb0&gt;</code>__
+explains the main components in details).</p>
+<p>The three main components of an agent in this decomposition are the
+trading strategy, negotiation control strategy and production strategy.</p>
+<p>.. image:: anatomy.png</p>
+<p>The trading strategy decides what should the agent buy and sell (the
+<em>trading schedule</em>) and the negotiation control strategy takes that as
+input and uses it to drive negotiations in order to carry out this plan.
+The production strategy controls the factory by deciding how many items
+to produce at every time step (based on existing inventory and the
+trading schedule).</p>
+<p>We will discuss ideas for improving each one of these three components
+separately.</p>
+<p>Before diving into these ideas, it is important to note that the overall
+performance of the agent does not come from having one perfect component
+but from harmony between all the components constituting it. For
+example, a trading strategy that generates a perfect trading schedule is
+useless without a negotiation control strategy capable of achieving that
+schedule.</p>
+<p>Trading Strategy
+~~~~~~~~~~~~~~~~</p>
+<p>Representing the planning department of a company, the trading strategy
+seems like the obvious target of improvement. This figure shows the
+outputs of the trading strategy and the three examples implemented in
+the <code>scml</code> package.</p>
+<p>.. image:: trading.png</p>
+<p>The best trading strategy used by the built-in agents is the
+<code>PredictionBasedTradingStrategy</code> and we will focus on it as it seems
+the most amenable to improvement.</p>
+<p>This trading strategy uses two components, a <code>TradePredictionStrategy</code>
+that predicts the amount of trade on the input and output products of
+the agent as a function of the simulation step, and an
+<code>ERPredictionStrategy</code> predicting the quantity that will actually be
+executed from a contract. These predictions are both set to constants
+for the built-in component. This immediately suggests the following
+ideas</p>
+<p>IDEA 1: Improve trade prediction
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>The only <code>TradePredictionStrategy</code> implemented in <code>scml</code> is the
+<code>FixedTradePredictionStrategy</code> which predicts trade at a fixed amount
+in every product at every step (currently set to half the number of
+lines: :math:<code>5</code>). This can definitely be improved.</p>
+<ol>
+<li>Train a regressor (e.g. a
+   <code>scikit-learn &lt;https://scikit-learn.org/stable/user_guide.html&gt;</code><strong>
+   regressor) on many worlds to receive the product number and the
+   fraction of the simulation steps passed and predict the amount of
+   trade and use this regressor in real time (or store its results in a
+   table that you can <code>load in real
+   time &lt;https://scml.readthedocs.io/en/latest/faq.html#how-can-i-access-a-data-file-in-my-package&gt;</code></strong>).</li>
+<li>Improve the regressor using incremental learning in real time during
+   world simulation. This may not be very effective in short simulations
+   but we will simulate up to :math:<code>200</code> steps so it may improve
+   performance.</li>
+</ol>
+<p>IDEA 2: Improve execution rate prediction
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>The only <code>ERPredictionStrategy</code> implemented in the system is the
+<code>FixedERPredictionStrategy</code> which will expect that half of the
+quantity in any contract will be executed. This can easily be improved
+using several approaches.</p>
+<ol>
+<li>Use the financial reports of your suppliers and consumers to predict
+   the possibility that they will breach contracts in the future. Again
+   you can train a regressor that receives few past financial reports
+   and predicts future behavior using simulations against a variety of
+   agents (including your own!) and then load it in real time.</li>
+<li>Use more general market conditions for prediction of actual trade
+   amount and base your prediction of the contract execution rate on
+   that.</li>
+</ol>
+<p>IDEA3: Improve the logic of the trading strategy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>The <code>PredictionBasedTradingStrategy</code> just uses the
+<code>TradePredictionStrategy</code> and <code>ERPredictionStrategy</code> directly for
+deciding trade but that need not be the optimal thing to do. It may be
+possible to change that logic of the trading strategy itself to add a
+higher level of control over the outputs of these base prediction
+strategies.</p>
+<p>Negotiation Manager
+~~~~~~~~~~~~~~~~~~~</p>
+<p>This is a <em>negotiation</em> competition and it seems fit to focus our
+efforts on negotiation. Moreover, as we indicated earlier, having the
+perfect trade schedule coming out from the trading strategy is useless
+for the agent if it cannot negotiate effectively to achieve that
+schedule.</p>
+<p>The negotiation control strategy consists of two main components:</p>
+<ul>
+<li><strong>Negotiation Manager</strong> responsible of requesting negotiations as
+   needed and responding to such requests</li>
+<li><strong>Negotiation Algorithm</strong> which can be implemented using one or more
+   <code>negmas</code>
+   <code>SAOController &lt;https://negmas.readthedocs.io/en/latest/modules/sao.html?highlight=Controller#module-negmas.sao&gt;</code><strong>
+   or directly using <code>negmas</code>
+   <code>SAONegotiator &lt;https://negmas.readthedocs.io/en/latest/modules/sao.html?highlight=Negotiator#module-negmas.sao&gt;</code></strong>.
+   This <code>video &lt;https://youtu.be/10Rjl3ikaDU&gt;</code>__ describes available
+   controllers and negotiators and of course you can - and should -
+   design your own.</li>
+</ul>
+<p>This figure shows the two inputs you need to define for any negotiation
+manager: <code>target_quantity</code> and <code>acceptable_unit_price</code>. Their names
+are self-descriptive.</p>
+<p>.. image:: negotiation.png</p>
+<p>Built-in negotiation managers are intentionally pretty basic. It may be
+that this is the point of improvement that has the highest probability
+of leading to winning agents (that may not be true though as the trading
+strategy seems as important). Here are some ideas for improving the
+negotiation control strategy</p>
+<p>IDEA 4: Improve the negotiation manager
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>The negotiation manager responsible of starting and accepting
+negotiations in <code>scml</code> is extremely basic.</p>
+<ol>
+<li>It uses a target quantity that is set directly as the difference
+   between needs and secured quantity and it does not take into account
+   in any way running negotiations. You can access running negotiations
+   using <code>self.negotiations</code> and standing negotiation requests using
+   <code>self.negotiation_requests</code>.</li>
+<li>It always negotiates with everybody. You can use financial reports to
+   decide whom to negotiate with.</li>
+<li>It uses fixed ranges for negotiation issues. You can try to
+   dynamically decide the ranges allowed for negotiation issues based on
+   market conditions. For example, you can set the range of prices based
+   on your estimate of the current trading price of products.</li>
+</ol>
+<p>IDEA 5 Improve signing strategy
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>Deciding what to sign is not strictly a part of the negotiation strategy
+but it needs to be implemented to respond to <code>sign_all_contracts</code>.
+Currently, it is handled by the trading strategy but you can override
+that by providing your own <code>SigningStrategy</code> that overrides
+<code>sign_all_contracts</code>.</p>
+<p>All negotiations in a single simulation step run in parallel. This means
+that the negotiation manager is prone to over-contracting. This can then
+be corrected using a <code>SigningStrategy</code> that intelligently decides what
+to sign.</p>
+<p>Negotiation Algorithm
+~~~~~~~~~~~~~~~~~~~~~</p>
+<p>All built in negotiations are conducted using either simple negotiation
+algorithm (e.g. time-based strategy, naive tit-for-tat implementation,
+…) or a simple <code>negmas</code> built in controller. None of the adequately
+handles the two main challenges: concurrent negotiations within a single
+simulation step and taking into account future negotiation
+opportunities.</p>
+<p>IDEA 6: Improve concurrent negotiation control
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>The <code>StepController</code> is the negotiation algorithm used by the
+<code>StepNegotiationManager</code> employed by the <code>DecentralizingAgent</code> (the
+top built-in agent). It instantiates one controller to handle buying and
+another to handle selling <em>for each simulation step</em>. These controllers
+rely heavily on the <code>SAOSyncController</code> of <code>negmas</code> using a
+time-based meta-negotiation strategy. That is a very simple algorithm
+that is not expected to effectively handle concurrent negotiations. Try
+to find a way to either <em>coordinate</em> the behavior of multiple autonomous
+negotiators each simulation step or to centrally <em>control</em> these
+negotiators to achieve the preset target.</p>
+<p>IDEA 7: Improve sequential negotiation control
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>Agents in SCML negotiate repeatedly. This means that the utility of any
+offer in any negotiation does not only depend on current market
+conditions but also in expected future negotiations. Built-in agents
+side step the need to take that into account during negotiation by
+having a trading strategy and a negotiation manager set their targets
+for them rendering negotiations in every simulation step independent
+from future negotiations (given the targets). This is clearly a
+simplistic heuristic. Try to find a way to take future negotiations into
+account when designing your agent. One way to do that is to have them
+affect the utility function used by your controller/negotiator.</p>
+<p>IDEA 8: Improve the utility functions used
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>The <code>IndependentNegotiationManager</code> uses linear independent utility
+functions with a simple time-base negotiation (<code>AspirationNegotiator</code>)
+for all of its negotiations. The other two negotiation managers employ
+controllers that define their utilities linearly using some built-in
+fixed weights for price and quantity. That is obviously suboptimal. 1.
+Try to improve the utility function used by either the negotiators or
+the controller (depending on the negotiation manager you use) to achieve
+higher expected utilities. 2. Try to take the identity of the agent you
+are negotiating with into account in your utility calculations. A
+contract with a <em>trustworthy</em> agent has more utility than one with a
+<em>non-trustworthy</em> agent. You can use the financial reports of agents to
+judge their <em>trustworthiness</em>.</p>
+<p>Production Strategy
+~~~~~~~~~~~~~~~~~~~</p>
+<p>That is the simplest of the three components. There are two main
+production strategies in <code>scml</code> as described earlier in the second
+tutorial: supply based or demand based production strategies.</p>
+<p>IDEA 9: Base production decisions on trading prices (as well as contracts).
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</p>
+<p>Given that disposal cost is zero and storage capacity is infinite, it
+seems that the only optimization you can do is to avoid over production.
+Production has cost so over production may not be a good idea. On the
+other hand, the inventory is valued in SCML 2020 at half the trading
+price which means that it may be a good idea to convert inputs to
+outputs (even if you do not sell that output) if the difference in
+trading prices at the end of simulation offsets your production costs.
+Try creating a production strategy that takes this effect into account
+switching between supply based and demand based production using a
+estimate of the final trading prices of its input and output products.</p>
+<p>Final Remarks
+~~~~~~~~~~~~~</p>
+<p>The ideas presented above are, by no means, exclusive or comprehensive.
+You can combine them and add new ones. The
+main reason we present these ideas is to <em>challenge you to come with
+better ones</em>. Happy coding :-)
+<a href="/tutorials/notebooks/04.ideas.ipynb">Download Notebook</a></p></div>
+            </div>
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../../js/jquery-3.6.0.min.js"></script>
+        <script src="../../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "../..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../../js/base.js"></script>
+        <script src="../../search/main.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div>
+
+    </body>
+</html>
