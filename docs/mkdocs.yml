@@ -4,11 +4,12 @@ site_name: ANL Documentation
 site_url: https://yasserfarouk.github.io/anl/
 nav:
     - Index: index.md
-    - FAQ: faq.md
+    - Installation: install.md
     - Tutorial: tutorials/tutorial.md
+    - FAQ: faq.md
     - Reference: reference.md
 theme:
-  name: "readthedocs"
+  name: "mkdocs"
 plugins:
 - search
 - mkdocstrings

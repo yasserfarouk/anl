@@ -1,33 +1,4 @@
-## Preparing your development environment
-
-The first step is to install the `anl` package using:
-
-```bash
-pip install anl
-```
-
-The second step in developing your agent for ANL 2024 is to download the template from [here](https://yasserfarouk.github.io/files/anl/anl.zip). Please familiarize yourself with the competition rules availabe at the [competition website](https://scml.cs.brown.edu/anl).
-
-After downloading and uncompressing the template, you should do the following steps:
-
-1. Modify the name of the single class in `myagent.py` (currently called `MyNegotiator`) to a representative name for your agent. We will use `AwsomeNegotiator` here. You should then implement your agent logic by modifying this class.
-   - Remember to change the name of the agent in the last line of the file to match your new class name (`AwsomeNegotiator`).
-   - Remember to update the `agent class` in the submission form on the  [competition website](https://scml.cs.brown.edu/anl) to `AwsomeNegotiator`.
-2. Start developing your agent as will be explained later in this tutorial
-3. You can use the following ways to test your agent:
-    - Run the following command to test your agent from the root folder of the extracted skeleton:
-      ```bash
-      python -m myagent.myagent
-      ```
-    - Use the `anl` command line utility from the root folder of the extracted skeleton:
-      ```bash
-      anl tournament2024 --path=. --competitors="myagent.myagnet.AwsomeNegotiator;Boulware;Conceder"
-      ```
-      This method is more flexible as you can control all aspects of the tournament to run.
-      Use `anl tournament2024 --help`  to see all available options.
-
-    - You can directly call `anl2024_tournament()` passing your agent as one of the competitors. This is the most flexible method and will be used in this tutorial.
-
+# ANL 2024 Tutorial
 
 ## Developing a negotiator
 
@@ -89,8 +60,8 @@ results = anl2024_tournament(
 
 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.701151</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.083134</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.655925</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-3.144891</span>
 </pre>
 
 
@@ -145,12 +116,12 @@ results.final_scores
     <tr>
       <th>0</th>
       <td>Boulware</td>
-      <td>0.701151</td>
+      <td>0.655925</td>
     </tr>
     <tr>
       <th>1</th>
       <td>MyRandomNegotiator</td>
-      <td>0.083134</td>
+      <td>-3.144891</td>
     </tr>
   </tbody>
 </table>
@@ -173,7 +144,7 @@ plt.legend();
 
 
     
-![png](tutorial_files/tutorial_9_0.png)
+![png](tutorial_files/tutorial_8_0.png)
     
 
 
@@ -187,7 +158,7 @@ for i, col in enumerate(["advantage", "welfare", "nash_optimality"]):
 
 
     
-![png](tutorial_files/tutorial_10_0.png)
+![png](tutorial_files/tutorial_9_0.png)
     
 
 
@@ -632,7 +603,7 @@ plt.show()
 
 
     
-![png](tutorial_files/tutorial_17_0.png)
+![png](tutorial_files/tutorial_16_0.png)
     
 
 
@@ -665,7 +636,7 @@ plt.show()
 
 
     
-![png](tutorial_files/tutorial_19_0.png)
+![png](tutorial_files/tutorial_18_0.png)
     
 
 
