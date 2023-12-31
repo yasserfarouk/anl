@@ -50,9 +50,9 @@ def show(folder: Path, port: int, address: str):
     else:
         sys.argv = ["streamlit", "run", str(Path(__file__).parent / "app.py")]
     if port:
-        sys.argv += ["server.port", str(port)]
+        sys.argv += ["--server.port", str(port)]
     if address not in ("", "default"):
-        sys.argv += ["server.address", address]
+        sys.argv += ["--server.address", address]
     sys.exit(stcli.main())
 
 

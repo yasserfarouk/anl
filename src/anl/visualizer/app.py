@@ -34,7 +34,11 @@ def tournaments(base: Path = DEFAULT_TOURNAMENT_PATH):
     return (
         base.absolute(),
         sorted(
-            [str(_.relative_to(base)) for _ in base.glob("**/*") if is_tournament_folder(_)]
+            [
+                str(_.relative_to(base))
+                for _ in base.glob("**/*")
+                if is_tournament_folder(_)
+            ]
         )[::-1],
     )
 
