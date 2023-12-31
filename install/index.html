@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://yasserfarouk.github.io/anl/install/" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Installation - ANL Documentation</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Installation";
+        var mkdocs_page_input_path = "install.md";
+        var mkdocs_page_url = "/anl/install/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> ANL Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Index</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Installation</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#direct-recommended">Direct (Recommended)</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#creating-and-activating-a-virtual-environment">Creating and activating a virtual environment</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#installing-the-anl-package">Installing the ANL package</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#downloading-using-the-skeleton">Downloading using the Skeleton</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#using-docker">Using Docker</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#downloading-using-the-skeleton_1">Downloading using the Skeleton</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#build-the-image-and-container">Build the image and container</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorial/">Tutorial</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../faq/">FAQ</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../reference/">Reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">ANL Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Installation</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="preparing-development-environment">Preparing Development Environment</h1>
+<h2 id="direct-recommended">Direct (Recommended)</h2>
+<h3 id="creating-and-activating-a-virtual-environment">Creating and activating a virtual environment</h3>
+<p>As always recommended, you should create a virtual environment for your development. You can use your IDE to do that or simply run the following command:
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>python<span class="w"> </span>-m<span class="w"> </span>venv<span class="w"> </span>.venv
+</span></code></pre></div>
+You should always activate your virtual environment using:</p>
+<p>=== windows
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>.venv<span class="se">\S</span>cripts<span class="se">\a</span>ctivate.bat
+</span></code></pre></div>
+=== Linux/MacOS
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="nb">source</span><span class="w"> </span>.venv/bin/activate
+</span></code></pre></div></p>
+<h3 id="installing-the-anl-package">Installing the ANL package</h3>
+<p>The second step is to install the <code>anl</code> package using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>python<span class="w"> </span>-m<span class="w"> </span>pip<span class="w"> </span>install<span class="w"> </span>anl
+</span></code></pre></div>
+<h3 id="downloading-using-the-skeleton">Downloading using the Skeleton</h3>
+<p>The next step is to download the template from <a href="https://yasserfarouk.github.io/files/anl/anl.zip">here</a>. Please familiarize yourself with the competition rules availabe at the <a href="https://scml.cs.brown.edu/anl">competition website</a>.
+After downloading and uncompressing the template, you should do the following steps:</p>
+<ol>
+<li>Modify the name of the single class in <code>myagent.py</code> (currently called <code>MyNegotiator</code>) to a representative name for your agent. We will use <code>AwsomeNegotiator</code> here. You should then implement your agent logic by modifying this class.</li>
+<li>Remember to change the name of the agent in the last line of the file to match your new class name (<code>AwsomeNegotiator</code>).</li>
+<li>Remember to update the <code>agent class</code> in the submission form on the  <a href="https://scml.cs.brown.edu/anl">competition website</a> to <code>AwsomeNegotiator</code>.</li>
+<li>Start developing your agent as will be explained later in the tutorial</li>
+<li>
+<p>You can use the following ways to test your agent:</p>
+<ul>
+<li>Run the following command to test your agent from the root folder of the extracted skeleton:
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>python<span class="w"> </span>-m<span class="w"> </span>myagent.myagent
+</span></code></pre></div></li>
+<li>
+<p>Use the <code>anl</code> command line utility from the root folder of the extracted skeleton:
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>anl<span class="w"> </span>tournament2024<span class="w"> </span>--path<span class="o">=</span>.<span class="w"> </span>--competitors<span class="o">=</span><span class="s2">&quot;myagent.myagnet.AwsomeNegotiator;Boulware;Conceder&quot;</span>
+</span></code></pre></div>
+  This method is more flexible as you can control all aspects of the tournament to run.
+  Use <code>anl tournament2024 --help</code>  to see all available options.</p>
+</li>
+<li>
+<p>You can directly call <code>anl2024_tournament()</code> passing your agent as one of the competitors. This is the most flexible method and will be used in the tutorial.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>You can visualize tournaments by running:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>anlv<span class="w"> </span>show
+</span></code></pre></div>
+<h2 id="using-docker">Using Docker</h2>
+<p>If you prefer not to install anything on your machine or if you cannot use python 3.11 or later, you can use docker for development as follows.</p>
+<h3 id="downloading-using-the-skeleton_1">Downloading using the Skeleton</h3>
+<p>The first step is to download the template from <a href="https://yasserfarouk.github.io/files/anl/anl.zip">here</a>. Please familiarize yourself with the competition rules availabe at the <a href="https://scml.cs.brown.edu/anl">competition website</a>.
+After downloading and uncompressing the template, you should do the following steps:</p>
+<ol>
+<li>Modify the name of the single class in <code>myagent.py</code> (currently called <code>MyNegotiator</code>) to a representative name for your agent. We will use <code>AwsomeNegotiator</code> here. You should then implement your agent logic by modifying this class.</li>
+<li>Remember to change the name of the agent in the last line of the file to match your new class name (<code>AwsomeNegotiator</code>).</li>
+<li>Remember to update the <code>agent class</code> in the submission form on the  <a href="https://scml.cs.brown.edu/anl">competition website</a> to <code>AwsomeNegotiator</code>.</li>
+<li>Start developing your agent as will be explained later in the tutorial</li>
+</ol>
+<h3 id="build-the-image-and-container">Build the image and container</h3>
+<p>Run the following command on the root folder of your template to create and prepare the image and container that will be used for development:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>docker<span class="w"> </span>compose<span class="w"> </span>up<span class="w"> </span>--build
+</span></code></pre></div>
+<p>This will take several minutes. Once the images are ready, you can run ANL commands as in the direct development method but you need to prefix each command with one of the following:</p>
+<p>=== windows
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>docker-run.bat
+</span></code></pre></div></p>
+<p>=== Linux/MacOS
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>docker-run.sh
+</span></code></pre></div></p>
+<p>Here are some examples on windows (replace docker-run.bat with docker-run.sh for Linux/MacOS):</p>
+<ol>
+<li>
+<p>You can use the following ways to test your agent:</p>
+<ul>
+<li>Run the following command to test your agent from the root folder of the extracted skeleton:
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>docker-run.bat<span class="w"> </span>python<span class="w"> </span>-m<span class="w"> </span>myagent.myagent
+</span></code></pre></div></li>
+<li>
+<p>Use the <code>anl</code> command line utility from the root folder of the extracted skeleton:
+  <div class="language-bash highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>docker-run.bat<span class="w"> </span>anl<span class="w"> </span>tournament2024<span class="w"> </span>--path<span class="o">=</span>.<span class="w"> </span>--competitors<span class="o">=</span><span class="s2">&quot;myagent.myagnet.AwsomeNegotiator;Boulware;Conceder&quot;</span>
+</span></code></pre></div>
+  This method is more flexible as you can control all aspects of the tournament to run.
+  Use <code>anl tournament2024 --help</code>  to see all available options.</p>
+</li>
+<li>
+<p>You can directly call <code>anl2024_tournament()</code> passing your agent as one of the competitors. This is the most flexible method and will be used in the tutorial.</p>
+</li>
+</ul>
+</li>
+</ol>
+<p>You can visualize tournaments by running:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>docker-run.bat<span class="w"> </span>anlv<span class="w"> </span>show
+</span></code></pre></div>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Index"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../tutorials/tutorial/" class="btn btn-neutral float-right" title="Tutorial">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../tutorials/tutorial/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
