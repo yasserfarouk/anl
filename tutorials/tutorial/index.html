@@ -1,110 +1,134 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        
-        <link rel="canonical" href="https://yasserfarouk.github.io/anl/tutorials/tutorial/">
-        <link rel="shortcut icon" href="../../img/favicon.ico">
-        <title>Tutorial - ANL Documentation</title>
-        <link href="../../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
-        <link href="../../assets/_mkdocstrings.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script> 
-    </head>
-
-    <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="../..">ANL Documentation</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href="../.." class="nav-link">Index</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../../faq/" class="nav-link">FAQ</a>
-                            </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">Tutorial</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../../reference/" class="nav-link">Reference</a>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../../faq/" class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../../reference/" class="nav-link">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
-
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://yasserfarouk.github.io/anl/tutorials/tutorial/" />
+      <link rel="shortcut icon" href="../../img/favicon.ico" />
+    <title>Tutorial - ANL Documentation</title>
+    <link rel="stylesheet" href="../../css/theme.css" />
+    <link rel="stylesheet" href="../../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+        <link href="../../assets/_mkdocstrings.css" rel="stylesheet" />
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#preparing-your-development-environment" class="nav-link">Preparing your development environment</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            
-            <li class="nav-item" data-level="1"><a href="#running-a-tournament" class="nav-link">Running a tournament</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-        </ul>
-    </div>
-</div></div>
-                    <div class="col-md-9" role="main">
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Tutorial";
+        var mkdocs_page_input_path = "tutorials/tutorial.md";
+        var mkdocs_page_url = "/anl/tutorials/tutorial/";
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
 
-<h1 id="preparing-your-development-environment">Preparing your development environment</h1>
-<p>The first step in developing your agent for ANL 2024 is to download the template from <a href="https://yasserfarouk.github.io/files/anl/anl.zip">here</a>. Please familiarize yourself with the competition rules availabe at the <a href="https://scml.cs.brown.edu/anl">competition website</a>.</p>
-<p>After downloading and uncompressing the template, you should modify the name of the single class in <code>myagent.py</code> (currently called <code>MyNegotiator</code>) to a representative name for your agent. You should then implement your agent logic by modifying this class.</p>
-<p>Let's develop our first agent </p>
-<h1 id="running-a-tournament">Running a tournament</h1>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">anl.anl2024</span> <span class="kn">import</span> <span class="n">anl2024_tournament</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="kn">from</span> <span class="nn">negmas.helpers.strings</span> <span class="kn">import</span> <span class="n">unique_name</span>
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href="../.." class="icon icon-home"> ANL Documentation
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../..">Index</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../faq/">FAQ</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="./">Tutorial</a>
+    <ul class="current">
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../../reference/">Reference</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../..">ANL Documentation</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../.." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Tutorial</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h2 id="preparing-your-development-environment">Preparing your development environment</h2>
+<p>The first step is to install the <code>anl</code> package using:</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>anl
 </span></code></pre></div>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="n">results</span> <span class="o">=</span> <span class="n">anl2024_tournament</span><span class="p">(</span>
-</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>    <span class="n">n_scenarios</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">n_outcomes</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">plot_fraction</span><span class="o">=</span><span class="mf">0.01</span><span class="p">,</span> <span class="n">verbosity</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">path</span><span class="o">=</span><span class="kc">None</span>
-</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a><span class="p">)</span>
+<p>The second step in developing your agent for ANL 2024 is to download the template from <a href="https://yasserfarouk.github.io/files/anl/anl.zip">here</a>. Please familiarize yourself with the competition rules availabe at the <a href="https://scml.cs.brown.edu/anl">competition website</a>.</p>
+<p>After downloading and uncompressing the template, you should do the folowing steps:
+1. Modify the name of the single class in <code>myagent.py</code> (currently called <code>MyNegotiator</code>) to a representative name for your agent. We will use <code>AwsomeNegotiator</code> here. You should then implement your agent logic by modifying this class.   <br />
+    - Remember to change the name of the agent in the last line of the file to match your new class name (<code>AwsomeNegotiator</code>).
+    - Remember to update the <code>agent class</code> in the submission form on the  <a href="https://scml.cs.brown.edu/anl">competition website</a> to <code>AwsomeNegotiator</code>.
+2. Start developing your agent as will be explained later in this tutorial
+3. You can use the following ways to test your agent:
+   1. Run the following command to test your agent from the root folder of the extracted skeleton:</p>
+<div class="language-text highlight"><pre><span></span><code>```bash
+python -m myagent.myagent
+```
+</code></pre></div>
+<ol>
+<li>Use the <code>anl</code> command line utility from the root folder of the extracted skeleton: 
+    <code>bash
+    anl tournament2024 --path=. --competitors="myagent.myagnet.AwsomeNegotiator;Boulware;RVFitter;Conceder"</code>
+    This method is more flexible as you can control all aspects of the tournament to run. Use <code>anl tournament2024 --help</code>  to see all available options.</li>
+<li>You can directly call <code>anl2024_tournament()</code> passing your agent as one of the competitors. This is the most flexible method and will be used in this tutorial. </li>
+</ol>
+<h2 id="developing-a-negotiator">Developing a negotiator</h2>
+<p>Agents for the ANL competition are standard <a href="https://yasserfarouk.github.io/negmas">NegMAS</a> negotiators. As such, they can be developed using any approach used to develop negotiators in NegMAS.</p>
+<p>To develop a negotiator, you need to inherit from the <a href="https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAONegotiator.html">SAONegotiator</a> class and implement the <a href="https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAONegotiator.html#negmas.sao.SAONegotiator.__call__"><strong>call</strong></a> method.</p>
+<p>Here is a simple random negotiator:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">random</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="kn">from</span> <span class="nn">negmas.sao</span> <span class="kn">import</span> <span class="n">SAONegotiator</span><span class="p">,</span> <span class="n">SAOResponse</span><span class="p">,</span> <span class="n">ResponseType</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">class</span> <span class="nc">MyRandomNegotiator</span><span class="p">(</span><span class="n">SAONegotiator</span><span class="p">):</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>        <span class="n">offer</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">current_offer</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>        <span class="k">if</span> <span class="n">offer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">is_not_worse</span><span class="p">(</span><span class="n">offer</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.25</span> <span class="p">:</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>            <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">ACCEPT_OFFER</span><span class="p">,</span> <span class="n">offer</span><span class="p">)</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>        <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">REJECT_OFFER</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nmi</span><span class="o">.</span><span class="n">random_outcomes</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
 </span></code></pre></div>
+<h3 id="testing-the-agent">Testing the agent</h3>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">anl.anl2024</span> <span class="kn">import</span> <span class="n">anl2024_tournament</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span> <span class="nn">anl.anl2024.negotiators</span> <span class="kn">import</span> <span class="n">Boulware</span><span class="p">,</span> <span class="n">Conceder</span><span class="p">,</span> <span class="n">RVFitter</span>
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="n">results</span> <span class="o">=</span> <span class="n">anl2024_tournament</span><span class="p">(</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>    <span class="n">n_scenarios</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_repetitions</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nologs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">njobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>    <span class="n">competitors</span><span class="o">=</span><span class="p">[</span><span class="n">MyRandomNegotiator</span><span class="p">,</span> <span class="n">Boulware</span><span class="p">]</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">)</span>
+</span></code></pre></div>
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">Will run <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">12</span> negotiations on <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> scenarios between <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span> competitors
+</pre>
+
 <div class="language-text highlight"><pre><span></span><code>Output()
 </code></pre></div>
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
@@ -112,102 +136,362 @@
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
 </pre>
 
-<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="n">results</span><span class="o">.</span><span class="n">final_scores</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">);</span>
-</span></code></pre></div>
-<p><img alt="png" src="../tutorial_files/tutorial_3_0.png" /></p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">df</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">scores</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;strategy&#39;</span><span class="p">):</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="n">data</span><span class="o">.</span><span class="n">advantage</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
-</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;advantage&quot;</span><span class="p">)</span>
-</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
-</span></code></pre></div>
-<p><img alt="png" src="../tutorial_files/tutorial_4_0.png" /></p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">13</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;utility&quot;</span><span class="p">,</span> <span class="s2">&quot;partner_welfare&quot;</span><span class="p">]):</span>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    <span class="n">results</span><span class="o">.</span><span class="n">scores</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;strategy&quot;</span><span class="p">)[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
-</span></code></pre></div>
-<p><img alt="png" src="../tutorial_files/tutorial_5_0.png" /></p>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>
-</span></code></pre></div>
-<a href="/tutorials/notebooks/tutorial.ipynb">Download Notebook</a></p></div>
-            </div>
-        </div>
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.635721</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.090451</span>
+</pre>
 
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script src="../../js/jquery-3.6.0.min.js"></script>
-        <script src="../../js/bootstrap.min.js"></script>
-        <script>
-            var base_url = "../..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="../../js/base.js"></script>
-        <script src="../../search/main.js"></script>
+<p>We can immediately notice that <code>MyRandomNegotiator</code> is getting a negative average advantage which means that it sometimes gets agreements that are worse than disagreement (i.e. with utility less than its reserved value). Can you guess why is this happening? How can we resolve that?</p>
+<p>You can easily check the final scores using the <code>final_scores</code> member of the returned <a href="https://negmas.readthedocs.io/en/latest/api/negmas.tournaments.SimpleTournamentResults.html">SimpleTournamentResults</a> object</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="n">results</span><span class="o">.</span><span class="n">final_scores</span>
+</span></code></pre></div>
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>strategy</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Boulware</td>
+      <td>0.635721</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>MyRandomNegotiator</td>
+      <td>-0.090451</td>
+    </tr>
+  </tbody>
+</table>
 </div>
 
-    </body>
+<p>The returned results are all pandas dataframes. We can use standard pandas functions to get deeper understanding of the results. Here is how to plot a KDE figure comparing different strategies in this tournament:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">df</span> <span class="o">=</span> <span class="n">results</span><span class="o">.</span><span class="n">scores</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">data</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;strategy&#39;</span><span class="p">):</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>    <span class="n">data</span><span class="o">.</span><span class="n">advantage</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;kde&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">)</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">&quot;advantage&quot;</span><span class="p">)</span>
+</span><span id="__span-7-6"><a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">();</span>
+</span></code></pre></div>
+<p><img alt="png" src="../tutorial_files/tutorial_9_0.png" /></p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="n">fig</span><span class="p">,</span> <span class="n">axs</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">([</span><span class="s2">&quot;advantage&quot;</span><span class="p">,</span> <span class="s2">&quot;welfare&quot;</span><span class="p">,</span> <span class="s2">&quot;nash_optimality&quot;</span><span class="p">]):</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    <span class="n">results</span><span class="o">.</span><span class="n">scores</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s2">&quot;strategy&quot;</span><span class="p">)[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span><span class="o">.</span><span class="n">sort_index</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s2">&quot;bar&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+</span></code></pre></div>
+<p><img alt="png" src="../tutorial_files/tutorial_10_0.png" /></p>
+<h2 id="available-helpers">Available helpers</h2>
+<p>Our negotaitor was not so good but it examplifies the simplest method for developing a negotiator in NegMAS. For more information refer to <a href="https://negmas.readthedocs.io">NegMAS Documentation</a>. You develop your agent, as explained above, by implementing the <code>__call__</code> method of your class. </p>
+<p>This method, receives an <a href="https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAOState.html">SAOState</a> which represents the current <code>state</code> of the negotiation. The most important members of this state object are <code>current_offer</code> which gives the current offer from the partner (or <code>None</code> if this is the beginning of the negotiation) and <code>relative_time</code> which gives the relative time of the negotiation ranging between <code>0</code> and <code>1</code>.</p>
+<p>It should return an <a href="https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAOResponse.html">SAOResponse</a> represeting the agent's <code>response</code> which consists of two parts:</p>
+<ol>
+<li>A <a href="https://negmas.readthedocs.io/en/latest/api/negmas.gb.ResponseType.html">ResponseType</a> with the following allowed values:<ul>
+<li><code>ResponseType.ACCEPT_OFFER</code>, accepts the current offer (pass the current offer as the second member of the response).</li>
+<li><code>ResponseType.REJECT_OFFER</code>, rejects the current offer (pass you counter-offer as the second member of the response).</li>
+<li><code>ResponseType.END_NEGOTIATION</code>, ends the negotiation immediately (pass <code>None</code> as the second member of the response).</li>
+</ul>
+</li>
+<li>A counter offer (in case of rejection), the received offer (in case of acceptance) or <code>None</code> if ending the negotiation.</li>
+</ol>
+<p>The negotiator can use the following objects to help it implement its strategy:</p>
+<ul>
+<li><code>self.nmi</code> A <a href="https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAONMI.html">SAONMI</a> that gives you access to all the settings of this negotiation and provide some simple helpers:<ul>
+<li><code>n_steps</code>, <code>time_limit</code> The number of rounds and seconds allowed for this negotiation (<code>None</code> means no limit).</li>
+<li><code>random_outcomes(n)</code> Samples <code>n</code> random outcomes from this negotiation.</li>
+<li><code>outcome_space</code> The <a href="https://negmas.readthedocs.io/en/latest/api/negmas.outcomes.OutcomeSpace.html">OutcomeSpace</a> of the negotiation which represent all possible agreements. In ANL 2024, this will always be of type <a href="https://negmas.readthedocs.io/en/latest/api/negmas.outcomes.DiscreteCartesianOutcomeSpace.html">DiscreteCartesianOutcomeSpace</a> with a single issue.</li>
+<li><code>discrete_outcomes()</code> A generator of all outcomes in the outcome space.</li>
+<li><code>log_info()</code> Logs structured information for this negotiator that can be checked in the logs later (Similarily there are <code>log_error</code>, <code>log_warning</code>, <code>log_debug</code>). </li>
+</ul>
+</li>
+<li><code>self.ufun</code> A <a href="https://negmas.readthedocs.io/en/latest/api/negmas.preferences.LinearAdditiveUtilityFunction.html#negmas.preferences.LinearAdditiveUtilityFunction">LinearAdditiveUtilityFunction</a> representing the agent's own utility function. This object provides some helpful functionality including:</li>
+<li><code>self.ufun.is_better(a, b)</code> Tests if outcome <code>a</code> is better than <code>b</code> (use <code>None</code> for disagreement). Similarily we have, <code>is_worse</code>, <code>is_not_worse</code> and <code>is_not_better</code>.</li>
+<li><code>self.ufun.reserved_value</code> Your negotiator's reserved value (between 0 and 1). You can access this also as <code>self.ufun(None)</code>.</li>
+<li><code>self.ufun(w)</code> Returns the utility value of the outcome <code>w</code>. It is recommended to cast this value to float (i.e. <code>float(self.ufun(w)</code>) to support probabilistic utility functions.</li>
+<li><code>self.outcome_space</code> The <a href="https://negmas.readthedocs.io/en/latest/api/negmas.outcomes.OutcomeSpace.html">OutcomeSpace</a> of the negotiation which represent all possible agreements. In ANL 2024, this will always be of type <a href="https://negmas.readthedocs.io/en/latest/api/negmas.outcomes.DiscreteCartesianOutcomeSpace.html">DiscreteCartesianOutcomeSpace</a> with a single issue.</li>
+<li><code>self.ufun.invert()</code> Returns and caches an <a href="https://negmas.readthedocs.io/en/latest/api/negmas.preferences.InverseUFun.html#negmas.preferences.InverseUFun">InverseUtilityFunction</a> object which can be used to find outcomes given their utilities. The most important services provided by the InverseUtilityFunction returned are:<ul>
+<li><code>minmax()</code> returns the minimum and maximum values of the ufun (will always be (0, 1) approximately in ANL 2024).</li>
+<li><code>best()</code>, <code>worst()</code> returns the best (worst) outcomes.</li>
+<li><code>one_in()</code>, <code>some_in()</code> returns one (or some) outcomes within the given range of utilities.</li>
+<li><code>next_better()</code>, <code>next_worse()</code> returns the next outcome descendingly (ascendingly) in utility value.</li>
+</ul>
+</li>
+<li><code>self.opponent_ufun</code> A <a href="https://negmas.readthedocs.io/en/latest/api/negmas.preferences.LinearAdditiveUtilityFunction.html#negmas.preferences.LinearAdditiveUtilityFunction">LinearAdditiveUtilityFunction</a> representing the <strong>opponent's</strong> utility function. You can access this also as <code>self.private_info["opponent_ufun"]</code>. This utility function will have a zero reserved value indepdendent of the opponent's true reserved value. You can actually set the reserved value on this object to your best estimate. All ufun funcationality is available in this object.</li>
+</ul>
+<p>Other than these objects, your negotiator can access any of the analytic facilities available in NegMAS. For example, you can calculate the <a href="https://negmas.readthedocs.io/en/latest/api/negmas.preferences.pareto_frontier.html">pareto_frontier</a>, <a href="https://negmas.readthedocs.io/en/latest/api/negmas.preferences.nash_points.html">Nash Bargaining Soluion</a>, <a href="https://negmas.readthedocs.io/en/latest/api/negmas.preferences.kalai_points.html">Kalai Bargaining Solution</a>, <a href="https://negmas.readthedocs.io/en/latest/api/negmas.preferences.max_welfare_points.html">points with maximum wellfare</a>, etc. You can check the implementation of the <a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/nash_seeker.py">NashSeeker</a> agent for examples of using these facilities.</p>
+<p>Other than implementing the <code>__call__</code>, method you can optionally implement one or more of the following callbacks to initialize your agent:</p>
+<ul>
+<li><code>on_negotiation_start(state: SAOState)</code> This <a href="https://negmas.readthedocs.io/en/latest/api/negmas.negotiators.EvaluatorNegotiator.html#negmas.negotiators.EvaluatorNegotiator.on_negotiation_start">callback</a> is called once per negotiation after the ufuns are set but before any offers are exchanged.</li>
+<li><code>on_preferences_changed(changes)</code> This <a href="https://negmas.readthedocs.io/en/latest/api/negmas.negotiators.EvaluatorNegotiator.html#negmas.negotiators.EvaluatorNegotiator.on_preferences_changed">callback</a> is called <strong>whenever</strong> your negotiator's ufun is changed. This will happen at the beginning of each negotiation but it can also happen again if the ufun is changed <strong>while the negotiation is running</strong>. In ANL 2024, ufuns never change during the negotiation so this callback is equivalent to <code>on_negotiation_start()</code> but for future proofness, you should use this callback for any initialization instead to guarantee that this initialization will be re-run in cases of changing utility function.</li>
+</ul>
+<h2 id="understanding-our-negotiator">Understanding our negotiator</h2>
+<p>Now we can analyze the simple random negotiator we developed earlier.</p>
+<ul>
+<li>Firstly, we find the current offer that we need to respond to:
+  <div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">offer</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">current_offer</span>
+</span></code></pre></div></li>
+<li><strong>Acceptance Strategy</strong> We then accept this offer if three conditions are satisfied:</li>
+<li>The offer is not <code>None</code> which means that we are not starting the negotiation just now:</li>
+<li>The offer is not worse than disagreement. This prevents us from accepting irrational outcomes.</li>
+<li>A random number we generated is less than 0.25. This means we accept rational offers with probability 25%.
+    <div class="language-python highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="k">if</span> <span class="n">offer</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">is_not_worse</span><span class="p">(</span><span class="n">offer</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span> <span class="ow">and</span> <span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="o">&lt;</span> <span class="mf">0.25</span><span class="p">:</span>
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">ACCEPT_OFFER</span><span class="p">,</span> <span class="n">offer</span><span class="p">)</span>
+</span></code></pre></div></li>
+<li><strong>Offering Strategy</strong> If we decided not to accept the offer, we simply generate a single random outcome and offer it:
+  <div class="language-python highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">REJECT_OFFER</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">nmi</span><span class="o">.</span><span class="n">random_outcomes</span><span class="p">(</span><span class="mi">1</span><span class="p">)[</span><span class="mi">0</span><span class="p">])</span>
+</span></code></pre></div></li>
+</ul>
+<p>This negotiator did not use the fact that we know the opponent utility function up to reserved value. It did not even use the fact that we know our <em>own</em> utility function. As expected, it did not get a good score. Let's develop a simple yet more meaningful agent that uses both of these pieces of information.</p>
+<p>Can you now see why is this negotiator is getting negative advantages sometimes? We were careful in our acceptance strategy but not in our <em>offering strategy</em>. There is nothing in our code that prevents our negotiator from offering irrational outcomes (i.e. outcomes worse than disagreement for itself) and sometimes the opponent will just accept those. Can you fix this?</p>
+<h2 id="a-more-meaningful-negotiator">A more meaningful negotiator</h2>
+<p>How can we use knowledge of our own and our opponent's utility functions (up to reserved value for them)? Here is one possibility: </p>
+<ul>
+<li><strong>Acceptance Strategy</strong> We accept offers that have a utility above some <em>aspiration</em> level. This aspiration level starts very high (1.0) and goes monotoncially down but never under the reserved value which is reached when the relative time is 1.0 (i.e. by the end of the negotiation). This is implemented in <code>is_acceptable()</code> below.</li>
+<li>
+<p><strong>Opponent Modeling</strong> We estimate the opponent reserved value under the assumption that they are using a monotonically decreasing curve to select a utility value and offer an outcome around it. This is implemented in <code>update_reserved_value()</code> below.</p>
+</li>
+<li>
+<p><strong>Offering Strategy</strong> Once we have an estimate of their reserved value, we can then find out all outcomes that are rational for both we and them. We can then check the relative time of the negotiation and offer outcomes by conceding over this list of rational outcomes. This is implemented in the <code>__call__()</code> method below.</p>
+</li>
+</ul>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="k">def</span> <span class="nf">aspiration_function</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">mx</span><span class="p">,</span> <span class="n">rv</span><span class="p">,</span> <span class="n">e</span><span class="p">):</span>
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;A monotonically decreasing curve starting at mx (t=0) and ending at rv (t=1)&quot;&quot;&quot;</span>
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    <span class="k">return</span> <span class="p">(</span><span class="n">mx</span> <span class="o">-</span> <span class="n">rv</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">-</span> <span class="n">np</span><span class="o">.</span><span class="n">power</span><span class="p">(</span><span class="n">t</span><span class="p">,</span> <span class="n">e</span><span class="p">))</span> <span class="o">+</span> <span class="n">rv</span>
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+</span><span id="__span-12-5"><a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>
+</span><span id="__span-12-6"><a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="k">class</span> <span class="nc">SimpleRVFitter</span><span class="p">(</span><span class="n">SAONegotiator</span><span class="p">):</span>
+</span><span id="__span-12-7"><a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;A simple curve fitting modeling agent&quot;&quot;&quot;</span>
+</span><span id="__span-12-8"><a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">5.0</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-12-9"><a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Initialization&quot;&quot;&quot;</span>
+</span><span id="__span-12-10"><a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</span><span id="__span-12-11"><a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">e</span> <span class="o">=</span> <span class="n">e</span>        
+</span><span id="__span-12-12"><a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>        <span class="c1"># keeps track of times at which the opponent offers</span>
+</span><span id="__span-12-13"><a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">opponent_times</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-12-14"><a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>        <span class="c1"># keeps track of opponent utilities of its offers</span>
+</span><span id="__span-12-15"><a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">opponent_utilities</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">float</span><span class="p">]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-12-16"><a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a>        <span class="c1"># keeps track of the our last estimate of the opponent reserved value</span>
+</span><span id="__span-12-17"><a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_past_oppnent_rv</span> <span class="o">=</span> <span class="mf">0.0</span>
+</span><span id="__span-12-18"><a id="__codelineno-12-18" name="__codelineno-12-18" href="#__codelineno-12-18"></a>        <span class="c1"># keeps track of the rational outcome set given our estimate of the</span>
+</span><span id="__span-12-19"><a id="__codelineno-12-19" name="__codelineno-12-19" href="#__codelineno-12-19"></a>        <span class="c1"># opponent reserved value and our knowledge of ours</span>
+</span><span id="__span-12-20"><a id="__codelineno-12-20" name="__codelineno-12-20" href="#__codelineno-12-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">:</span> <span class="nb">list</span><span class="p">[</span><span class="nb">tuple</span><span class="p">[</span><span class="nb">float</span><span class="p">,</span> <span class="nb">float</span><span class="p">,</span> <span class="n">Outcome</span><span class="p">]]</span> <span class="o">=</span> <span class="p">[]</span>
+</span><span id="__span-12-21"><a id="__codelineno-12-21" name="__codelineno-12-21" href="#__codelineno-12-21"></a>
+</span><span id="__span-12-22"><a id="__codelineno-12-22" name="__codelineno-12-22" href="#__codelineno-12-22"></a>    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+</span><span id="__span-12-23"><a id="__codelineno-12-23" name="__codelineno-12-23" href="#__codelineno-12-23"></a>        <span class="c1"># update the opponent reserved value in self.opponent_ufun</span>
+</span><span id="__span-12-24"><a id="__codelineno-12-24" name="__codelineno-12-24" href="#__codelineno-12-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">update_reserved_value</span><span class="p">(</span><span class="n">state</span><span class="p">)</span>
+</span><span id="__span-12-25"><a id="__codelineno-12-25" name="__codelineno-12-25" href="#__codelineno-12-25"></a>        <span class="c1"># rune the acceptance strategy and if the offer received is acceptable, accept it</span>
+</span><span id="__span-12-26"><a id="__codelineno-12-26" name="__codelineno-12-26" href="#__codelineno-12-26"></a>        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">is_acceptable</span><span class="p">(</span><span class="n">state</span><span class="p">):</span>
+</span><span id="__span-12-27"><a id="__codelineno-12-27" name="__codelineno-12-27" href="#__codelineno-12-27"></a>            <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">ACCEPT_OFFER</span><span class="p">,</span> <span class="n">state</span><span class="o">.</span><span class="n">current_offer</span><span class="p">)</span>
+</span><span id="__span-12-28"><a id="__codelineno-12-28" name="__codelineno-12-28" href="#__codelineno-12-28"></a>        <span class="c1"># The offering strategy</span>
+</span><span id="__span-12-29"><a id="__codelineno-12-29" name="__codelineno-12-29" href="#__codelineno-12-29"></a>        <span class="c1"># We only update our estimate of the rational list of outcomes if it is not set or</span>
+</span><span id="__span-12-30"><a id="__codelineno-12-30" name="__codelineno-12-30" href="#__codelineno-12-30"></a>        <span class="c1"># there is a change in estimated reserved value</span>
+</span><span id="__span-12-31"><a id="__codelineno-12-31" name="__codelineno-12-31" href="#__codelineno-12-31"></a>        <span class="k">if</span> <span class="p">(</span>
+</span><span id="__span-12-32"><a id="__codelineno-12-32" name="__codelineno-12-32" href="#__codelineno-12-32"></a>            <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span>
+</span><span id="__span-12-33"><a id="__codelineno-12-33" name="__codelineno-12-33" href="#__codelineno-12-33"></a>            <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opponent_ufun</span><span class="o">.</span><span class="n">reserved_value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_past_oppnent_rv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-3</span>
+</span><span id="__span-12-34"><a id="__codelineno-12-34" name="__codelineno-12-34" href="#__codelineno-12-34"></a>        <span class="p">):</span>
+</span><span id="__span-12-35"><a id="__codelineno-12-35" name="__codelineno-12-35" href="#__codelineno-12-35"></a>            <span class="c1"># The rational set of outcomes sorted dependingly according to our utility function</span>
+</span><span id="__span-12-36"><a id="__codelineno-12-36" name="__codelineno-12-36" href="#__codelineno-12-36"></a>            <span class="c1"># and the opponent utility function (in that order).</span>
+</span><span id="__span-12-37"><a id="__codelineno-12-37" name="__codelineno-12-37" href="#__codelineno-12-37"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span>
+</span><span id="__span-12-38"><a id="__codelineno-12-38" name="__codelineno-12-38" href="#__codelineno-12-38"></a>                <span class="p">[</span>
+</span><span id="__span-12-39"><a id="__codelineno-12-39" name="__codelineno-12-39" href="#__codelineno-12-39"></a>                    <span class="p">(</span><span class="n">my_util</span><span class="p">,</span> <span class="n">opp_util</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
+</span><span id="__span-12-40"><a id="__codelineno-12-40" name="__codelineno-12-40" href="#__codelineno-12-40"></a>                    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nmi</span><span class="o">.</span><span class="n">outcome_space</span><span class="o">.</span><span class="n">enumerate_or_sample</span><span class="p">(</span>
+</span><span id="__span-12-41"><a id="__codelineno-12-41" name="__codelineno-12-41" href="#__codelineno-12-41"></a>                        <span class="n">levels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_cardinality</span><span class="o">=</span><span class="mi">100_000</span>
+</span><span id="__span-12-42"><a id="__codelineno-12-42" name="__codelineno-12-42" href="#__codelineno-12-42"></a>                    <span class="p">)</span>
+</span><span id="__span-12-43"><a id="__codelineno-12-43" name="__codelineno-12-43" href="#__codelineno-12-43"></a>                    <span class="k">if</span> <span class="p">(</span><span class="n">my_util</span> <span class="o">:=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="p">(</span><span class="n">_</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">reserved_value</span>
+</span><span id="__span-12-44"><a id="__codelineno-12-44" name="__codelineno-12-44" href="#__codelineno-12-44"></a>                    <span class="ow">and</span> <span class="p">(</span><span class="n">opp_util</span> <span class="o">:=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opponent_ufun</span><span class="p">(</span><span class="n">_</span><span class="p">)))</span>
+</span><span id="__span-12-45"><a id="__codelineno-12-45" name="__codelineno-12-45" href="#__codelineno-12-45"></a>                    <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">opponent_ufun</span><span class="o">.</span><span class="n">reserved_value</span>
+</span><span id="__span-12-46"><a id="__codelineno-12-46" name="__codelineno-12-46" href="#__codelineno-12-46"></a>                <span class="p">],</span>
+</span><span id="__span-12-47"><a id="__codelineno-12-47" name="__codelineno-12-47" href="#__codelineno-12-47"></a>            <span class="p">)</span>
+</span><span id="__span-12-48"><a id="__codelineno-12-48" name="__codelineno-12-48" href="#__codelineno-12-48"></a>        <span class="c1"># If there are no rational outcomes (i.e. our estimate of the opponent rv is very wrogn),</span>
+</span><span id="__span-12-49"><a id="__codelineno-12-49" name="__codelineno-12-49" href="#__codelineno-12-49"></a>        <span class="c1"># then just revert to offering our top offer</span>
+</span><span id="__span-12-50"><a id="__codelineno-12-50" name="__codelineno-12-50" href="#__codelineno-12-50"></a>        <span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">:</span>
+</span><span id="__span-12-51"><a id="__codelineno-12-51" name="__codelineno-12-51" href="#__codelineno-12-51"></a>            <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">REJECT_OFFER</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">best</span><span class="p">())</span>
+</span><span id="__span-12-52"><a id="__codelineno-12-52" name="__codelineno-12-52" href="#__codelineno-12-52"></a>        <span class="c1"># find our aspiration level (value between 0 and 1) the higher the higher utility we require</span>
+</span><span id="__span-12-53"><a id="__codelineno-12-53" name="__codelineno-12-53" href="#__codelineno-12-53"></a>        <span class="n">asp</span> <span class="o">=</span> <span class="n">aspiration_function</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">relative_time</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">)</span>
+</span><span id="__span-12-54"><a id="__codelineno-12-54" name="__codelineno-12-54" href="#__codelineno-12-54"></a>        <span class="c1"># find the index of the rational outcome at the aspiration level (in the rational set of outcomes)</span>
+</span><span id="__span-12-55"><a id="__codelineno-12-55" name="__codelineno-12-55" href="#__codelineno-12-55"></a>        <span class="n">max_rational</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span id="__span-12-56"><a id="__codelineno-12-56" name="__codelineno-12-56" href="#__codelineno-12-56"></a>        <span class="n">indx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_rational</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">asp</span> <span class="o">*</span> <span class="n">max_rational</span><span class="p">)))</span>        
+</span><span id="__span-12-57"><a id="__codelineno-12-57" name="__codelineno-12-57" href="#__codelineno-12-57"></a>        <span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">[</span><span class="n">indx</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-12-58"><a id="__codelineno-12-58" name="__codelineno-12-58" href="#__codelineno-12-58"></a>        <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">REJECT_OFFER</span><span class="p">,</span> <span class="n">outcome</span><span class="p">)</span>
+</span><span id="__span-12-59"><a id="__codelineno-12-59" name="__codelineno-12-59" href="#__codelineno-12-59"></a>
+</span><span id="__span-12-60"><a id="__codelineno-12-60" name="__codelineno-12-60" href="#__codelineno-12-60"></a>    <span class="k">def</span> <span class="nf">is_acceptable</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bool</span><span class="p">:</span>
+</span><span id="__span-12-61"><a id="__codelineno-12-61" name="__codelineno-12-61" href="#__codelineno-12-61"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;The acceptance strategy&quot;&quot;&quot;</span>
+</span><span id="__span-12-62"><a id="__codelineno-12-62" name="__codelineno-12-62" href="#__codelineno-12-62"></a>        <span class="c1"># get the offer from the mechanism state</span>
+</span><span id="__span-12-63"><a id="__codelineno-12-63" name="__codelineno-12-63" href="#__codelineno-12-63"></a>        <span class="n">offer</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">current_offer</span>
+</span><span id="__span-12-64"><a id="__codelineno-12-64" name="__codelineno-12-64" href="#__codelineno-12-64"></a>        <span class="c1"># If there is no offer, there is nothing to accept</span>
+</span><span id="__span-12-65"><a id="__codelineno-12-65" name="__codelineno-12-65" href="#__codelineno-12-65"></a>        <span class="k">if</span> <span class="n">offer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-12-66"><a id="__codelineno-12-66" name="__codelineno-12-66" href="#__codelineno-12-66"></a>            <span class="k">return</span> <span class="kc">False</span>
+</span><span id="__span-12-67"><a id="__codelineno-12-67" name="__codelineno-12-67" href="#__codelineno-12-67"></a>        <span class="c1"># Find the current aspiration level</span>
+</span><span id="__span-12-68"><a id="__codelineno-12-68" name="__codelineno-12-68" href="#__codelineno-12-68"></a>        <span class="n">asp</span> <span class="o">=</span> <span class="n">aspiration_function</span><span class="p">(</span>
+</span><span id="__span-12-69"><a id="__codelineno-12-69" name="__codelineno-12-69" href="#__codelineno-12-69"></a>            <span class="n">state</span><span class="o">.</span><span class="n">relative_time</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">reserved_value</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span>
+</span><span id="__span-12-70"><a id="__codelineno-12-70" name="__codelineno-12-70" href="#__codelineno-12-70"></a>        <span class="p">)</span>
+</span><span id="__span-12-71"><a id="__codelineno-12-71" name="__codelineno-12-71" href="#__codelineno-12-71"></a>        <span class="c1"># accept if the utility of the received offer is higher than</span>
+</span><span id="__span-12-72"><a id="__codelineno-12-72" name="__codelineno-12-72" href="#__codelineno-12-72"></a>        <span class="c1"># the current aspiration</span>
+</span><span id="__span-12-73"><a id="__codelineno-12-73" name="__codelineno-12-73" href="#__codelineno-12-73"></a>        <span class="k">return</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="p">(</span><span class="n">offer</span><span class="p">))</span> <span class="o">&gt;=</span> <span class="n">asp</span>
+</span><span id="__span-12-74"><a id="__codelineno-12-74" name="__codelineno-12-74" href="#__codelineno-12-74"></a>
+</span><span id="__span-12-75"><a id="__codelineno-12-75" name="__codelineno-12-75" href="#__codelineno-12-75"></a>    <span class="k">def</span> <span class="nf">update_reserved_value</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">state</span><span class="p">):</span>
+</span><span id="__span-12-76"><a id="__codelineno-12-76" name="__codelineno-12-76" href="#__codelineno-12-76"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;Learns the reserved value of the partner&quot;&quot;&quot;</span>
+</span><span id="__span-12-77"><a id="__codelineno-12-77" name="__codelineno-12-77" href="#__codelineno-12-77"></a>        <span class="c1"># extract the current offer from the state</span>
+</span><span id="__span-12-78"><a id="__codelineno-12-78" name="__codelineno-12-78" href="#__codelineno-12-78"></a>        <span class="n">offer</span> <span class="o">=</span> <span class="n">state</span><span class="o">.</span><span class="n">current_offer</span>
+</span><span id="__span-12-79"><a id="__codelineno-12-79" name="__codelineno-12-79" href="#__codelineno-12-79"></a>        <span class="k">if</span> <span class="n">offer</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="__span-12-80"><a id="__codelineno-12-80" name="__codelineno-12-80" href="#__codelineno-12-80"></a>            <span class="k">return</span>
+</span><span id="__span-12-81"><a id="__codelineno-12-81" name="__codelineno-12-81" href="#__codelineno-12-81"></a>        <span class="c1"># save to the list of utilities received from the opponent and their times</span>
+</span><span id="__span-12-82"><a id="__codelineno-12-82" name="__codelineno-12-82" href="#__codelineno-12-82"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">opponent_utilities</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opponent_ufun</span><span class="p">(</span><span class="n">offer</span><span class="p">)))</span>
+</span><span id="__span-12-83"><a id="__codelineno-12-83" name="__codelineno-12-83" href="#__codelineno-12-83"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">opponent_times</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">relative_time</span><span class="p">)</span>
+</span><span id="__span-12-84"><a id="__codelineno-12-84" name="__codelineno-12-84" href="#__codelineno-12-84"></a>        <span class="c1"># Use curve fitting to estimate the opponent reserved value</span>
+</span><span id="__span-12-85"><a id="__codelineno-12-85" name="__codelineno-12-85" href="#__codelineno-12-85"></a>        <span class="c1"># We assume the following:</span>
+</span><span id="__span-12-86"><a id="__codelineno-12-86" name="__codelineno-12-86" href="#__codelineno-12-86"></a>        <span class="c1"># - The opponent is using a concession strategy with an exponent between 0.2, 5.0</span>
+</span><span id="__span-12-87"><a id="__codelineno-12-87" name="__codelineno-12-87" href="#__codelineno-12-87"></a>        <span class="c1"># - The opponent never offers outcomes lower than their reserved value which means</span>
+</span><span id="__span-12-88"><a id="__codelineno-12-88" name="__codelineno-12-88" href="#__codelineno-12-88"></a>        <span class="c1">#   that their rv must be no higher than the worst outcome they offered for themselves.</span>
+</span><span id="__span-12-89"><a id="__codelineno-12-89" name="__codelineno-12-89" href="#__codelineno-12-89"></a>        <span class="n">bounds</span> <span class="o">=</span> <span class="p">((</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">5.0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opponent_utilities</span><span class="p">)))</span>
+</span><span id="__span-12-90"><a id="__codelineno-12-90" name="__codelineno-12-90" href="#__codelineno-12-90"></a>        <span class="n">err</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
+</span><span id="__span-12-91"><a id="__codelineno-12-91" name="__codelineno-12-91" href="#__codelineno-12-91"></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="__span-12-92"><a id="__codelineno-12-92" name="__codelineno-12-92" href="#__codelineno-12-92"></a>            <span class="n">optimal_vals</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">curve_fit</span><span class="p">(</span>
+</span><span id="__span-12-93"><a id="__codelineno-12-93" name="__codelineno-12-93" href="#__codelineno-12-93"></a>                <span class="k">lambda</span> <span class="n">x</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">rv</span><span class="p">:</span> <span class="n">aspiration_function</span><span class="p">(</span>
+</span><span id="__span-12-94"><a id="__codelineno-12-94" name="__codelineno-12-94" href="#__codelineno-12-94"></a>                    <span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">opponent_utilities</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">rv</span><span class="p">,</span> <span class="n">e</span>
+</span><span id="__span-12-95"><a id="__codelineno-12-95" name="__codelineno-12-95" href="#__codelineno-12-95"></a>                <span class="p">),</span>
+</span><span id="__span-12-96"><a id="__codelineno-12-96" name="__codelineno-12-96" href="#__codelineno-12-96"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">opponent_times</span><span class="p">,</span>
+</span><span id="__span-12-97"><a id="__codelineno-12-97" name="__codelineno-12-97" href="#__codelineno-12-97"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">opponent_utilities</span><span class="p">,</span>
+</span><span id="__span-12-98"><a id="__codelineno-12-98" name="__codelineno-12-98" href="#__codelineno-12-98"></a>                <span class="n">bounds</span><span class="o">=</span><span class="n">bounds</span><span class="p">,</span>
+</span><span id="__span-12-99"><a id="__codelineno-12-99" name="__codelineno-12-99" href="#__codelineno-12-99"></a>            <span class="p">)</span>
+</span><span id="__span-12-100"><a id="__codelineno-12-100" name="__codelineno-12-100" href="#__codelineno-12-100"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">_past_oppnent_rv</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">opponent_ufun</span><span class="o">.</span><span class="n">reserved_value</span>
+</span><span id="__span-12-101"><a id="__codelineno-12-101" name="__codelineno-12-101" href="#__codelineno-12-101"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">opponent_ufun</span><span class="o">.</span><span class="n">reserved_value</span> <span class="o">=</span> <span class="n">optimal_vals</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-12-102"><a id="__codelineno-12-102" name="__codelineno-12-102" href="#__codelineno-12-102"></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="__span-12-103"><a id="__codelineno-12-103" name="__codelineno-12-103" href="#__codelineno-12-103"></a>            <span class="n">err</span><span class="p">,</span> <span class="n">optimal_vals</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">,</span> <span class="p">[</span><span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span>
+</span></code></pre></div>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="n">anl2024_tournament</span><span class="p">(</span>
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    <span class="n">n_scenarios</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_repetitions</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nologs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">njobs</span><span class="o">=-</span><span class="mi">1</span><span class="p">,</span>
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    <span class="n">competitors</span><span class="o">=</span><span class="p">[</span><span class="n">MyRandomNegotiator</span><span class="p">,</span> <span class="n">SimpleRVFitter</span><span class="p">,</span> <span class="n">Boulware</span><span class="p">,</span> <span class="n">Conceder</span><span class="p">]</span>
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="p">)</span><span class="o">.</span><span class="n">final_scores</span>
+</span></code></pre></div>
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">Will run <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">48</span> negotiations on <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span> scenarios between <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">4</span> competitors
+</pre>
+
+<div class="language-text highlight"><pre><span></span><code>Output()
+</code></pre></div>
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
+</pre>
+
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>      SimpleRVFitter  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.560725</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.505073</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>            Conceder  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.344169</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.045876</span>
+</pre>
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>strategy</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>SimpleRVFitter</td>
+      <td>0.560725</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Boulware</td>
+      <td>0.505073</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Conceder</td>
+      <td>0.344169</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>MyRandomNegotiator</td>
+      <td>-0.045876</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<p>Much better :-)</p>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>
+</span></code></pre></div>
+<a href="/tutorials/notebooks/tutorial.ipynb">Download Notebook</a></p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../../faq/" class="btn btn-neutral float-left" title="FAQ"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../../reference/" class="btn btn-neutral float-right" title="Reference">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../../faq/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../../reference/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "../..";</script>
+    <script src="../../js/theme_extra.js"></script>
+    <script src="../../js/theme.js"></script>
+      <script src="../../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
 </html>
