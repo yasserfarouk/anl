@@ -1,217 +1,189 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><link rel="canonical" href="https://yasserfarouk.github.io/anl/reference/" />
-      <link rel="shortcut icon" href="../img/favicon.ico" />
-    <title>Reference - ANL Documentation</title>
-    <link rel="stylesheet" href="../css/theme.css" />
-    <link rel="stylesheet" href="../css/theme_extra.css" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
-        <link href="../assets/_mkdocstrings.css" rel="stylesheet" />
-    
-      <script>
-        // Current page data
-        var mkdocs_page_name = "Reference";
-        var mkdocs_page_input_path = "reference.md";
-        var mkdocs_page_url = "/anl/reference/";
-      </script>
-    
-    <!--[if lt IE 9]>
-      <script src="../js/html5shiv.min.js"></script>
-    <![endif]-->
-      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-      <script>hljs.highlightAll();</script> 
-</head>
-
-<body class="wy-body-for-nav" role="document">
-
-  <div class="wy-grid-for-nav">
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
-    <div class="wy-side-scroll">
-      <div class="wy-side-nav-search">
-          <a href=".." class="icon icon-home"> ANL Documentation
-        </a><div role="search">
-  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
-      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
-  </form>
-</div>
-      </div>
-
-      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="..">Index</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../install/">Installation</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../tutorials/tutorial/">Tutorial</a>
-                </li>
-              </ul>
-              <ul>
-                <li class="toctree-l1"><a class="reference internal" href="../faq/">FAQ</a>
-                </li>
-              </ul>
-              <ul class="current">
-                <li class="toctree-l1 current"><a class="reference internal current" href="./">Reference</a>
-    <ul class="current">
-    <li class="toctree-l2"><a class="reference internal" href="#example-negotiators">Example Negotiators</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-micro">class: MiCRO</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.micro.MiCRO">MiCRO</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-nashseeker">class: NashSeeker</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker">NashSeeker</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-rvfitter">class: RVFitter</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.rv_fitter.RVFitter">RVFitter</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-boulware">class: Boulware</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.Boulware">Boulware</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-linear">class: Linear</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.Linear">Linear</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-conceder">class: Conceder</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.Conceder">Conceder</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-stochasticboulware">class: StochasticBoulware</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware">StochasticBoulware</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-stochasticlinear">class: StochasticLinear</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.StochasticLinear">StochasticLinear</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-conceder_1">class: Conceder</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.StochasticConceder">StochasticConceder</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-naivetitfortat">class: NaiveTitForTat</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat">NaiveTitForTat</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#tournaments">Tournaments</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#function-anl2024_tournament">function: anl2024_tournament</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.anl2024_tournament">anl2024_tournament</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#constant-default_an2024_competitors">constant: DEFAULT_AN2024_COMPETITORS</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.DEFAULT_AN2024_COMPETITORS">DEFAULT_AN2024_COMPETITORS</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#constant-default_tournament_path">constant: DEFAULT_TOURNAMENT_PATH</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.DEFAULT_TOURNAMENT_PATH">DEFAULT_TOURNAMENT_PATH</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#constant-default2024settings">constant: DEFAULT2024SETTINGS</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#helpers-scenario-generation">Helpers (Scenario Generation)</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#type-scenariogenerator">type: ScenarioGenerator</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.ScenarioGenerator">ScenarioGenerator</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#function-mixed_scenarios">function: mixed_scenarios</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.mixed_scenarios">mixed_scenarios</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#function-pie_scenarios">function: pie_scenarios</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.pie_scenarios">pie_scenarios</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#function-arbitrary_pie_scenarios">function: arbitrary_pie_scenarios</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.arbitrary_pie_scenarios">arbitrary_pie_scenarios</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#function-monotonic_pie_scenarios">function: monotonic_pie_scenarios</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.monotonic_pie_scenarios">monotonic_pie_scenarios</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#function-zerosum_pie_scenarios">function: zerosum_pie_scenarios</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.zerosum_pie_scenarios">zerosum_pie_scenarios</a>
-    </li>
-    </ul>
-                </li>
-              </ul>
-      </div>
-    </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="..">ANL Documentation</a>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         
-      </nav>
-      <div class="wy-nav-content">
-        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
-  <ul class="wy-breadcrumbs">
-    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
-      <li class="breadcrumb-item active">Reference</li>
-    <li class="wy-breadcrumbs-aside">
-    </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-            <div class="section" itemprop="articleBody">
-              
-                <h1 id="anl-reference">ANL Reference</h1>
+        
+        <link rel="canonical" href="https://yasserfarouk.github.io/anl/reference/">
+        <link rel="shortcut icon" href="../img/favicon.ico">
+        <title>Reference - ANL Documentation</title>
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
+        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+        <script>hljs.highlightAll();</script> 
+    </head>
+
+    <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">ANL Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Index</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../install/" class="nav-link">Installation</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../tutorials/tutorial/" class="nav-link">Tutorial</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../faq/" class="nav-link">FAQ</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Reference</a>
+                            </li>
+                        </ul>
+
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../faq/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#anl-reference" class="nav-link">ANL Reference</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#example-negotiators" class="nav-link">Example Negotiators</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.micro.MiCRO" class="nav-link">MiCRO</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker" class="nav-link">NashSeeker</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.rv_fitter.RVFitter" class="nav-link">RVFitter</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.Boulware" class="nav-link">Boulware</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.Linear" class="nav-link">Linear</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.Conceder" class="nav-link">Conceder</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware" class="nav-link">StochasticBoulware</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticLinear" class="nav-link">StochasticLinear</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticConceder" class="nav-link">StochasticConceder</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat" class="nav-link">NaiveTitForTat</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#tournaments" class="nav-link">Tournaments</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.anl2024_tournament" class="nav-link">anl2024_tournament</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.DEFAULT_AN2024_COMPETITORS" class="nav-link">DEFAULT_AN2024_COMPETITORS</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.DEFAULT_TOURNAMENT_PATH" class="nav-link">DEFAULT_TOURNAMENT_PATH</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.DEFAULT2024SETTINGS" class="nav-link">DEFAULT2024SETTINGS</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#helpers-scenario-generation" class="nav-link">Helpers (Scenario Generation)</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.ScenarioGenerator" class="nav-link">ScenarioGenerator</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.mixed_scenarios" class="nav-link">mixed_scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.pie_scenarios" class="nav-link">pie_scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.arbitrary_pie_scenarios" class="nav-link">arbitrary_pie_scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.monotonic_pie_scenarios" class="nav-link">monotonic_pie_scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#anl.anl2024.zerosum_pie_scenarios" class="nav-link">zerosum_pie_scenarios</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
+</div></div>
+                    <div class="col-md-9" role="main">
+
+<h1 id="anl-reference">ANL Reference</h1>
 <p>This package provides a wrapper around NegMAS functionality to generate and run tournaments a la ANL 2024 competition.
 You mostly only need to use <code>anl2024_tournament</code> in your code. The other helpers are provided to allow for a finer control over the scenarios used.</p>
 <h2 id="example-negotiators">Example Negotiators</h2>
@@ -448,38 +420,47 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>opponent_reserved_value</code></b>
-                  (<code>float</code>, default:
-                      <code>0.25</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Assumed reserved value for the opponent</p>
-              </div>
-            </li>
-            <li>
-              <b><code>nash_factor</code></b>
-              –
-              <div class="doc-md-description">
-                <p>Fraction (or multiple) of the agent utility at the Nash Point (assuming the <code>opponent_reserved_value</code>) that is acceptable</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>opponent_reserved_value</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Assumed reserved value for the opponent</p>
+            </div>
+          </td>
+          <td>
+                <code>0.25</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>nash_factor</code></td>
+          <td>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Fraction (or multiple) of the agent utility at the Nash Point (assuming the <code>opponent_reserved_value</code>) that is acceptable</p>
+            </div>
+          </td>
+          <td>
+                <code>0.9</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
             <details class="quote">
               <summary>Source code in <code>anl/anl2024/negotiators/builtins/nash_seeker.py</code></summary>
               <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-10">10</a></span>
@@ -649,62 +630,77 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>min_unique_utilities</code></b>
-                  (<code>int</code>, default:
-                      <code>10</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of different offers from the opponent before starting to
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>min_unique_utilities</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of different offers from the opponent before starting to
                   attempt learning their reserved value.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>e</code></b>
-                  (<code>float</code>, default:
-                      <code>5.0</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>The concession exponent used for the agent's offering strategy</p>
-              </div>
-            </li>
-            <li>
-              <b><code>stochasticity</code></b>
-                  (<code>float</code>, default:
-                      <code>0.1</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>The level of stochasticity in the offers.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>enable_logging</code></b>
-                  (<code>bool</code>, default:
-                      <code>False</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>If given, a log will be stored  for the estimates.</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>      <p>Remarks:</p>
+            </div>
+          </td>
+          <td>
+                <code>10</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>e</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The concession exponent used for the agent's offering strategy</p>
+            </div>
+          </td>
+          <td>
+                <code>5.0</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>stochasticity</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The level of stochasticity in the offers.</p>
+            </div>
+          </td>
+          <td>
+                <code>0.1</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>enable_logging</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, a log will be stored  for the estimates.</p>
+            </div>
+          </td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+      <p>Remarks:</p>
 <div class="language-text highlight"><pre><span></span><code>- Assumes that the opponent is using a time-based offering strategy that offers
   the outcome at utility $u(t) = (u_0 - r) - r \exp(t^e)$ where $u_0$ is the utility of
   the first offer (directly read from the opponent ufun), $e$ is an exponent that controls the
@@ -1427,325 +1423,436 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>scenarios</code></b>
-                  (<code>tuple[<span title="negmas.inout.Scenario">Scenario</span>, ...] | list[<span title="negmas.inout.Scenario">Scenario</span>]</code>, default:
-                      <code>tuple()</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>A list of predefined scenarios to use for the tournament</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_scenarios</code></b>
-                  (<code>int</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_scenarios&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of negotiation scenarios to generate specifically for this tournament</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_outcomes</code></b>
-                  (<code>int | tuple[int, int] | list[int]</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_outcomes&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of outcomes (or a min/max tuple of n. outcomes) for each scenario</p>
-              </div>
-            </li>
-            <li>
-              <b><code>competitors</code></b>
-                  (<code>tuple[type[<span title="negmas.negotiators.Negotiator">Negotiator</span>] | str, ...] | list[type[<span title="negmas.negotiators.Negotiator">Negotiator</span>] | str]</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT_AN2024_COMPETITORS" href="#anl.anl2024.DEFAULT_AN2024_COMPETITORS">DEFAULT_AN2024_COMPETITORS</a></code>
-)
-              –
-              <div class="doc-md-description">
-                <p>list of competitor agents</p>
-              </div>
-            </li>
-            <li>
-              <b><code>competitor_params</code></b>
-                  (<code><span title="typing.Sequence">Sequence</span>[dict | None] | None</code>, default:
-                      <code>None</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>If given, parameters to construct each competitor</p>
-              </div>
-            </li>
-            <li>
-              <b><code>rotate_ufuns</code></b>
-                  (<code>bool</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;rotate_ufuns&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>If given, each scenario will be tried with both orders of the ufuns.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_repetitions</code></b>
-                  (<code>int</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_repetitions&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of times to repeat each negotiation</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_steps</code></b>
-                  (<code>int | tuple[int, int] | None</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_steps&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of steps/rounds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</p>
-              </div>
-            </li>
-            <li>
-              <b><code>time_limit</code></b>
-                  (<code>float | tuple[float, float] | None</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;time_limit&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of seconds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</p>
-              </div>
-            </li>
-            <li>
-              <b><code>pend</code></b>
-                  (<code>float | tuple[float, float]</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;pend&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Probability of ending the negotiation every step/round (None for no-limit and a 2-valued tuple for sampling from a range)</p>
-              </div>
-            </li>
-            <li>
-              <b><code>pend_per_second</code></b>
-                  (<code>float | tuple[float, float]</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;pend_per_second&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Probability of ending the negotiation every second (None for no-limit and a 2-valued tuple for sampling from a range)</p>
-              </div>
-            </li>
-            <li>
-              <b><code>step_time_limit</code></b>
-                  (<code>float | tuple[float, float] | None</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;step_time_limit&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Time limit for every negotiation step (None for no-limit and a 2-valued tuple for sampling from a range)</p>
-              </div>
-            </li>
-            <li>
-              <b><code>negotiator_time_limit</code></b>
-                  (<code>float | tuple[float, float] | None</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;negotiator_time_limit&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Time limit for all actions of every negotiator (None for no-limit and a 2-valued tuple for sampling from a range)</p>
-              </div>
-            </li>
-            <li>
-              <b><code>name</code></b>
-                  (<code>str | None</code>, default:
-                      <code>None</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Name of the tournament</p>
-              </div>
-            </li>
-            <li>
-              <b><code>nologs</code></b>
-                  (<code>bool</code>, default:
-                      <code>False</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>If given, no logs will be saved</p>
-              </div>
-            </li>
-            <li>
-              <b><code>njobs</code></b>
-                  (<code>int</code>, default:
-                      <code>0</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of parallel jobs to use. -1 for serial and 0 for all cores</p>
-              </div>
-            </li>
-            <li>
-              <b><code>plot_fraction</code></b>
-                  (<code>float</code>, default:
-                      <code>0.2</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Fraction of negotiations to plot. Only used if not nologs</p>
-              </div>
-            </li>
-            <li>
-              <b><code>verbosity</code></b>
-                  (<code>int</code>, default:
-                      <code>1</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Verbosity level. The higher the more verbose</p>
-              </div>
-            </li>
-            <li>
-              <b><code>self_play</code></b>
-                  (<code>bool</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;self_play&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Allow negotiators to run against themselves.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>randomize_runs</code></b>
-                  (<code>bool</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;randomize_runs&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Randomize the order of negotiations</p>
-              </div>
-            </li>
-            <li>
-              <b><code>save_every</code></b>
-                  (<code>int</code>, default:
-                      <code>0</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Save logs every this number of negotiations</p>
-              </div>
-            </li>
-            <li>
-              <b><code>save_stats</code></b>
-                  (<code>bool</code>, default:
-                      <code>True</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Save statistics for scenarios</p>
-              </div>
-            </li>
-            <li>
-              <b><code>known_partner</code></b>
-                  (<code>bool</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;known_partner&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Allow negotiators to know the type of their partner (through their ID)</p>
-              </div>
-            </li>
-            <li>
-              <b><code>final_score</code></b>
-                  (<code>tuple[str, str]</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;final_score&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>The metric and statistic used to calculate the score. Metrics are: advantage, utility, welfare, partner_welfare and Stats are: median, mean, std, min, max</p>
-              </div>
-            </li>
-            <li>
-              <b><code>base_path</code></b>
-                  (<code><span title="pathlib.Path">Path</span> | None</code>, default:
-                      <code>None</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Folder in which to generate the logs folder for this tournament. Default is ~/negmas/anl2024/tournaments</p>
-              </div>
-            </li>
-            <li>
-              <b><code>scenario_generator</code></b>
-                  (<code>str | <a class="autorefs autorefs-internal" title="anl.anl2024.runner.ScenarioGenerator" href="#anl.anl2024.ScenarioGenerator">ScenarioGenerator</a></code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;scenario_generator&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>An alternative method for generating bilateral negotiation scenarios. Must receive the number of scenarios and number of outcomes.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>generator_params</code></b>
-                  (<code>dict[str, <span title="typing.Any">Any</span>] | None</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Parameters passed to the scenario generator</p>
-              </div>
-            </li>
-            <li>
-              <b><code>plot_params</code></b>
-                  (<code>dict[str, <span title="typing.Any">Any</span>] | None</code>, default:
-                      <code>None</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>If given, overrides plotting parameters. See <code>nemgas.sao.SAOMechanism.plot()</code> for all parameters</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>scenarios</code></td>
+          <td>
+                <code>tuple[<span title="negmas.inout.Scenario">Scenario</span>, ...] | list[<span title="negmas.inout.Scenario">Scenario</span>]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>A list of predefined scenarios to use for the tournament</p>
+            </div>
+          </td>
+          <td>
+                <code>tuple()</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_scenarios</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of negotiation scenarios to generate specifically for this tournament</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_scenarios&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_outcomes</code></td>
+          <td>
+                <code>int | tuple[int, int] | list[int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes (or a min/max tuple of n. outcomes) for each scenario</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_outcomes&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>competitors</code></td>
+          <td>
+                <code>tuple[type[<span title="negmas.negotiators.Negotiator">Negotiator</span>] | str, ...] | list[type[<span title="negmas.negotiators.Negotiator">Negotiator</span>] | str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>list of competitor agents</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT_AN2024_COMPETITORS" href="#anl.anl2024.DEFAULT_AN2024_COMPETITORS">DEFAULT_AN2024_COMPETITORS</a></code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>competitor_params</code></td>
+          <td>
+                <code><span title="typing.Sequence">Sequence</span>[dict | None] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, parameters to construct each competitor</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>rotate_ufuns</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, each scenario will be tried with both orders of the ufuns.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;rotate_ufuns&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_repetitions</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of times to repeat each negotiation</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_repetitions&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_steps</code></td>
+          <td>
+                <code>int | tuple[int, int] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of steps/rounds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_steps&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>time_limit</code></td>
+          <td>
+                <code>float | tuple[float, float] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of seconds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;time_limit&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pend</code></td>
+          <td>
+                <code>float | tuple[float, float]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Probability of ending the negotiation every step/round (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;pend&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pend_per_second</code></td>
+          <td>
+                <code>float | tuple[float, float]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Probability of ending the negotiation every second (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;pend_per_second&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>step_time_limit</code></td>
+          <td>
+                <code>float | tuple[float, float] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Time limit for every negotiation step (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;step_time_limit&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>negotiator_time_limit</code></td>
+          <td>
+                <code>float | tuple[float, float] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Time limit for all actions of every negotiator (None for no-limit and a 2-valued tuple for sampling from a range)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;negotiator_time_limit&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>name</code></td>
+          <td>
+                <code>str | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Name of the tournament</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>nologs</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, no logs will be saved</p>
+            </div>
+          </td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>njobs</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of parallel jobs to use. -1 for serial and 0 for all cores</p>
+            </div>
+          </td>
+          <td>
+                <code>0</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>plot_fraction</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Fraction of negotiations to plot. Only used if not nologs</p>
+            </div>
+          </td>
+          <td>
+                <code>0.2</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>verbosity</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Verbosity level. The higher the more verbose</p>
+            </div>
+          </td>
+          <td>
+                <code>1</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>self_play</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Allow negotiators to run against themselves.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;self_play&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>randomize_runs</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Randomize the order of negotiations</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;randomize_runs&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>save_every</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Save logs every this number of negotiations</p>
+            </div>
+          </td>
+          <td>
+                <code>0</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>save_stats</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Save statistics for scenarios</p>
+            </div>
+          </td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>known_partner</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Allow negotiators to know the type of their partner (through their ID)</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;known_partner&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>final_score</code></td>
+          <td>
+                <code>tuple[str, str]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>The metric and statistic used to calculate the score. Metrics are: advantage, utility, welfare, partner_welfare and Stats are: median, mean, std, min, max</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;final_score&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>base_path</code></td>
+          <td>
+                <code><span title="pathlib.Path">Path</span> | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Folder in which to generate the logs folder for this tournament. Default is ~/negmas/anl2024/tournaments</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>scenario_generator</code></td>
+          <td>
+                <code>str | <a class="autorefs autorefs-internal" title="anl.anl2024.runner.ScenarioGenerator" href="#anl.anl2024.ScenarioGenerator">ScenarioGenerator</a></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>An alternative method for generating bilateral negotiation scenarios. Must receive the number of scenarios and number of outcomes.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;scenario_generator&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>generator_params</code></td>
+          <td>
+                <code>dict[str, <span title="typing.Any">Any</span>] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Parameters passed to the scenario generator</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>plot_params</code></td>
+          <td>
+                <code>dict[str, <span title="typing.Any">Any</span>] | None</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, overrides plotting parameters. See <code>nemgas.sao.SAOMechanism.plot()</code> for all parameters</p>
+            </div>
+          </td>
+          <td>
+                <code>None</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
                 <code><span title="negmas.tournaments.neg.simple.SimpleTournamentResults">SimpleTournamentResults</span></code>
-            –
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>Tournament results as a <code>SimpleTournamentResults</code> object.</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
           <details class="quote">
             <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
             <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-463">463</a></span>
@@ -2111,167 +2218,216 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>n_scenarios</code></b>
-                  (<code>int</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_scenarios&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of scenarios to genearate</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_outcomes</code></b>
-                  (<code>int | tuple[int, int] | list[int]</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_outcomes&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of outcomes (or a list of range thereof).</p>
-              </div>
-            </li>
-            <li>
-              <b><code>reserved_ranges</code></b>
-                  (<code><span title="anl.anl2024.runner.ReservedRanges">ReservedRanges</span></code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;reserved_ranges&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>the range allowed for reserved values for each ufun.
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>n_scenarios</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of scenarios to genearate</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_scenarios&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_outcomes</code></td>
+          <td>
+                <code>int | tuple[int, int] | list[int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes (or a list of range thereof).</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_outcomes&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>reserved_ranges</code></td>
+          <td>
+                <code><span title="anl.anl2024.runner.ReservedRanges">ReservedRanges</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>the range allowed for reserved values for each ufun.
              Note that the upper limit will be overridden to guarantee
              the existence of at least one rational outcome</p>
-              </div>
-            </li>
-            <li>
-              <b><code>log_uniform</code></b>
-                  (<code>bool</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;outcomes_log_uniform&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Use log-uniform instead of uniform sampling if n_outcomes is a tuple giving a range.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>zerosum_fraction</code></b>
-                  (<code>float</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;zerosum_fraction&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Fraction of zero-sum scenarios. These are original DivideThePie scenarios</p>
-              </div>
-            </li>
-            <li>
-              <b><code>monotonic_fraction</code></b>
-                  (<code>float</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;monotonic_fraction&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Fraction of scenarios where each ufun is a monotonic function of the received pie.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>curve_fraction</code></b>
-                  (<code>float</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;curve_fraction&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Fraction of general and monotonic scenarios that use a curve for Pareto generation instead of
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;reserved_ranges&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>log_uniform</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Use log-uniform instead of uniform sampling if n_outcomes is a tuple giving a range.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;outcomes_log_uniform&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>zerosum_fraction</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Fraction of zero-sum scenarios. These are original DivideThePie scenarios</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;zerosum_fraction&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>monotonic_fraction</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Fraction of scenarios where each ufun is a monotonic function of the received pie.</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;monotonic_fraction&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>curve_fraction</code></td>
+          <td>
+                <code>float</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Fraction of general and monotonic scenarios that use a curve for Pareto generation instead of
             a piecewise linear Pareto frontier.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>pareto_first</code></b>
-                  (<code>bool</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;pareto_first&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>If given, the Pareto frontier will always be in the first set of outcomes</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_ufuns</code></b>
-                  (<code>int</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_ufuns&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of ufuns to generate per scenario</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_pareto</code></b>
-                  (<code>int | float | tuple[float | int, float | int] | list[int | float]</code>, default:
-                      <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;n_pareto&#39;]</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of outcomes on the Pareto frontier in general scenarios.
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;curve_fraction&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pareto_first</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, the Pareto frontier will always be in the first set of outcomes</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;pareto_first&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_ufuns</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of ufuns to generate per scenario</p>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;n_ufuns&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_pareto</code></td>
+          <td>
+                <code>int | float | tuple[float | int, float | int] | list[int | float]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes on the Pareto frontier in general scenarios.
     Can be specified as a number, a tuple of a min and max to sample within, a list of possibilities.
     Each value can either be an integer &gt; 1 or a fraction of the number of outcomes in the scenario.</p>
-              </div>
-            </li>
-            <li>
-              <b><code>pareto_log_uniform</code></b>
-                  (<code>bool</code>, default:
-                      <code>False</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Use log-uniform instead of uniform sampling if n_pareto is a tuple</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_trials</code></b>
-              –
-              <div class="doc-md-description">
-                <p>Number of times to retry generating each scenario if failures occures</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+            </div>
+          </td>
+          <td>
+                <code><a class="autorefs autorefs-internal" title="anl.anl2024.runner.DEFAULT2024SETTINGS" href="#anl.anl2024.DEFAULT2024SETTINGS">DEFAULT2024SETTINGS</a>[&#39;generator_params&#39;][&#39;n_pareto&#39;]</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>pareto_log_uniform</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Use log-uniform instead of uniform sampling if n_pareto is a tuple</p>
+            </div>
+          </td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_trials</code></td>
+          <td>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of times to retry generating each scenario if failures occures</p>
+            </div>
+          </td>
+          <td>
+                <code>10</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-    <th class="field-name">Returns:</th>
-    <td class="field-body">
-      <ul class="first simple">
-          <li>
+
+  <p><strong>Returns:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td>
                 <code>list[<span title="negmas.inout.Scenario">Scenario</span>]</code>
-            –
+          </td>
+          <td>
             <div class="doc-md-description">
               <p>A list <code>Scenario</code> s</p>
             </div>
-          </li>
-      </ul>
-    </td>
-    </tr>
-  </tbody>
-</table>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
           <details class="quote">
             <summary>Source code in <code>anl/anl2024/runner.py</code></summary>
             <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-336">336</a></span>
@@ -2518,69 +2674,90 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>n_scenarios</code></b>
-                  (<code>int</code>, default:
-                      <code>20</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of scenarios to create</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_outcomes</code></b>
-                  (<code>int | tuple[int, int] | list[int]</code>, default:
-                      <code>100</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of outcomes per scenario. If a tuple it will be interpreted as a min/max range to sample n. outcomes from.
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>n_scenarios</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of scenarios to create</p>
+            </div>
+          </td>
+          <td>
+                <code>20</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_outcomes</code></td>
+          <td>
+                <code>int | tuple[int, int] | list[int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes per scenario. If a tuple it will be interpreted as a min/max range to sample n. outcomes from.
         If a list, samples from this list will be used (with replacement).</p>
-              </div>
-            </li>
-            <li>
-              <b><code>reserved_ranges</code></b>
-                  (<code><span title="anl.anl2024.runner.ReservedRanges">ReservedRanges</span></code>, default:
-                      <code>((0.0, 0.999999), (0.0, 0.999999))</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Ranges of reserved values for first and second negotiators</p>
-              </div>
-            </li>
-            <li>
-              <b><code>log_uniform</code></b>
-                  (<code>bool</code>, default:
-                      <code>True</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</p>
-              </div>
-            </li>
-            <li>
-              <b><code>monotonic</code></b>
-              –
-              <div class="doc-md-description">
-                <p>If true all ufuns are monotonically increasing in the portion of the pie</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+            </div>
+          </td>
+          <td>
+                <code>100</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>reserved_ranges</code></td>
+          <td>
+                <code><span title="anl.anl2024.runner.ReservedRanges">ReservedRanges</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Ranges of reserved values for first and second negotiators</p>
+            </div>
+          </td>
+          <td>
+                <code>((0.0, 0.999999), (0.0, 0.999999))</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>log_uniform</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</p>
+            </div>
+          </td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>monotonic</code></td>
+          <td>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If true all ufuns are monotonically increasing in the portion of the pie</p>
+            </div>
+          </td>
+          <td>
+                <code>False</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
 <details class="remarks" open>
   <summary>Remarks</summary>
   <ul>
@@ -2893,61 +3070,76 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
 
 
-<table class="field-list">
-  <colgroup>
-    <col class="field-name" />
-    <col class="field-body" />
-  </colgroup>
-  <tbody valign="top">
-    <tr class="field">
-      <th class="field-name">Parameters:</th>
-      <td class="field-body">
-        <ul class="first simple">
-            <li>
-              <b><code>n_scenarios</code></b>
-                  (<code>int</code>, default:
-                      <code>20</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of scenarios to create</p>
-              </div>
-            </li>
-            <li>
-              <b><code>n_outcomes</code></b>
-                  (<code>int | tuple[int, int] | list[int]</code>, default:
-                      <code>100</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Number of outcomes per scenario (if a tuple it will be interpreted as a min/max range to sample n. outcomes from).</p>
-              </div>
-            </li>
-            <li>
-              <b><code>reserved_ranges</code></b>
-                  (<code><span title="anl.anl2024.runner.ReservedRanges">ReservedRanges</span></code>, default:
-                      <code>((0.0, 0.499999), (0.0, 0.499999))</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>Ranges of reserved values for first and second negotiators</p>
-              </div>
-            </li>
-            <li>
-              <b><code>log_uniform</code></b>
-                  (<code>bool</code>, default:
-                      <code>True</code>
-)
-              –
-              <div class="doc-md-description">
-                <p>If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</p>
-              </div>
-            </li>
-        </ul>
-      </td>
-    </tr>
-  </tbody>
-</table>
+  <p><strong>Parameters:</strong></p>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Default</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>n_scenarios</code></td>
+          <td>
+                <code>int</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of scenarios to create</p>
+            </div>
+          </td>
+          <td>
+                <code>20</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>n_outcomes</code></td>
+          <td>
+                <code>int | tuple[int, int] | list[int]</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Number of outcomes per scenario (if a tuple it will be interpreted as a min/max range to sample n. outcomes from).</p>
+            </div>
+          </td>
+          <td>
+                <code>100</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>reserved_ranges</code></td>
+          <td>
+                <code><span title="anl.anl2024.runner.ReservedRanges">ReservedRanges</span></code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>Ranges of reserved values for first and second negotiators</p>
+            </div>
+          </td>
+          <td>
+                <code>((0.0, 0.499999), (0.0, 0.499999))</code>
+          </td>
+        </tr>
+        <tr>
+          <td><code>log_uniform</code></td>
+          <td>
+                <code>bool</code>
+          </td>
+          <td>
+            <div class="doc-md-description">
+              <p>If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).</p>
+            </div>
+          </td>
+          <td>
+                <code>True</code>
+          </td>
+        </tr>
+    </tbody>
+  </table>
+
 <details class="remarks" open>
   <summary>Remarks</summary>
   <ul>
@@ -3071,49 +3263,83 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
           </details>
   </div>
 
-</div>
-              
+</div></div>
             </div>
-          </div><footer>
-    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
-        <a href="../faq/" class="btn btn-neutral float-left" title="FAQ"><span class="icon icon-circle-arrow-left"></span> Previous</a>
-    </div>
-
-  <hr/>
-
-  <div role="contentinfo">
-    <!-- Copyright etc -->
-  </div>
-
-  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
-</footer>
-          
         </div>
-      </div>
 
-    </section>
+        <footer class="col-md-12">
+            <hr>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+        <script src="../js/jquery-3.6.0.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js"></script>
+        <script src="../search/main.js"></script>
 
-  </div>
-
-  <div class="rst-versions" role="note" aria-label="Versions">
-  <span class="rst-current-version" data-toggle="rst-current-version">
-    
-    
-      <span><a href="../faq/" style="color: #fcfcfc">&laquo; Previous</a></span>
-    
-    
-  </span>
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+                <p>From here you can search these documents. Enter your search terms below.</p>
+                <form>
+                    <div class="form-group">
+                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
+                    </div>
+                </form>
+                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            </div>
+            <div class="modal-body">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th style="width: 20%;">Keys</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="help shortcut"><kbd>?</kbd></td>
+                    <td>Open this help</td>
+                  </tr>
+                  <tr>
+                    <td class="next shortcut"><kbd>n</kbd></td>
+                    <td>Next page</td>
+                  </tr>
+                  <tr>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
+                    <td>Search</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div>
+    </div>
 </div>
-    <script src="../js/jquery-3.6.0.min.js"></script>
-    <script>var base_url = "..";</script>
-    <script src="../js/theme_extra.js"></script>
-    <script src="../js/theme.js"></script>
-      <script src="../search/main.js"></script>
-    <script>
-        jQuery(function () {
-            SphinxRtdTheme.Navigation.enable(true);
-        });
-    </script>
 
-</body>
+    </body>
 </html>
