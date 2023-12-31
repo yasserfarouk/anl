@@ -16,7 +16,7 @@ def read(*names, **kwargs):
 
 setup(
     name="anl",
-    version="0.1.7",
+    version="0.1.8",
     description="ANAC Automated Negotiations League Platform",
     long_description="%s\n%s"
     % (

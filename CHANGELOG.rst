@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.1.8 (2023.12.31)
+------------------
+
+* bugfix in visualizer initial tournament list
+* Correcting auto pushing to PyPi
 
 0.1.7 (2023.12.31)
 ------------------
