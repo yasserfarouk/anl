@@ -7,17 +7,6 @@ You mostly only need to use `anl2024_tournament` in your code. The other helpers
 The package provides few example negotiators. Of special importance is the `MiCRO` negotiator which provides a full implementation of a recently proposed behavioral strategy.
 Other negotiators are just wrappers over negotiators provided by NegMAS.
 
-### class: Boulware
-::: anl.anl2024.negotiators.builtins.wrappers.Boulware
-
-### class: Linear
-::: anl.anl2024.negotiators.builtins.wrappers.Linear
-
-### class: Conceder
-::: anl.anl2024.negotiators.builtins.wrappers.Conceder
-
-### class: NaiveTitForTat
-::: anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat
 
 ### class: MiCRO
 ::: anl.anl2024.negotiators.builtins.micro.MiCRO
@@ -28,6 +17,26 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.
 ### class: RVFitter
 ::: anl.anl2024.negotiators.builtins.rv_fitter.RVFitter
 
+### class: Boulware
+::: anl.anl2024.negotiators.builtins.wrappers.Boulware
+
+### class: Linear
+::: anl.anl2024.negotiators.builtins.wrappers.Linear
+
+### class: Conceder
+::: anl.anl2024.negotiators.builtins.wrappers.Conceder
+
+### class: StochasticBoulware
+::: anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware
+
+### class: StochasticLinear
+::: anl.anl2024.negotiators.builtins.wrappers.StochasticLinear
+
+### class: Conceder
+::: anl.anl2024.negotiators.builtins.wrappers.StochasticConceder
+
+### class: NaiveTitForTat
+::: anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat
 ## Tournaments
 
 ### function: anl2024_tournament

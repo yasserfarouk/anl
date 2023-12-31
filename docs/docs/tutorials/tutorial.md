@@ -73,6 +73,7 @@ results = anl2024_tournament(
 
 
 
+    Output()
 
 
 
@@ -96,7 +97,19 @@ results = anl2024_tournament(
 
 We can immediately notice that `MyRandomNegotiator` is getting a negative average advantage which means that it sometimes gets agreements that are worse than disagreement (i.e. with utility less than its reserved value). Can you guess why is this happening? How can we resolve that?
 
-You can easily check the final scores using the `final_scores` member of the returned [SimpleTournamentResults](https://negmas.readthedocs.io/en/latest/api/negmas.tournaments.SimpleTournamentResults.html) object
+#### Note about runing tournaments
+
+- When running a tournament using `anl2024_tournament` inside a Jupyter Notebook, you **must** pass `njobs=-1` to force serial execution of negotiations. This is required because the multiprocessing library used by NegMAS does not play nicely with Jupyter Notebooks. If you run the tournament using the same method from a `.py` python script file, you can omit this argument to run a tournament using all available cores.
+- When you pass `nologs=True`, no logs are stored for this tournament. If you omit this argument, a log will be created under `~/negmas/anl2024/tournaments` which can be visualized using the ANL visualizer by running:
+
+```bash
+anlv show
+```
+
+
+#### Back to the tutorial
+
+You can easily check the final scores using the `final_scores` member of the returned [SimpleTournamentResults](https://negmas.readthedocs.io/en/latest/api/negmas.tournaments.SimpleTournamentResults.html) object.
 
 
 ```python
@@ -378,6 +391,80 @@ anl2024_tournament(
 
 
 
+    Output()
+
+
+
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
+
+
+
+
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
+</pre>
+
+
+
+
+<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.469250</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>      SimpleRVFitter  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.468410</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>            Conceder  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.301509</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.674371</span>
+</pre>
+
+
+
+
+
+
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>strategy</th>
+      <th>score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Boulware</td>
+      <td>0.469250</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>SimpleRVFitter</td>
+      <td>0.468410</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Conceder</td>
+      <td>0.301509</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>MyRandomNegotiator</td>
+      <td>-0.674371</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 
 Much better :-)
@@ -415,7 +502,7 @@ def __call__(self, state):
 
 We start by updating our estimate of the reserved value of the opponent using `update_reserved_value()`. We then call the acceptance strategy `is_acceptable()` to check whether the current offer should be accepted. If the current offer is not acceptable, we call the bidding strategy `generate_offer()` to generate a new offer which we return as our counter-offer. Simple!!
 
-### Opponent Modling (Estimating Reserved Value)
+### Opponent Modeling (Estimating Reserved Value)
 
 The first step is in our algorithm is to update our estimate of the opponent's reserved value. This is done in three simple steps:
 
@@ -430,26 +517,27 @@ The first step is in our algorithm is to update our estimate of the opponent's r
    self.opponent_times.append(relative_time)
    ```
 3. We apply a simple [curve fitting](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html) algorithm from [scipy](https://scipy.org) to estimate the opponent's reserved value (and its concession exponent but we are not going to use that):
-   - We set the bounds of the reserved value to be between zero (minimum possible value) and the minimum utility the opponent ever offered. This assumes that the opponent only offers rational outcomes for itself. The bounds for the concession curve are set to (0.2, 5.0) which is the usual range of exponents used by time-based strategies.
-   ```python
-   bounds = ((0.2, 0.0), (5.0, min(self.opponent_utilities)))
-   ```
-   - We then just apply curve fitting while keeping the old estimate. We keep the old estimate to check whether there is enough change to warrent reevaluation of the rational outcome sets in our offering strategy. We ignore any errors keeping the old estimate in that case.
-   ```python
-   try:
-       optimal_vals, _ = curve_fit(
-           lambda x, e, rv: aspiration_function(
-               x, self.opponent_utilities[0], rv, e
-           ),
-           self.opponent_times,
-           self.opponent_utilities,
-           bounds=bounds,
-       )
-       self._past_oppnent_rv = self.opponent_ufun.reserved_value
-       self.opponent_ufun.reserved_value = optimal_vals[1]
-   except Exception as e:
-       pass
-   ```
+
+      - We set the bounds of the reserved value to be between zero (minimum possible value) and the minimum utility the opponent ever offered. This assumes that the opponent only offers rational outcomes for itself. The bounds for the concession curve are set to (0.2, 5.0) which is the usual range of exponents used by time-based strategies.
+      ```python
+      bounds = ((0.2, 0.0), (5.0, min(self.opponent_utilities)))
+      ```
+      - We then just apply curve fitting while keeping the old estimate. We keep the old estimate to check whether there is enough change to warrent reevaluation of the rational outcome sets in our offering strategy. We ignore any errors keeping the old estimate in that case.
+      
+      ```python
+      optimal_vals, _ = curve_fit(
+          lambda x, e, rv: aspiration_function(x, self.opponent_utilities[0], rv, e),
+          self.opponent_times, self.opponent_utilities, bounds=bounds
+      )
+      
+      ```
+      Note that we just pass `self.opponent_utilities[0]` as the maximum for the concession curve because we know that this is the utility of the first offer from the opponent.
+      
+      - Finally, we update the opponent reserved value with our new estimate keeping the latest value for later:
+      ```python
+      self._past_oppnent_rv = self.opponent_ufun.reserved_value
+      self.opponent_ufun.reserved_value = optimal_vals[1]      
+      ```
 
 ### Acceptance Strategy
 
@@ -474,30 +562,33 @@ Note that this acceptance strategy does not use the estimated opponent reserved 
 
 Now that we have updated our estimate of the opponent reserved value and decided not to accept their offer, we have to generate our own offer which the job of the bidding strategy implementedin `generate_offer()`. This is done in three steps as well:
 
-1. If the difference between the current and last estimate of the opponent reserved value is large enough, we create the rational outcome list:
-   ```python
-   if (
-            not self._rational
-            or abs(self.opponent_ufun.reserved_value - self._past_oppnent_rv) > 1e-3
-   ):
-        self._rational = sorted(
-        [
-            (my_util, opp_util, _)
-            for _ in self.nmi.outcome_space.enumerate_or_sample(
-              levels=10, max_cardinality=100_000
-            )
-            if (my_util := float(self.ufun(_))) > self.ufun.reserved_value
-            and (opp_util := float(self.opponent_ufun(_))) > self.opponent_ufun.reserved_value
-        ])
+1. If the difference between the current and last estimate of the opponent reserved value is large enough, we create the rational outcome list. 
+    - This test is implemented by:
+    ```python
+    not self._rational or abs(self.opponent_ufun.reserved_value - self._past_oppnent_rv) > 1e-3
     ```
-    We simply take all outcomes in the the `outcome_space` and for each of them we prepend our own utility and our opponent's utility if this outcome was better than disagreement for us and for the opponent. We then sort this list. Because each element is a tuple, the list will be sorted ascendingly by our utility with equal values sorted ascendingly by the opponent utility.
+    - We then create of all outcomes prepending them with our and opponent's utility values:
+  ```python
+  [ (my_util, opp_util, _)
+    for _ in self.nmi.outcome_space.enumerate_or_sample(
+        levels=10, max_cardinality=100_000
+    )
+    if (
+        (my_util := float(self.ufun(_))) > self.ufun.reserved_value
+        and (opp_util := float(self.opponent_ufun(_))) > self.opponent_ufun.reserved_value
+  )]
+  ```
+    - Finally, we sort this list. Because each element is a tuple, the list will be sorted ascendingly by our utility with equal values sorted ascendingly by the opponent utility.    
+  ```python
+  self._rational = sorted(...)
+  ```  
 
 2. If there are no rational outcomes (e.g. our estimate of the opponent rv is very wrong), then just revert to offering our top offer
    ```python
    if not self._rational:
         return self.ufun.best()
    ```
-3. If we have a rational set, we calculate an spiration level that starts at 1 and ends at 0 (note that we do not need to end at the reserved value because all outcomes in `self._rational` are already no worse than disagreement. We then calculate the outcome that is at the current aspiration level from the end of the rational outcome list and offer it:
+3. If we have a rational set, we calculate an aspiration level that starts at 1 and ends at 0 (note that we do not need to end at the reserved value because all outcomes in `self._rational` are already no worse than disagreement. We then calculate the outcome that is at the current aspiration level from the end of the rational outcome list and offer it:
    ```python
    asp = aspiration_function(relative_time, 1.0, 0.0, self.e)   
    max_rational = len(self._rational) - 1
@@ -505,6 +596,82 @@ Now that we have updated our estimate of the opponent reserved value and decided
    outcome = self._rational[indx][-1]
    return outcome
    ```
+
+### Running a single negotiation
+
+What if we now want to see what happens in a single negotiation using our shiny new negotiator? 
+We first need a scenario to define the outcome space and ufuns. We can then add negotiators to it and run it. Let's see an example:
+
+
+```python
+import copy
+from negmas.sao import SAOMechanism
+from anl.anl2024.runner import mixed_scenarios
+from anl.anl2024.negotiators.builtins import Linear
+
+# create a scenario
+s = mixed_scenarios(1)[0]
+# copy ufuns and set rv to 0 in the copies
+ufuns0 = [copy.deepcopy(u) for u in s.ufuns]
+for u in ufuns0:
+    u.reserved_value = 0.0
+# create the negotiation mechanism
+session = SAOMechanism(n_steps=1000, outcome_space=s.outcome_space)
+# add negotiators. Remember to pass the opponent_ufun in private_info
+session.add(
+    SimpleRVFitter(name="SimpleRVFitter", 
+                   private_info=dict(opponent_ufun=ufuns0[1]))
+    , ufun=s.ufuns[0]
+)
+session.add(Linear(name="Linear"), ufun=s.ufuns[1])
+# run the negotiation and plot the results
+session.run()
+session.plot()
+plt.show()
+```
+
+
+    
+![png](tutorial_files/tutorial_17_0.png)
+    
+
+
+Notice how in the second half of the negotiation, the SimpleRVFitter is only offering outcomes that are rational for both negotiators (can you see that in the left-side plot? can you see it in the top right-side plot?). This means that the curve fitting approach is working OK here. The opponent is a time-based strategy in this case though. 
+
+What happens if it was not? Let's try it against the builtin RVFitter for example
+
+
+```python
+from anl.anl2024.negotiators import RVFitter
+# create the negotiation mechanism
+session = SAOMechanism(n_steps=1000, outcome_space=s.outcome_space)
+# add negotiators. Remember to pass the opponent_ufun in private_info
+session.add(
+    SimpleRVFitter(name="SimpleRVFitter", 
+                   private_info=dict(opponent_ufun=ufuns0[1]))
+    , ufun=s.ufuns[0]
+)
+session.add(
+    RVFitter(name="RVFitter", 
+                   private_info=dict(opponent_ufun=ufuns0[0]))
+    , ufun=s.ufuns[1]
+)
+
+# run the negotiation and plot the results
+session.run()
+session.plot()
+plt.show()
+```
+
+
+    
+![png](tutorial_files/tutorial_19_0.png)
+    
+
+
+This time, our simple RV fitter could not really learn the opponent reserved value effectively. We can see that from the fact that it kept offering outcomes that are irrational for the opponent almost until the end of the negotiation.
+
+The builtin `RVFitter` seems better in this case. It took longer but it seems to only offer rational outcomes for its opponent (our SimpleRVFitter) after around 60% of the available negotiation time.
 
 ## Other Examples
 

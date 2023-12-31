@@ -2,6 +2,8 @@
 for notebook in `ls ../notebooks/tutorials/*.ipynb | sort -g` ; do
     jupyter nbconvert --TagRemovePreprocessor.remove_cell_tags='{"remove_cell"}' --to markdown $notebook
     jupyter nbconvert --TagRemovePreprocessor.remove_cell_tags='{"remove_cell"}' --to markdown $notebook
+    jupyter nbconvert --TagRemovePreprocessor.remove_cell_tags='{"remove_cell"}' --to markdown $notebook
+    jupyter nbconvert --TagRemovePreprocessor.remove_cell_tags='{"remove_cell"}' --to markdown $notebook
 done
 rm -r docs/tutorials
 mkdir docs/tutorials
@@ -18,7 +20,7 @@ done
 for mdfile in docs/tutorials/*.md; do
     filename1=${mdfile##*/}
     filename=${filename1%???}
-    sed -i='' '/Output()/d' $mdfile
+    # sed -i='' '/Output()/d' $mdfile
     echo "[Download Notebook](/tutorials/notebooks/$filename.ipynb)" >> $mdfile
 done
 echo "------------------------------------------------"
