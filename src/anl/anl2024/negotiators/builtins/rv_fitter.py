@@ -54,14 +54,19 @@ class RVFitter(SAONegotiator):
         **kwargs,
     ):
         super().__init__(*args, **kwargs)
-        self.opponent_times: list[float] = []
-        self.opponent_utilities: list[float] = []
-        self._past_oppnent_rv = 0.0
-        self._rational: list[tuple[float, float, Outcome]] = []
         self.min_unique_utilities = min_unique_utilities
-        self._enable_logging = enable_logging
         self.e = e
         self.stochasticity = stochasticity
+        # keeps track of times at which the opponent offers
+        self.opponent_times: list[float] = []
+        # keeps track of opponent utilities of its offers
+        self.opponent_utilities: list[float] = []
+        # keeps track of the our last estimate of the opponent reserved value
+        self._past_oppnent_rv = 0.0
+        # keeps track of the rational outcome set given our estimate of the
+        # opponent reserved value and our knowledge of ours
+        self._rational: list[tuple[float, float, Outcome]] = []
+        self._enable_logging = enable_logging
 
     def __call__(self, state: SAOState) -> SAOResponse:
         assert self.ufun and self.opponent_ufun

@@ -31,7 +31,7 @@ class MiCRO(SAONegotiator):
         self._received, self._sent = set(), set()
 
     def __call__(self, state: SAOState) -> SAOResponse:
-        """The main implementation of the MiCRO strategy"""
+        # The main implementation of the MiCRO strategy
         assert self.ufun
         # initialize the sorter (This should better be done in on_negotiation_start() to allow for reuse but this is not needed in ANL)
         if self.sorter is None:

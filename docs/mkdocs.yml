@@ -1,12 +1,27 @@
+# yaml-language-server: $schema=https://squidfunk.github.io/mkdocs-material/schema.json
+
 site_name: ANL Documentation
 site_url: https://yasserfarouk.github.io/anl/
 nav:
     - Index: index.md
     - FAQ: faq.md
+    - Tutorial: tutorials/tutorial.md
     - Reference: reference.md
 theme:
-  name: "mkdocs"
+  name: "readthedocs"
 plugins:
 - search
 - mkdocstrings
 - include-markdown
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.tabbed:

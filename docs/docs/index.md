@@ -16,11 +16,15 @@ The official website for the ANL competition is:
 
 ## Installation
 
-    pip install anl
+```bash
+pip install anl
+```
 
 You can also install the in-development version with::
 
-    pip install https://github.com/autoneg/anl/archive/master.zip
+```bash
+pip install https://github.com/autoneg/anl/archive/master.zip
+```
 
 
 ## Documentation
@@ -76,8 +80,8 @@ To start the visualizer type:
 anlv show
 ```
 This will allow you to select any tournament that is stored in the default location (~/negmas/anl2024/tournaments).
-You can also show the tournament stored in a specific location '_path' using:
+You can also show the tournament stored in a specific location 'your-tournament-path' using:
 
 ```bash
-anlv show _path
+anlv show your-tournament-path
 ```
