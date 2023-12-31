@@ -1,6 +1,18 @@
 Changelog
 =========
 
+
+0.1.7 (2023.12.31)
+------------------
+
+* Adding simple dockerfile
+* Adding --port, --address to anlv show. You can now set the port and address of the visualizer
+* Visualizer parses folders recursively
+* minor: faster saving of figs
+* Adding mkdocs to dev requirements
+* Removing NaiveTitForTat from the default set of competitors
+* Improving tutorial
+
 0.1.6 (2023.12.27)
 ------------------
 
