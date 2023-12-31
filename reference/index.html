@@ -57,6 +57,24 @@
     <ul class="current">
     <li class="toctree-l2"><a class="reference internal" href="#example-negotiators">Example Negotiators</a>
         <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#class-micro">class: MiCRO</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.micro.MiCRO">MiCRO</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#class-nashseeker">class: NashSeeker</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker">NashSeeker</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#class-rvfitter">class: RVFitter</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.rv_fitter.RVFitter">RVFitter</a>
+        <ul>
     <li class="toctree-l3"><a class="reference internal" href="#class-boulware">class: Boulware</a>
     </li>
         </ul>
@@ -75,29 +93,29 @@
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.Conceder">Conceder</a>
         <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#class-stochasticboulware">class: StochasticBoulware</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware">StochasticBoulware</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#class-stochasticlinear">class: StochasticLinear</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.StochasticLinear">StochasticLinear</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#class-conceder_1">class: Conceder</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.StochasticConceder">StochasticConceder</a>
+        <ul>
     <li class="toctree-l3"><a class="reference internal" href="#class-naivetitfortat">class: NaiveTitForTat</a>
     </li>
         </ul>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat">NaiveTitForTat</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-micro">class: MiCRO</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.micro.MiCRO">MiCRO</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-nashseeker">class: NashSeeker</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker">NashSeeker</a>
-        <ul>
-    <li class="toctree-l3"><a class="reference internal" href="#class-rvfitter">class: RVFitter</a>
-    </li>
-        </ul>
-    </li>
-    <li class="toctree-l2"><a class="reference internal" href="#anl.anl2024.negotiators.builtins.rv_fitter.RVFitter">RVFitter</a>
     </li>
     <li class="toctree-l2"><a class="reference internal" href="#tournaments">Tournaments</a>
         <ul>
@@ -195,127 +213,7 @@ You mostly only need to use <code>anl2024_tournament</code> in your code. The ot
 <h2 id="example-negotiators">Example Negotiators</h2>
 <p>The package provides few example negotiators. Of special importance is the <code>MiCRO</code> negotiator which provides a full implementation of a recently proposed behavioral strategy.
 Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
-<h3 id="class-boulware">class: Boulware</h3>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<a id="anl.anl2024.negotiators.builtins.wrappers.Boulware"></a>
-  <div class="doc doc-contents first">
-          <p class="doc doc-class-bases">
-            Bases: <code><span title="negmas.sao.negotiators.BoulwareTBNegotiator">BoulwareTBNegotiator</span></code></p>
-
-  
-      <p>Time-based boulware negotiation strategy</p>
-
-            <details class="quote">
-              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-83">83</a></span>
-<span class="normal"><a href="#__codelineno-0-84">84</a></span>
-<span class="normal"><a href="#__codelineno-0-85">85</a></span>
-<span class="normal"><a href="#__codelineno-0-86">86</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="k">class</span> <span class="nc">Boulware</span><span class="p">(</span><span class="n">BoulwareTBNegotiator</span><span class="p">):</span>
-</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="sd">    Time-based boulware negotiation strategy</span>
-</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="sd">    &quot;&quot;&quot;</span>
-</span></code></pre></div></td></tr></table></div>
-            </details>
-
-  </div>
-
-</div><h3 id="class-linear">class: Linear</h3>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<a id="anl.anl2024.negotiators.builtins.wrappers.Linear"></a>
-  <div class="doc doc-contents first">
-          <p class="doc doc-class-bases">
-            Bases: <code><span title="negmas.sao.negotiators.LinearTBNegotiator">LinearTBNegotiator</span></code></p>
-
-  
-      <p>Time-based linear negotiation strategy</p>
-
-            <details class="quote">
-              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-69">69</a></span>
-<span class="normal"><a href="#__codelineno-0-70">70</a></span>
-<span class="normal"><a href="#__codelineno-0-71">71</a></span>
-<span class="normal"><a href="#__codelineno-0-72">72</a></span>
-<span class="normal"><a href="#__codelineno-0-73">73</a></span>
-<span class="normal"><a href="#__codelineno-0-74">74</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="k">class</span> <span class="nc">Linear</span><span class="p">(</span><span class="n">LinearTBNegotiator</span><span class="p">):</span>
-</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a><span class="sd">    Time-based linear negotiation strategy</span>
-</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73"></a>
-</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a>    <span class="o">...</span>
-</span></code></pre></div></td></tr></table></div>
-            </details>
-
-  </div>
-
-</div><h3 id="class-conceder">class: Conceder</h3>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<a id="anl.anl2024.negotiators.builtins.wrappers.Conceder"></a>
-  <div class="doc doc-contents first">
-          <p class="doc doc-class-bases">
-            Bases: <code><span title="negmas.sao.negotiators.ConcederTBNegotiator">ConcederTBNegotiator</span></code></p>
-
-  
-      <p>Time-based conceder negotiation strategy</p>
-
-            <details class="quote">
-              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-77">77</a></span>
-<span class="normal"><a href="#__codelineno-0-78">78</a></span>
-<span class="normal"><a href="#__codelineno-0-79">79</a></span>
-<span class="normal"><a href="#__codelineno-0-80">80</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77"></a><span class="k">class</span> <span class="nc">Conceder</span><span class="p">(</span><span class="n">ConcederTBNegotiator</span><span class="p">):</span>
-</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79"></a><span class="sd">    Time-based conceder negotiation strategy</span>
-</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80"></a><span class="sd">    &quot;&quot;&quot;</span>
-</span></code></pre></div></td></tr></table></div>
-            </details>
-
-  </div>
-
-</div><h3 id="class-naivetitfortat">class: NaiveTitForTat</h3>
-
-
-<div class="doc doc-object doc-class">
-
-
-
-<a id="anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat"></a>
-  <div class="doc doc-contents first">
-          <p class="doc doc-class-bases">
-            Bases: <code><span title="negmas.sao.negotiators.NaiveTitForTatNegotiator">NaiveTitForTatNegotiator</span></code></p>
-
-  
-      <p>A simple behavioral strategy that assumes a zero-sum game</p>
-
-            <details class="quote">
-              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
-              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-12">12</a></span>
-<span class="normal"><a href="#__codelineno-0-13">13</a></span>
-<span class="normal"><a href="#__codelineno-0-14">14</a></span>
-<span class="normal"><a href="#__codelineno-0-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="k">class</span> <span class="nc">NaiveTitForTat</span><span class="p">(</span><span class="n">NaiveTitForTatNegotiator</span><span class="p">):</span>
-</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
-</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="sd">    A simple behavioral strategy that assumes a zero-sum game</span>
-</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="sd">    &quot;&quot;&quot;</span>
-</span></code></pre></div></td></tr></table></div>
-            </details>
-
-  </div>
-
-</div><h3 id="class-micro">class: MiCRO</h3>
+<h3 id="class-micro">class: MiCRO</h3>
 
 
 <div class="doc doc-object doc-class">
@@ -1185,6 +1083,327 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
 
   </div>
+
+  </div>
+
+</div><h3 id="class-boulware">class: Boulware</h3>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.builtins.wrappers.Boulware"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.BoulwareTBNegotiator">BoulwareTBNegotiator</span></code></p>
+
+  
+      <p>Time-based boulware negotiation strategy</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-83">83</a></span>
+<span class="normal"><a href="#__codelineno-0-84">84</a></span>
+<span class="normal"><a href="#__codelineno-0-85">85</a></span>
+<span class="normal"><a href="#__codelineno-0-86">86</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-83"><a id="__codelineno-0-83" name="__codelineno-0-83"></a><span class="k">class</span> <span class="nc">Boulware</span><span class="p">(</span><span class="n">BoulwareTBNegotiator</span><span class="p">):</span>
+</span><span id="__span-0-84"><a id="__codelineno-0-84" name="__codelineno-0-84"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-85"><a id="__codelineno-0-85" name="__codelineno-0-85"></a><span class="sd">    Time-based boulware negotiation strategy</span>
+</span><span id="__span-0-86"><a id="__codelineno-0-86" name="__codelineno-0-86"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+</div><h3 id="class-linear">class: Linear</h3>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.builtins.wrappers.Linear"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.LinearTBNegotiator">LinearTBNegotiator</span></code></p>
+
+  
+      <p>Time-based linear negotiation strategy</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-69">69</a></span>
+<span class="normal"><a href="#__codelineno-0-70">70</a></span>
+<span class="normal"><a href="#__codelineno-0-71">71</a></span>
+<span class="normal"><a href="#__codelineno-0-72">72</a></span>
+<span class="normal"><a href="#__codelineno-0-73">73</a></span>
+<span class="normal"><a href="#__codelineno-0-74">74</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69"></a><span class="k">class</span> <span class="nc">Linear</span><span class="p">(</span><span class="n">LinearTBNegotiator</span><span class="p">):</span>
+</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a><span class="sd">    Time-based linear negotiation strategy</span>
+</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73"></a>
+</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a>    <span class="o">...</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+</div><h3 id="class-conceder">class: Conceder</h3>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.builtins.wrappers.Conceder"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.ConcederTBNegotiator">ConcederTBNegotiator</span></code></p>
+
+  
+      <p>Time-based conceder negotiation strategy</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-77">77</a></span>
+<span class="normal"><a href="#__codelineno-0-78">78</a></span>
+<span class="normal"><a href="#__codelineno-0-79">79</a></span>
+<span class="normal"><a href="#__codelineno-0-80">80</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77"></a><span class="k">class</span> <span class="nc">Conceder</span><span class="p">(</span><span class="n">ConcederTBNegotiator</span><span class="p">):</span>
+</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79"></a><span class="sd">    Time-based conceder negotiation strategy</span>
+</span><span id="__span-0-80"><a id="__codelineno-0-80" name="__codelineno-0-80"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+
+  </div>
+
+</div><h3 id="class-stochasticboulware">class: StochasticBoulware</h3>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.AspirationNegotiator">AspirationNegotiator</span></code></p>
+
+  
+      <p>Time-based boulware negotiation strategy (offers above the limit instead of at it)</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#__codelineno-0-59">59</a></span>
+<span class="normal"><a href="#__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#__codelineno-0-61">61</a></span>
+<span class="normal"><a href="#__codelineno-0-62">62</a></span>
+<span class="normal"><a href="#__codelineno-0-63">63</a></span>
+<span class="normal"><a href="#__codelineno-0-64">64</a></span>
+<span class="normal"><a href="#__codelineno-0-65">65</a></span>
+<span class="normal"><a href="#__codelineno-0-66">66</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52"></a><span class="k">class</span> <span class="nc">StochasticBoulware</span><span class="p">(</span><span class="n">AspirationNegotiator</span><span class="p">):</span>
+</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54"></a><span class="sd">    Time-based boulware negotiation strategy (offers above the limit instead of at it)</span>
+</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56"></a>
+</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59"></a>            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60"></a>            <span class="n">max_aspiration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61"></a>            <span class="n">aspiration_type</span><span class="o">=</span><span class="s2">&quot;boulware&quot;</span><span class="p">,</span>
+</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a>            <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span>
+</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63"></a>            <span class="n">stochastic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-64"><a id="__codelineno-0-64" name="__codelineno-0-64"></a>            <span class="n">presort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a>            <span class="o">**</span><span class="n">kwargs</span>
+</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66"></a>        <span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div><h3 id="class-stochasticlinear">class: StochasticLinear</h3>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.builtins.wrappers.StochasticLinear"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.AspirationNegotiator">AspirationNegotiator</span></code></p>
+
+  
+      <p>Time-based linear negotiation strategy (offers above the limit instead of at it)</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#__codelineno-0-32">32</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="k">class</span> <span class="nc">StochasticLinear</span><span class="p">(</span><span class="n">AspirationNegotiator</span><span class="p">):</span>
+</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="sd">    Time-based linear negotiation strategy (offers above the limit instead of at it)</span>
+</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22"></a>
+</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25"></a>            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26"></a>            <span class="n">max_aspiration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27"></a>            <span class="n">aspiration_type</span><span class="o">=</span><span class="s2">&quot;linear&quot;</span><span class="p">,</span>
+</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28"></a>            <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span>
+</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29"></a>            <span class="n">stochastic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30"></a>            <span class="n">presort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a>            <span class="o">**</span><span class="n">kwargs</span>
+</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>        <span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div><h3 id="class-conceder_1">class: Conceder</h3>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.builtins.wrappers.StochasticConceder"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.AspirationNegotiator">AspirationNegotiator</span></code></p>
+
+  
+      <p>Time-based conceder negotiation strategy (offers above the limit instead of at it)</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#__codelineno-0-49">49</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="k">class</span> <span class="nc">StochasticConceder</span><span class="p">(</span><span class="n">AspirationNegotiator</span><span class="p">):</span>
+</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37"></a><span class="sd">    Time-based conceder negotiation strategy (offers above the limit instead of at it)</span>
+</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39"></a>
+</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40"></a>    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41"></a>        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42"></a>            <span class="o">*</span><span class="n">args</span><span class="p">,</span>
+</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43"></a>            <span class="n">max_aspiration</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span>
+</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44"></a>            <span class="n">aspiration_type</span><span class="o">=</span><span class="s2">&quot;conceder&quot;</span><span class="p">,</span>
+</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45"></a>            <span class="n">tolerance</span><span class="o">=</span><span class="mf">0.00001</span><span class="p">,</span>
+</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46"></a>            <span class="n">stochastic</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47"></a>            <span class="n">presort</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48"></a>            <span class="o">**</span><span class="n">kwargs</span>
+</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49"></a>        <span class="p">)</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
+
+  
+
+  <div class="doc doc-children">
+
+
+
+
+
+
+
+
+
+
+
+  </div>
+
+  </div>
+
+</div><h3 id="class-naivetitfortat">class: NaiveTitForTat</h3>
+
+
+<div class="doc doc-object doc-class">
+
+
+
+<a id="anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat"></a>
+  <div class="doc doc-contents first">
+          <p class="doc doc-class-bases">
+            Bases: <code><span title="negmas.sao.negotiators.NaiveTitForTatNegotiator">NaiveTitForTatNegotiator</span></code></p>
+
+  
+      <p>A simple behavioral strategy that assumes a zero-sum game</p>
+
+            <details class="quote">
+              <summary>Source code in <code>anl/anl2024/negotiators/builtins/wrappers.py</code></summary>
+              <div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-12">12</a></span>
+<span class="normal"><a href="#__codelineno-0-13">13</a></span>
+<span class="normal"><a href="#__codelineno-0-14">14</a></span>
+<span class="normal"><a href="#__codelineno-0-15">15</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-12"><a id="__codelineno-0-12" name="__codelineno-0-12"></a><span class="k">class</span> <span class="nc">NaiveTitForTat</span><span class="p">(</span><span class="n">NaiveTitForTatNegotiator</span><span class="p">):</span>
+</span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+</span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14"></a><span class="sd">    A simple behavioral strategy that assumes a zero-sum game</span>
+</span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15"></a><span class="sd">    &quot;&quot;&quot;</span>
+</span></code></pre></div></td></tr></table></div>
+            </details>
 
   </div>
 

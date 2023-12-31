@@ -97,7 +97,19 @@ results = anl2024_tournament(
 
 We can immediately notice that `MyRandomNegotiator` is getting a negative average advantage which means that it sometimes gets agreements that are worse than disagreement (i.e. with utility less than its reserved value). Can you guess why is this happening? How can we resolve that?
 
-You can easily check the final scores using the `final_scores` member of the returned [SimpleTournamentResults](https://negmas.readthedocs.io/en/latest/api/negmas.tournaments.SimpleTournamentResults.html) object
+#### Note about runing tournaments
+
+- When running a tournament using `anl2024_tournament` inside a Jupyter Notebook, you **must** pass `njobs=-1` to force serial execution of negotiations. This is required because the multiprocessing library used by NegMAS does not play nicely with Jupyter Notebooks. If you run the tournament using the same method from a `.py` python script file, you can omit this argument to run a tournament using all available cores.
+- When you pass `nologs=True`, no logs are stored for this tournament. If you omit this argument, a log will be created under `~/negmas/anl2024/tournaments` which can be visualized using the ANL visualizer by running:
+
+```bash
+anlv show
+```
+
+
+#### Back to the tutorial
+
+You can easily check the final scores using the `final_scores` member of the returned [SimpleTournamentResults](https://negmas.readthedocs.io/en/latest/api/negmas.tournaments.SimpleTournamentResults.html) object.
 
 
 ```python
@@ -382,79 +394,6 @@ anl2024_tournament(
     Output()
 
 
-
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace"></pre>
-
-
-
-
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">
-</pre>
-
-
-
-
-<pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>      SimpleRVFitter  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.795060</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.793180</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>            Conceder  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.434767</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>  MyRandomNegotiator  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.144377</span>
-</pre>
-
-
-
-
-
-
-<div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
-
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
-<table border="1" class="dataframe">
-  <thead>
-    <tr style="text-align: right;">
-      <th></th>
-      <th>strategy</th>
-      <th>score</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <th>0</th>
-      <td>SimpleRVFitter</td>
-      <td>0.795060</td>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td>Boulware</td>
-      <td>0.793180</td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td>Conceder</td>
-      <td>0.434767</td>
-    </tr>
-    <tr>
-      <th>3</th>
-      <td>MyRandomNegotiator</td>
-      <td>0.144377</td>
-    </tr>
-  </tbody>
-</table>
-</div>
-
-
-
 Much better :-)
 
 Let's see how each part of this negotiator works and how they fit together.
@@ -584,6 +523,82 @@ Now that we have updated our estimate of the opponent reserved value and decided
    outcome = self._rational[indx][-1]
    return outcome
    ```
+
+### Running a single negotiation
+
+What if we now want to see what happens in a single negotiation using our shiny new negotiator? 
+We first need a scenario to define the outcome space and ufuns. We can then add negotiators to it and run it. Let's see an example:
+
+
+```python
+import copy
+from negmas.sao import SAOMechanism
+from anl.anl2024.runner import mixed_scenarios
+from anl.anl2024.negotiators.builtins import Linear
+
+# create a scenario
+s = mixed_scenarios(1)[0]
+# copy ufuns and set rv to 0 in the copies
+ufuns0 = [copy.deepcopy(u) for u in s.ufuns]
+for u in ufuns0:
+    u.reserved_value = 0.0
+# create the negotiation mechanism
+session = SAOMechanism(n_steps=1000, outcome_space=s.outcome_space)
+# add negotiators. Rememver to pass the opponent_ufun in private_info
+session.add(
+    SimpleRVFitter(name="SimpleRVFitter", 
+                   private_info=dict(opponent_ufun=ufuns0[1]))
+    , ufun=s.ufuns[0]
+)
+session.add(Linear(name="Linear"), ufun=s.ufuns[1])
+# run the negotiation and plot the results
+session.run()
+session.plot()
+plt.show()
+```
+
+
+    
+![png](tutorial_files/tutorial_17_0.png)
+    
+
+
+Notice how in the second half of the negotiation, the SimpleRVFitter is only offering outcomes that are rational for both negotiators (can you see that in the left-side plot? can you see it in the top right-side plot?). This means that the curve fitting approach is working OK here. The opponent is a time-based strategy in this case though. 
+
+What happens if it was not? Let's try it against the builtin RVFitter for example
+
+
+```python
+from anl.anl2024.negotiators import RVFitter
+# create the negotiation mechanism
+session = SAOMechanism(n_steps=1000, outcome_space=s.outcome_space)
+# add negotiators. Rememver to pass the opponent_ufun in private_info
+session.add(
+    SimpleRVFitter(name="SimpleRVFitter", 
+                   private_info=dict(opponent_ufun=ufuns0[1]))
+    , ufun=s.ufuns[0]
+)
+session.add(
+    RVFitter(name="RVFitter", 
+                   private_info=dict(opponent_ufun=ufuns0[0]))
+    , ufun=s.ufuns[1]
+)
+
+# run the negotiation and plot the results
+session.run()
+session.plot()
+plt.show()
+```
+
+
+    
+![png](tutorial_files/tutorial_19_0.png)
+    
+
+
+This time, our simple RV fitter could not really learn the opponent reserved value effectively. We can see that from the fact that it kept offering outcomes that are irrational for the opponent almost until the end of the negotiation.
+
+The builtin `RVFitter` seems better in this case. It took longer but it seems to only offer rational outcomes for its opponent (our SimpleRVFitter) after around 60% of the available negotiation time.
 
 ## Other Examples
 
