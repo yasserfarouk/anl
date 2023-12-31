@@ -484,7 +484,7 @@
 </span><span id="__span-16-5"><a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    <span class="k">return</span> <span class="n">SAOResponse</span><span class="p">(</span><span class="n">ResponseType</span><span class="o">.</span><span class="n">REJECT_OFFER</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">generate_offer</span><span class="p">(</span><span class="n">state</span><span class="o">.</span><span class="n">relative_time</span><span class="p">))</span>
 </span></code></pre></div>
 <p>We start by updating our estimate of the reserved value of the opponent using <code>update_reserved_value()</code>. We then call the acceptance strategy <code>is_acceptable()</code> to check whether the current offer should be accepted. If the current offer is not acceptable, we call the bidding strategy <code>generate_offer()</code> to generate a new offer which we return as our counter-offer. Simple!!</p>
-<h3 id="opponent-modling-estimating-reserved-value">Opponent Modling (Estimating Reserved Value)</h3>
+<h3 id="opponent-modeling-estimating-reserved-value">Opponent Modeling (Estimating Reserved Value)</h3>
 <p>The first step is in our algorithm is to update our estimate of the opponent's reserved value. This is done in three simple steps:</p>
 <ol>
 <li>If we have not offer from the opponent, there is nothing to do. Just return:
