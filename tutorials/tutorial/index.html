@@ -522,34 +522,37 @@ Note that this acceptance strategy does not use the estimated opponent reserved 
 <p>Now that we have updated our estimate of the opponent reserved value and decided not to accept their offer, we have to generate our own offer which the job of the bidding strategy implementedin <code>generate_offer()</code>. This is done in three steps as well:</p>
 <ol>
 <li>If the difference between the current and last estimate of the opponent reserved value is large enough, we create the rational outcome list. </li>
-<li>
-<p>This test is implemented by:
+<li>This test is implemented by:
     <div class="language-python highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span> <span class="ow">or</span> <span class="nb">abs</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opponent_ufun</span><span class="o">.</span><span class="n">reserved_value</span> <span class="o">-</span> <span class="bp">self</span><span class="o">.</span><span class="n">_past_oppnent_rv</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mf">1e-3</span>
+</span></code></pre></div></li>
+<li>We then create of all outcomes prepending them with our and opponent's utility values:
+  <div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="p">[</span> <span class="p">(</span><span class="n">my_util</span><span class="p">,</span> <span class="n">opp_util</span><span class="p">,</span> <span class="n">_</span><span class="p">)</span>
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>  <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">nmi</span><span class="o">.</span><span class="n">outcome_space</span><span class="o">.</span><span class="n">enumerate_or_sample</span><span class="p">(</span>
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>      <span class="n">levels</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">max_cardinality</span><span class="o">=</span><span class="mi">100_000</span>
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>  <span class="p">)</span>
+</span><span id="__span-24-5"><a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>  <span class="k">if</span> <span class="p">(</span>
+</span><span id="__span-24-6"><a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>      <span class="p">(</span><span class="n">my_util</span> <span class="o">:=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="p">(</span><span class="n">_</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">reserved_value</span>
+</span><span id="__span-24-7"><a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>      <span class="ow">and</span> <span class="p">(</span><span class="n">opp_util</span> <span class="o">:=</span> <span class="nb">float</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">opponent_ufun</span><span class="p">(</span><span class="n">_</span><span class="p">)))</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">opponent_ufun</span><span class="o">.</span><span class="n">reserved_value</span>
+</span><span id="__span-24-8"><a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>  <span class="p">)</span>
+</span><span id="__span-24-9"><a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a><span class="p">]</span>
+</span></code></pre></div></li>
+<li>
+<p>Finally, we sort this list. Because each element is a tuple, the list will be sorted ascendingly by our utility with equal values sorted ascendingly by the opponent utility.  <br />
+  <div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="bp">self</span><span class="o">.</span><span class="n">_rational</span> <span class="o">=</span> <span class="nb">sorted</span><span class="p">(</span><span class="o">...</span><span class="p">)</span>
 </span></code></pre></div></p>
-<p><code>python
-    self._rational = sorted(
-    [
-        (my_util, opp_util, _)
-        for _ in self.nmi.outcome_space.enumerate_or_sample(
-          levels=10, max_cardinality=100_000
-        )
-        if (my_util := float(self.ufun(_))) &gt; self.ufun.reserved_value
-        and (opp_util := float(self.opponent_ufun(_))) &gt; self.opponent_ufun.reserved_value
-    ])</code>
-We simply take all outcomes in the the <code>outcome_space</code> and for each of them we prepend our own utility and our opponent's utility if this outcome was better than disagreement for us and for the opponent. We then sort this list. Because each element is a tuple, the list will be sorted ascendingly by our utility with equal values sorted ascendingly by the opponent utility.</p>
 </li>
 <li>
 <p>If there are no rational outcomes (e.g. our estimate of the opponent rv is very wrong), then just revert to offering our top offer
-   <div class="language-python highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">:</span>
-</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">best</span><span class="p">()</span>
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="k">if</span> <span class="ow">not</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">:</span>
+</span><span id="__span-26-2"><a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>     <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">ufun</span><span class="o">.</span><span class="n">best</span><span class="p">()</span>
 </span></code></pre></div></p>
 </li>
 <li>If we have a rational set, we calculate an spiration level that starts at 1 and ends at 0 (note that we do not need to end at the reserved value because all outcomes in <code>self._rational</code> are already no worse than disagreement. We then calculate the outcome that is at the current aspiration level from the end of the rational outcome list and offer it:
-   <div class="language-python highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="n">asp</span> <span class="o">=</span> <span class="n">aspiration_function</span><span class="p">(</span><span class="n">relative_time</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">)</span>   
-</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="n">max_rational</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
-</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a><span class="n">indx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_rational</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">asp</span> <span class="o">*</span> <span class="n">max_rational</span><span class="p">)))</span>        
-</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">[</span><span class="n">indx</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
-</span><span id="__span-25-5"><a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="k">return</span> <span class="n">outcome</span>
+   <div class="language-python highlight"><pre><span></span><code><span id="__span-27-1"><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="n">asp</span> <span class="o">=</span> <span class="n">aspiration_function</span><span class="p">(</span><span class="n">relative_time</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">e</span><span class="p">)</span>   
+</span><span id="__span-27-2"><a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a><span class="n">max_rational</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+</span><span id="__span-27-3"><a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="n">indx</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">min</span><span class="p">(</span><span class="n">max_rational</span><span class="p">,</span> <span class="nb">int</span><span class="p">(</span><span class="n">asp</span> <span class="o">*</span> <span class="n">max_rational</span><span class="p">)))</span>        
+</span><span id="__span-27-4"><a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="n">outcome</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_rational</span><span class="p">[</span><span class="n">indx</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+</span><span id="__span-27-5"><a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a><span class="k">return</span> <span class="n">outcome</span>
 </span></code></pre></div></li>
 </ol>
 <h2 id="other-examples">Other Examples</h2>
@@ -567,7 +570,7 @@ We simply take all outcomes in the the <code>outcome_space</code> and for each o
 <li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py">StochasticBoulware, StochasticConceder, StochasticLinear</a> Stochastic versions of the three time-based strategies above implemented by just setting construction parameters of an existing NegMAS negotiator</li>
 <li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py">NaiveTitForTat</a> A simple behavioral strategy implemented by just inheriting from an existing NegMAS negotiator.</li>
 </ul>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-26-1"><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-28-1"><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>
 </span></code></pre></div>
 <a href="/tutorials/notebooks/tutorial.ipynb">Download Notebook</a></p>
               
