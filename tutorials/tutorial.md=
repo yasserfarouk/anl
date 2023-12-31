@@ -505,26 +505,27 @@ The first step is in our algorithm is to update our estimate of the opponent's r
    self.opponent_times.append(relative_time)
    ```
 3. We apply a simple [curve fitting](https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html) algorithm from [scipy](https://scipy.org) to estimate the opponent's reserved value (and its concession exponent but we are not going to use that):
-   - We set the bounds of the reserved value to be between zero (minimum possible value) and the minimum utility the opponent ever offered. This assumes that the opponent only offers rational outcomes for itself. The bounds for the concession curve are set to (0.2, 5.0) which is the usual range of exponents used by time-based strategies.
-   ```python
-   bounds = ((0.2, 0.0), (5.0, min(self.opponent_utilities)))
-   ```
-   - We then just apply curve fitting while keeping the old estimate. We keep the old estimate to check whether there is enough change to warrent reevaluation of the rational outcome sets in our offering strategy. We ignore any errors keeping the old estimate in that case.
-   ```python
-   try:
-       optimal_vals, _ = curve_fit(
-           lambda x, e, rv: aspiration_function(
-               x, self.opponent_utilities[0], rv, e
-           ),
-           self.opponent_times,
-           self.opponent_utilities,
-           bounds=bounds,
-       )
-       self._past_oppnent_rv = self.opponent_ufun.reserved_value
-       self.opponent_ufun.reserved_value = optimal_vals[1]
-   except Exception as e:
-       pass
-   ```
+
+      - We set the bounds of the reserved value to be between zero (minimum possible value) and the minimum utility the opponent ever offered. This assumes that the opponent only offers rational outcomes for itself. The bounds for the concession curve are set to (0.2, 5.0) which is the usual range of exponents used by time-based strategies.
+      ```python
+      bounds = ((0.2, 0.0), (5.0, min(self.opponent_utilities)))
+      ```
+      - We then just apply curve fitting while keeping the old estimate. We keep the old estimate to check whether there is enough change to warrent reevaluation of the rational outcome sets in our offering strategy. We ignore any errors keeping the old estimate in that case.
+      
+      ```python
+      optimal_vals, _ = curve_fit(
+          lambda x, e, rv: aspiration_function(x, self.opponent_utilities[0], rv, e),
+          self.opponent_times, self.opponent_utilities, bounds=bounds
+      )
+      
+      ```
+      Note that we just pass `self.opponent_utilities[0]` as the maximum for the concession curve because we know that this is the utility of the first offer from the opponent.
+      
+      - Finally, we update the opponent reserved value with our new estimate keeping the latest value for later:
+      ```python
+      self._past_oppnent_rv = self.opponent_ufun.reserved_value
+      self.opponent_ufun.reserved_value = optimal_vals[1]      
+      ```
 
 ### Acceptance Strategy
 
@@ -550,11 +551,11 @@ Note that this acceptance strategy does not use the estimated opponent reserved 
 Now that we have updated our estimate of the opponent reserved value and decided not to accept their offer, we have to generate our own offer which the job of the bidding strategy implementedin `generate_offer()`. This is done in three steps as well:
 
 1. If the difference between the current and last estimate of the opponent reserved value is large enough, we create the rational outcome list. 
-  - This test is implemented by:
+    - This test is implemented by:
     ```python
     not self._rational or abs(self.opponent_ufun.reserved_value - self._past_oppnent_rv) > 1e-3
     ```
-  - We then create of all outcomes prepending them with our and opponent's utility values:
+    - We then create of all outcomes prepending them with our and opponent's utility values:
   ```python
   [ (my_util, opp_util, _)
     for _ in self.nmi.outcome_space.enumerate_or_sample(
@@ -563,10 +564,9 @@ Now that we have updated our estimate of the opponent reserved value and decided
     if (
         (my_util := float(self.ufun(_))) > self.ufun.reserved_value
         and (opp_util := float(self.opponent_ufun(_))) > self.opponent_ufun.reserved_value
-    )
-  ]
+  )]
   ```
-  - Finally, we sort this list. Because each element is a tuple, the list will be sorted ascendingly by our utility with equal values sorted ascendingly by the opponent utility.    
+    - Finally, we sort this list. Because each element is a tuple, the list will be sorted ascendingly by our utility with equal values sorted ascendingly by the opponent utility.    
   ```python
   self._rational = sorted(...)
   ```  
@@ -576,7 +576,7 @@ Now that we have updated our estimate of the opponent reserved value and decided
    if not self._rational:
         return self.ufun.best()
    ```
-3. If we have a rational set, we calculate an spiration level that starts at 1 and ends at 0 (note that we do not need to end at the reserved value because all outcomes in `self._rational` are already no worse than disagreement. We then calculate the outcome that is at the current aspiration level from the end of the rational outcome list and offer it:
+3. If we have a rational set, we calculate an aspiration level that starts at 1 and ends at 0 (note that we do not need to end at the reserved value because all outcomes in `self._rational` are already no worse than disagreement. We then calculate the outcome that is at the current aspiration level from the end of the rational outcome list and offer it:
    ```python
    asp = aspiration_function(relative_time, 1.0, 0.0, self.e)   
    max_rational = len(self._rational) - 1
