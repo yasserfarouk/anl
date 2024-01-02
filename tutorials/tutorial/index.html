@@ -628,14 +628,21 @@ We first need a scenario to define the outcome space and ufuns. We can then add 
 <h2 id="other-examples">Other Examples</h2>
 <p>The ANL package comes with some example negotiators. These are not designed to be stong but to showcase how to use some of the features provided by the platform.</p>
 <ul>
-<li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/micro.py">MiCRO</a> A strong baseline behavioral negotiation strategy developed by de Jonge, Dave in "An Analysis of the Linear Bilateral ANAC Domains Using the MiCRO Benchmark Strategy.", ICJAI 2022. This strategy assumes no knowledge of the opponent utility function and is implemented from scratch to showcase the following:</li>
+<li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/micro.py">MiCRO</a> A strong baseline behavioral negotiation strategy developed by de Jonge, Dave in "An Analysis of the Linear Bilateral ANAC Domains Using the MiCRO Benchmark Strategy.", ICJAI 2022. This strategy assumes no knowledge of the opponent utility function and is implemented from scratch to showcase the following:<ul>
 <li>Using <code>on_preferences_changed</code> for initialization.</li>
 <li>Using <a href="https://negmas.readthedocs.io/en/latest/api/negmas.preferences.PresortingInverseUtilityFunction.html">PresortingInverseUtilityFunction</a> for inverting a utility function.</li>
-<li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/nash_seeker.py">NashSeeker</a> A naive strategy that simply sets the opponent reserved value to a fixed value and then uses helpers from NegMAS to find the <a href="https://en.wikipedia.org/wiki/Cooperative_bargaining">Nash Bargaining Solution</a> and use it for deciding what to offer. This showcases:</li>
+</ul>
+</li>
+<li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/nash_seeker.py">NashSeeker</a> A naive strategy that simply sets the opponent reserved value to a fixed value and then uses helpers from NegMAS to find the <a href="https://en.wikipedia.org/wiki/Cooperative_bargaining">Nash Bargaining Solution</a> and use it for deciding what to offer. This showcases:<ul>
 <li>Using NegMAS helpers to calculate the pareto-frontier and the Nash Bargaining Solution</li>
-<li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/rv_fitter.py">RVFitter</a> A strategy very similar to the one we implemented earlier as <code>SimpleRVFitter</code>. Instead of trying to estiamte the opponent reserved value from the first step, this strategy waits until it collects few offers before attempting the etimation. This showcases:</li>
+</ul>
+</li>
+<li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/rv_fitter.py">RVFitter</a> A strategy very similar to the one we implemented earlier as <code>SimpleRVFitter</code>. Instead of trying to estiamte the opponent reserved value from the first step, this strategy waits until it collects few offers before attempting the etimation. This showcases:<ul>
 <li>Setting the opponent reserved value based on our best estimate.</li>
 <li>A simple way to use this estimate for our bidding strategy.</li>
+<li>Using logging. Logs can be saved using <code>self.nmi.log_info(dict(my_key=my_value))</code> and found under the logs folder.</li>
+</ul>
+</li>
 <li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py">Boulware, Conceder, Linear</a> Time-based strategies that are implemented by just setting construction parameters of an existing NegMAS negotiator</li>
 <li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py">StochasticBoulware, StochasticConceder, StochasticLinear</a> Stochastic versions of the three time-based strategies above implemented by just setting construction parameters of an existing NegMAS negotiator</li>
 <li><a href="https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py">NaiveTitForTat</a> A simple behavioral strategy implemented by just inheriting from an existing NegMAS negotiator.</li>
