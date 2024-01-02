@@ -274,6 +274,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contributing
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -424,6 +433,15 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#contributing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Contributing
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -440,17 +458,17 @@
 
 
 <h1 id="anl-documentation">ANL Documentation</h1>
-<p>This repository is the official platform for running ANAC Automated Negotiation Leagues (starting 2024). It will contain a package
+<p>This repository is the official platform for running ANAC Automated Negotiation Leagues (starting 2024). It will contain a module
 called <code>anlXXXX</code> for the competition run in year XXXX. For example anl2024 will contain all files related to the
 2024's version of the competition.</p>
 <p>This package is a thin-wrapper around the <a href="https://negmas.readthedocs.io">NegMAS</a> library for automated negotiation. Its main goal is to provide the following functionalities:</p>
 <ol>
-<li>A set of utility functions to run tournaments in the same settings as in the ANL competition. These functions are always called <code>anl20XX_tournament</code> for year <code>20XX</code>.</li>
+<li>A method for generating scenarios to run tournaments in the same settings as in the ANL competition. These functions are always called <code>anl20XX_tournament</code> for year <code>20XX</code>.</li>
 <li>A CLI for running tournaments called <code>anl</code>.</li>
+<li>A visualizer for inspecting tournament results and negotiations in details called <code>anlv</code>.</li>
 <li>A place to hold the official implementation of every strategy submitted to the ANL competition after each year. These can be found in the module <code>anl.anl20XX.negotiators</code> for year <code>20XX</code>.</li>
 </ol>
-<p>The official website for the ANL competition is:
-<a href="https://scml.cs.brown.edu/anl">https://scml.cs.brown.edu/anl</a></p>
+<p>The official website for the ANL competition is: <a href="https://scml.cs.brown.edu/anl">https://scml.cs.brown.edu/anl</a></p>
 <h2 id="installation">Installation</h2>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>anl
 </span></code></pre></div>
@@ -491,6 +509,20 @@ This will allow you to select any tournament that is stored in the default locat
 You can also show the tournament stored in a specific location 'your-tournament-path' using:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>anlv<span class="w"> </span>show<span class="w"> </span>your-tournament-path
 </span></code></pre></div>
+<h2 id="contributing">Contributing</h2>
+<div class="admonition info">
+<p class="admonition-title">Info</p>
+<p>This is not required to participate in the ANL competition</p>
+</div>
+<p>If you would like to contribute to ANL, please clone <a href="https://github.com/yasserfarouk/anl">the repo</a>, then run:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">requirements</span><span class="o">-</span><span class="n">dev</span><span class="o">.</span><span class="n">txt</span>
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">r</span> <span class="n">docs</span><span class="o">/</span><span class="n">requirements</span><span class="o">.</span><span class="n">txt</span>
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="n">python</span> <span class="o">-</span><span class="n">m</span> <span class="n">pip</span> <span class="n">install</span> <span class="o">-</span><span class="n">e</span> <span class="o">.</span>
+</span></code></pre></div>
+<p>You can then submit Pull Requests which will be carefully reviewed.</p>
+<p>If you have an issue, please report it <a href="https://github.com/yasserfarouk/anl/issues">here</a>.
+If you have something to discuss, please report it <a href="https://github.com/yasserfarouk/anl/discussions">here</a>.</p>
 
 
 
