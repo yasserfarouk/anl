@@ -4,7 +4,7 @@
 
 Agents for the ANL competition are standard [NegMAS](https://yasserfarouk.github.io/negmas) negotiators. As such, they can be developed using any approach used to develop negotiators in NegMAS.
 
-To develop a negotiator, you need to inherit from the [SAONegotiator](https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAONegotiator.html) class and implement the [__call__](https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAONegotiator.html#negmas.sao.SAONegotiator.__call__) method.
+To develop a negotiator, you need to inherit from the [SAONegotiator](https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAONegotiator.html) class and implement the [`__call__()`](https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAONegotiator.html#negmas.sao.SAONegotiator.__call__) method.
 
 Here is a simple random negotiator:
 
@@ -60,8 +60,8 @@ results = anl2024_tournament(
 
 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.655925</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-3.144891</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.701151</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.083134</span>
 </pre>
 
 
@@ -116,12 +116,12 @@ results.final_scores
     <tr>
       <th>0</th>
       <td>Boulware</td>
-      <td>0.655925</td>
+      <td>0.701151</td>
     </tr>
     <tr>
       <th>1</th>
       <td>MyRandomNegotiator</td>
-      <td>-3.144891</td>
+      <td>0.083134</td>
     </tr>
   </tbody>
 </table>
@@ -378,10 +378,10 @@ anl2024_tournament(
 
 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.469250</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>      SimpleRVFitter  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.468410</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>            Conceder  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.301509</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.674371</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.629338</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>      SimpleRVFitter  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.619796</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>            Conceder  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.362968</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.082266</span>
 </pre>
 
 
@@ -415,22 +415,22 @@ anl2024_tournament(
     <tr>
       <th>0</th>
       <td>Boulware</td>
-      <td>0.469250</td>
+      <td>0.629338</td>
     </tr>
     <tr>
       <th>1</th>
       <td>SimpleRVFitter</td>
-      <td>0.468410</td>
+      <td>0.619796</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Conceder</td>
-      <td>0.301509</td>
+      <td>0.362968</td>
     </tr>
     <tr>
       <th>3</th>
       <td>MyRandomNegotiator</td>
-      <td>-0.674371</td>
+      <td>-0.082266</td>
     </tr>
   </tbody>
 </table>
@@ -656,14 +656,9 @@ The ANL package comes with some example negotiators. These are not designed to b
 - [RVFitter](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/rv_fitter.py) A strategy very similar to the one we implemented earlier as `SimpleRVFitter`. Instead of trying to estiamte the opponent reserved value from the first step, this strategy waits until it collects few offers before attempting the etimation. This showcases:
     - Setting the opponent reserved value based on our best estimate.
     - A simple way to use this estimate for our bidding strategy.
-    - Using logging. Logs can be saved using `self.nmi.log_info(dict(my_key=my_value))` and found under the logs folder.
+    - Using **logging**. Logs can be saved using `self.nmi.log_info(dict(my_key=my_value))` and found under the logs folder.
 - [Boulware, Conceder, Linear](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) Time-based strategies that are implemented by just setting construction parameters of an existing NegMAS negotiator
 - [StochasticBoulware, StochasticConceder, StochasticLinear](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) Stochastic versions of the three time-based strategies above implemented by just setting construction parameters of an existing NegMAS negotiator
 - [NaiveTitForTat](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) A simple behavioral strategy implemented by just inheriting from an existing NegMAS negotiator.
 
-
-
-```python
-
-```
 [Download Notebook](/tutorials/notebooks/tutorial.ipynb)

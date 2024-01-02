@@ -1,17 +1,17 @@
 # ANL Documentation
 
-This repository is the official platform for running ANAC Automated Negotiation Leagues (starting 2024). It will contain a package
+This repository is the official platform for running ANAC Automated Negotiation Leagues (starting 2024). It will contain a module
 called `anlXXXX` for the competition run in year XXXX. For example anl2024 will contain all files related to the
 2024's version of the competition.
 
 This package is a thin-wrapper around the [NegMAS](https://negmas.readthedocs.io) library for automated negotiation. Its main goal is to provide the following functionalities:
 
-1. A set of utility functions to run tournaments in the same settings as in the ANL competition. These functions are always called `anl20XX_tournament` for year `20XX`.
+1. A method for generating scenarios to run tournaments in the same settings as in the ANL competition. These functions are always called `anl20XX_tournament` for year `20XX`.
 1. A CLI for running tournaments called `anl`.
+1. A visualizer for inspecting tournament results and negotiations in details called `anlv`.
 1. A place to hold the official implementation of every strategy submitted to the ANL competition after each year. These can be found in the module `anl.anl20XX.negotiators` for year `20XX`.
 
-The official website for the ANL competition is:
-[https://scml.cs.brown.edu/anl](https://scml.cs.brown.edu/anl)
+The official website for the ANL competition is: [https://scml.cs.brown.edu/anl](https://scml.cs.brown.edu/anl)
 
 
 ## Installation
@@ -85,3 +85,22 @@ You can also show the tournament stored in a specific location 'your-tournament-
 ```bash
 anlv show your-tournament-path
 ```
+
+## Contributing
+
+!!! info
+    This is not required to participate in the ANL competition
+
+If you would like to contribute to ANL, please clone [the repo](https://github.com/yasserfarouk/anl), then run:
+
+```python
+python -m pip install -r requirements.txt
+python -m pip install -r requirements-dev.txt
+python -m pip install -r docs/requirements.txt
+python -m pip install -e .
+```
+
+You can then submit Pull Requests which will be carefully reviewed.
+
+If you have an issue, please report it [here](https://github.com/yasserfarouk/anl/issues).
+If you have something to discuss, please report it [here](https://github.com/yasserfarouk/anl/discussions).
