@@ -1,187 +1,821 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
-        
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
         <link rel="canonical" href="https://yasserfarouk.github.io/anl/reference/">
-        <link rel="shortcut icon" href="../img/favicon.ico">
+      
+      
+        <link rel="prev" href="../faq/">
+      
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.5.3, mkdocs-material-9.5.3">
+    
+    
+      
         <title>Reference - ANL Documentation</title>
-        <link href="../css/bootstrap.min.css" rel="stylesheet">
-        <link href="../css/font-awesome.min.css" rel="stylesheet">
-        <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css">
-        <link href="../assets/_mkdocstrings.css" rel="stylesheet">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
-        <script>hljs.highlightAll();</script> 
-    </head>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.50c56a3b.min.css">
+      
+      
 
-    <body>
-        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
-            <div class="container">
-                <a class="navbar-brand" href="..">ANL Documentation</a>
-                <!-- Expander button -->
-                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <!-- Expanded navigation -->
-                <div id="navbar-collapse" class="navbar-collapse collapse">
-                        <!-- Main navigation -->
-                        <ul class="nav navbar-nav">
-                            <li class="navitem">
-                                <a href=".." class="nav-link">Index</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../install/" class="nav-link">Installation</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../tutorials/tutorial/" class="nav-link">Tutorial</a>
-                            </li>
-                            <li class="navitem">
-                                <a href="../faq/" class="nav-link">FAQ</a>
-                            </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">Reference</a>
-                            </li>
-                        </ul>
-
-                    <ul class="nav navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
-                                <i class="fa fa-search"></i> Search
-                            </a>
-                        </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../faq/" class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" class="nav-link disabled">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <div class="container">
-            <div class="row">
-                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
-            <span class="fa fa-angle-down"></span>
-        </button>
-    </div>
 
     
-    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
-        <ul class="nav flex-column">
-            
-            <li class="nav-item" data-level="1"><a href="#anl-reference" class="nav-link">ANL Reference</a>
-              <ul class="nav flex-column">
-            <li class="nav-item" data-level="2"><a href="#example-negotiators" class="nav-link">Example Negotiators</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.micro.MiCRO" class="nav-link">MiCRO</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker" class="nav-link">NashSeeker</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.rv_fitter.RVFitter" class="nav-link">RVFitter</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.Boulware" class="nav-link">Boulware</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.Linear" class="nav-link">Linear</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.Conceder" class="nav-link">Conceder</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware" class="nav-link">StochasticBoulware</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticLinear" class="nav-link">StochasticLinear</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticConceder" class="nav-link">StochasticConceder</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat" class="nav-link">NaiveTitForTat</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#tournaments" class="nav-link">Tournaments</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.anl2024_tournament" class="nav-link">anl2024_tournament</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.DEFAULT_AN2024_COMPETITORS" class="nav-link">DEFAULT_AN2024_COMPETITORS</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.DEFAULT_TOURNAMENT_PATH" class="nav-link">DEFAULT_TOURNAMENT_PATH</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.DEFAULT2024SETTINGS" class="nav-link">DEFAULT2024SETTINGS</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#helpers-scenario-generation" class="nav-link">Helpers (Scenario Generation)</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.ScenarioGenerator" class="nav-link">ScenarioGenerator</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.mixed_scenarios" class="nav-link">mixed_scenarios</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.pie_scenarios" class="nav-link">pie_scenarios</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.arbitrary_pie_scenarios" class="nav-link">arbitrary_pie_scenarios</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.monotonic_pie_scenarios" class="nav-link">monotonic_pie_scenarios</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-            <li class="nav-item" data-level="2"><a href="#anl.anl2024.zerosum_pie_scenarios" class="nav-link">zerosum_pie_scenarios</a>
-              <ul class="nav flex-column">
-              </ul>
-            </li>
-              </ul>
-            </li>
-        </ul>
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/_mkdocstrings.css">
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce((e,_)=>(e<<5)-e+_.charCodeAt(0),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#anl-reference" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
-</div></div>
-                    <div class="col-md-9" role="main">
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="ANL Documentation" class="md-header__button md-logo" aria-label="ANL Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2Z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ANL Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Reference
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var media,input,key,value,palette=__md_get("__palette");if(palette&&palette.color){"(prefers-color-scheme)"===palette.color.media&&(media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']"),palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent"));for([key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5Z"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12Z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41Z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="ANL Documentation" class="md-nav__button md-logo" aria-label="ANL Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54Z"/></svg>
+
+    </a>
+    ANL Documentation
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Introduction
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../install/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Installation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../tutorials/tutorial/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tutorial
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FAQ
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Reference
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-negotiators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Negotiators
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Negotiators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.micro.MiCRO" class="md-nav__link">
+    <span class="md-ellipsis">
+      MiCRO
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker" class="md-nav__link">
+    <span class="md-ellipsis">
+      NashSeeker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.rv_fitter.RVFitter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RVFitter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.Boulware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Boulware
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.Linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linear
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.Conceder" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conceder
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware" class="md-nav__link">
+    <span class="md-ellipsis">
+      StochasticBoulware
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticLinear" class="md-nav__link">
+    <span class="md-ellipsis">
+      StochasticLinear
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticConceder" class="md-nav__link">
+    <span class="md-ellipsis">
+      StochasticConceder
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat" class="md-nav__link">
+    <span class="md-ellipsis">
+      NaiveTitForTat
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tournaments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tournaments
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tournaments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.anl2024_tournament" class="md-nav__link">
+    <span class="md-ellipsis">
+      anl2024_tournament()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.DEFAULT_AN2024_COMPETITORS" class="md-nav__link">
+    <span class="md-ellipsis">
+      DEFAULT_AN2024_COMPETITORS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.DEFAULT_TOURNAMENT_PATH" class="md-nav__link">
+    <span class="md-ellipsis">
+      DEFAULT_TOURNAMENT_PATH
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.DEFAULT2024SETTINGS" class="md-nav__link">
+    <span class="md-ellipsis">
+      DEFAULT2024SETTINGS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helpers-scenario-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Helpers (Scenario Generation)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Helpers (Scenario Generation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.ScenarioGenerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      ScenarioGenerator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.mixed_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      mixed_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.pie_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      pie_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.arbitrary_pie_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      arbitrary_pie_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.monotonic_pie_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      monotonic_pie_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.zerosum_pie_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      zerosum_pie_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#example-negotiators" class="md-nav__link">
+    <span class="md-ellipsis">
+      Example Negotiators
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Example Negotiators">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.micro.MiCRO" class="md-nav__link">
+    <span class="md-ellipsis">
+      MiCRO
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker" class="md-nav__link">
+    <span class="md-ellipsis">
+      NashSeeker
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.rv_fitter.RVFitter" class="md-nav__link">
+    <span class="md-ellipsis">
+      RVFitter
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.Boulware" class="md-nav__link">
+    <span class="md-ellipsis">
+      Boulware
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.Linear" class="md-nav__link">
+    <span class="md-ellipsis">
+      Linear
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.Conceder" class="md-nav__link">
+    <span class="md-ellipsis">
+      Conceder
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware" class="md-nav__link">
+    <span class="md-ellipsis">
+      StochasticBoulware
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticLinear" class="md-nav__link">
+    <span class="md-ellipsis">
+      StochasticLinear
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.StochasticConceder" class="md-nav__link">
+    <span class="md-ellipsis">
+      StochasticConceder
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat" class="md-nav__link">
+    <span class="md-ellipsis">
+      NaiveTitForTat
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#tournaments" class="md-nav__link">
+    <span class="md-ellipsis">
+      Tournaments
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Tournaments">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.anl2024_tournament" class="md-nav__link">
+    <span class="md-ellipsis">
+      anl2024_tournament()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.DEFAULT_AN2024_COMPETITORS" class="md-nav__link">
+    <span class="md-ellipsis">
+      DEFAULT_AN2024_COMPETITORS
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.DEFAULT_TOURNAMENT_PATH" class="md-nav__link">
+    <span class="md-ellipsis">
+      DEFAULT_TOURNAMENT_PATH
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.DEFAULT2024SETTINGS" class="md-nav__link">
+    <span class="md-ellipsis">
+      DEFAULT2024SETTINGS
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#helpers-scenario-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      Helpers (Scenario Generation)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Helpers (Scenario Generation)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.ScenarioGenerator" class="md-nav__link">
+    <span class="md-ellipsis">
+      ScenarioGenerator
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.mixed_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      mixed_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.pie_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      pie_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.arbitrary_pie_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      arbitrary_pie_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.monotonic_pie_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      monotonic_pie_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#anl.anl2024.zerosum_pie_scenarios" class="md-nav__link">
+    <span class="md-ellipsis">
+      zerosum_pie_scenarios()
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
 
 <h1 id="anl-reference">ANL Reference</h1>
 <p>This package provides a wrapper around NegMAS functionality to generate and run tournaments a la ANL 2024 competition.
@@ -189,14 +823,20 @@ You mostly only need to use <code>anl2024_tournament</code> in your code. The ot
 <h2 id="example-negotiators">Example Negotiators</h2>
 <p>The package provides few example negotiators. Of special importance is the <code>MiCRO</code> negotiator which provides a full implementation of a recently proposed behavioral strategy.
 Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
-<h3 id="class-micro">class: MiCRO</h3>
 
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.micro.MiCRO"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.micro.MiCRO" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.micro.MiCRO</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.sao.SAONegotiator">SAONegotiator</span></code></p>
@@ -403,14 +1043,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
   </div>
 
-</div><h3 id="class-nashseeker">class: NashSeeker</h3>
-
+</div>
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.nash_seeker.NashSeeker</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.sao.SAONegotiator">SAONegotiator</span></code></p>
@@ -613,14 +1259,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
   </div>
 
-</div><h3 id="class-rvfitter">class: RVFitter</h3>
-
+</div>
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.rv_fitter.RVFitter"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.rv_fitter.RVFitter" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.rv_fitter.RVFitter</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.SAONegotiator">SAONegotiator</span></code></p>
@@ -1086,14 +1738,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
   </div>
 
-</div><h3 id="class-boulware">class: Boulware</h3>
-
+</div>
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.wrappers.Boulware"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.wrappers.Boulware" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.wrappers.Boulware</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.sao.negotiators.BoulwareTBNegotiator">BoulwareTBNegotiator</span></code></p>
@@ -1115,14 +1773,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
   </div>
 
-</div><h3 id="class-linear">class: Linear</h3>
-
+</div>
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.wrappers.Linear"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.wrappers.Linear" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.wrappers.Linear</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.sao.negotiators.LinearTBNegotiator">LinearTBNegotiator</span></code></p>
@@ -1148,14 +1812,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
   </div>
 
-</div><h3 id="class-conceder">class: Conceder</h3>
-
+</div>
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.wrappers.Conceder"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.wrappers.Conceder" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.wrappers.Conceder</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.sao.negotiators.ConcederTBNegotiator">ConcederTBNegotiator</span></code></p>
@@ -1177,14 +1847,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
   </div>
 
-</div><h3 id="class-stochasticboulware">class: StochasticBoulware</h3>
-
+</div>
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.wrappers.StochasticBoulware</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.sao.negotiators.AspirationNegotiator">AspirationNegotiator</span></code></p>
@@ -1244,14 +1920,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
   </div>
 
-</div><h3 id="class-stochasticlinear">class: StochasticLinear</h3>
-
+</div>
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.wrappers.StochasticLinear"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.wrappers.StochasticLinear" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.wrappers.StochasticLinear</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.sao.negotiators.AspirationNegotiator">AspirationNegotiator</span></code></p>
@@ -1311,14 +1993,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
   </div>
 
-</div><h3 id="class-conceder_1">class: Conceder</h3>
-
+</div>
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.wrappers.StochasticConceder"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.wrappers.StochasticConceder" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.wrappers.StochasticConceder</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.sao.negotiators.AspirationNegotiator">AspirationNegotiator</span></code></p>
@@ -1378,14 +2066,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
   </div>
 
-</div><h3 id="class-naivetitfortat">class: NaiveTitForTat</h3>
-
+</div>
 
 <div class="doc doc-object doc-class">
 
 
 
-<a id="anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat"></a>
+
+<h3 id="anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat" class="doc doc-heading">
+          <code>anl.anl2024.negotiators.builtins.wrappers.NaiveTitForTat</code>
+
+
+</h3>
+
+
   <div class="doc doc-contents first">
           <p class="doc doc-class-bases">
             Bases: <code><span title="negmas.sao.negotiators.NaiveTitForTatNegotiator">NaiveTitForTatNegotiator</span></code></p>
@@ -1408,7 +2102,6 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
   </div>
 
 </div><h2 id="tournaments">Tournaments</h2>
-<h3 id="function-anl2024_tournament">function: anl2024_tournament</h3>
 
 
 
@@ -1416,7 +2109,13 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
 
 
 
-<a id="anl.anl2024.anl2024_tournament"></a>
+
+<h3 id="anl.anl2024.anl2024_tournament" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">anl2024_tournament</span></code>
+
+</h3>
+
+
   <div class="doc doc-contents first">
   
       <p>Runs an ANL 2024 tournament</p>
@@ -2150,68 +2849,109 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
           </details>
   </div>
 
-</div><h3 id="constant-default_an2024_competitors">constant: DEFAULT_AN2024_COMPETITORS</h3>
-
+</div>
 
 <div class="doc doc-object doc-attribute">
 
 
 
-<a id="anl.anl2024.DEFAULT_AN2024_COMPETITORS"></a>
+
+<h3 id="anl.anl2024.DEFAULT_AN2024_COMPETITORS" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">DEFAULT_AN2024_COMPETITORS</span> <span class="o">=</span> <span class="p">(</span><span class="n">RVFitter</span><span class="p">,</span> <span class="n">NashSeeker</span><span class="p">,</span> <span class="n">MiCRO</span><span class="p">,</span> <span class="n">Boulware</span><span class="p">,</span> <span class="n">Conceder</span><span class="p">,</span> <span class="n">Linear</span><span class="p">)</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h3>
+
+
   <div class="doc doc-contents first">
   
       <p>Default set of negotiators (agents) used as competitors</p>
   </div>
 
-</div><h3 id="constant-default_tournament_path">constant: DEFAULT_TOURNAMENT_PATH</h3>
-
+</div>
 
 <div class="doc doc-object doc-attribute">
 
 
 
-<a id="anl.anl2024.DEFAULT_TOURNAMENT_PATH"></a>
+
+<h3 id="anl.anl2024.DEFAULT_TOURNAMENT_PATH" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">DEFAULT_TOURNAMENT_PATH</span> <span class="o">=</span> <span class="n">Path</span><span class="o">.</span><span class="n">home</span><span class="p">()</span> <span class="o">/</span> <span class="s1">&#39;negmas&#39;</span> <span class="o">/</span> <span class="s1">&#39;anl2024&#39;</span> <span class="o">/</span> <span class="s1">&#39;tournaments&#39;</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h3>
+
+
   <div class="doc doc-contents first">
   
       <p>Default location to store tournament logs</p>
   </div>
 
-</div><h3 id="constant-default2024settings">constant: DEFAULT2024SETTINGS</h3>
-
+</div>
 
 <div class="doc doc-object doc-attribute">
 
 
 
-<a id="anl.anl2024.DEFAULT2024SETTINGS"></a>
+
+<h3 id="anl.anl2024.DEFAULT2024SETTINGS" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">DEFAULT2024SETTINGS</span> <span class="o">=</span> <span class="nb">dict</span><span class="p">(</span><span class="n">n_ufuns</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_scenarios</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">n_outcomes</span><span class="o">=</span><span class="p">(</span><span class="mi">900</span><span class="p">,</span> <span class="mi">1100</span><span class="p">),</span> <span class="n">n_steps</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10000</span><span class="p">),</span> <span class="n">n_repetitions</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">reserved_ranges</span><span class="o">=</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)),</span> <span class="n">competitors</span><span class="o">=</span><span class="n">DEFAULT_AN2024_COMPETITORS</span><span class="p">,</span> <span class="n">rotate_ufuns</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">time_limit</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">pend</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">pend_per_second</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">step_time_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">negotiator_time_limit</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">self_play</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">randomize_runs</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">known_partner</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">final_score</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;advantage&#39;</span><span class="p">,</span> <span class="s1">&#39;mean&#39;</span><span class="p">),</span> <span class="n">scenario_generator</span><span class="o">=</span><span class="s1">&#39;mix&#39;</span><span class="p">,</span> <span class="n">outcomes_log_uniform</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">generator_params</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">reserved_ranges</span><span class="o">=</span><span class="p">((</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">)),</span> <span class="n">log_uniform</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">zerosum_fraction</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">monotonic_fraction</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">curve_fraction</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">pareto_first</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">n_pareto</span><span class="o">=</span><span class="p">(</span><span class="mf">0.005</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)))</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h3>
+
+
   <div class="doc doc-contents first">
   
       <p>Default settings for ANL 2024</p>
   </div>
 
 </div><h2 id="helpers-scenario-generation">Helpers (Scenario Generation)</h2>
-<h3 id="type-scenariogenerator">type: ScenarioGenerator</h3>
 
 
 <div class="doc doc-object doc-attribute">
 
 
 
-<a id="anl.anl2024.ScenarioGenerator"></a>
+
+<h3 id="anl.anl2024.ScenarioGenerator" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">ScenarioGenerator</span> <span class="o">=</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span> <span class="o">|</span> <span class="nb">tuple</span><span class="p">[</span><span class="nb">int</span><span class="p">,</span> <span class="nb">int</span><span class="p">]</span> <span class="o">|</span> <span class="nb">list</span><span class="p">[</span><span class="nb">int</span><span class="p">]],</span> <span class="nb">list</span><span class="p">[</span><span class="n">Scenario</span><span class="p">]]</span></code>
+  
+  <span class="doc doc-labels">
+      <small class="doc doc-label doc-label-module-attribute"><code>module-attribute</code></small>
+  </span>
+
+</h3>
+
+
   <div class="doc doc-contents first">
   
       <p>Type of callable that can be used for generating scenarios. It must receive the number of scenarios and number of outcomes (as int, tuple or list) and return a list of <code>Scenario</code> s</p>
   </div>
 
-</div><h3 id="function-mixed_scenarios">function: mixed_scenarios</h3>
-
+</div>
 
 
 <div class="doc doc-object doc-function">
 
 
 
-<a id="anl.anl2024.mixed_scenarios"></a>
+
+<h3 id="anl.anl2024.mixed_scenarios" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">mixed_scenarios</span></code>
+
+</h3>
+
+
   <div class="doc doc-contents first">
   
       <p>Generates a mix of zero-sum, monotonic and general scenarios</p>
@@ -2659,15 +3399,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
           </details>
   </div>
 
-</div><h3 id="function-pie_scenarios">function: pie_scenarios</h3>
-
+</div>
 
 
 <div class="doc doc-object doc-function">
 
 
 
-<a id="anl.anl2024.pie_scenarios"></a>
+
+<h3 id="anl.anl2024.pie_scenarios" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">pie_scenarios</span></code>
+
+</h3>
+
+
   <div class="doc doc-contents first">
   
       <p>Creates single-issue scenarios with arbitrary/monotonically increasing utility functions</p>
@@ -2967,15 +3712,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
           </details>
   </div>
 
-</div><h3 id="function-arbitrary_pie_scenarios">function: arbitrary_pie_scenarios</h3>
-
+</div>
 
 
 <div class="doc doc-object doc-function">
 
 
 
-<a id="anl.anl2024.arbitrary_pie_scenarios"></a>
+
+<h3 id="anl.anl2024.arbitrary_pie_scenarios" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">arbitrary_pie_scenarios</span></code>
+
+</h3>
+
+
   <div class="doc doc-contents first">
 
           <details class="quote">
@@ -3011,15 +3761,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
           </details>
   </div>
 
-</div><h3 id="function-monotonic_pie_scenarios">function: monotonic_pie_scenarios</h3>
-
+</div>
 
 
 <div class="doc doc-object doc-function">
 
 
 
-<a id="anl.anl2024.monotonic_pie_scenarios"></a>
+
+<h3 id="anl.anl2024.monotonic_pie_scenarios" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">monotonic_pie_scenarios</span></code>
+
+</h3>
+
+
   <div class="doc doc-contents first">
 
           <details class="quote">
@@ -3055,15 +3810,20 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
           </details>
   </div>
 
-</div><h3 id="function-zerosum_pie_scenarios">function: zerosum_pie_scenarios</h3>
-
+</div>
 
 
 <div class="doc doc-object doc-function">
 
 
 
-<a id="anl.anl2024.zerosum_pie_scenarios"></a>
+
+<h3 id="anl.anl2024.zerosum_pie_scenarios" class="doc doc-heading">
+          <code class="highlight language-python"><span class="n">anl</span><span class="o">.</span><span class="n">anl2024</span><span class="o">.</span><span class="n">zerosum_pie_scenarios</span></code>
+
+</h3>
+
+
   <div class="doc doc-contents first">
   
       <p>Creates scenarios all of the DivideThePie variety with proportions giving utility</p>
@@ -3263,83 +4023,60 @@ Other negotiators are just wrappers over negotiators provided by NegMAS.</p>
           </details>
   </div>
 
-</div></div>
-            </div>
-        </div>
-
-        <footer class="col-md-12">
-            <hr>
-            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
-        </footer>
-        <script src="../js/jquery-3.6.0.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
-        <script>
-            var base_url = "..",
-                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
-        </script>
-        <script src="../js/base.js"></script>
-        <script src="../search/main.js"></script>
-
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="searchModalLabel">Search</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-                <p>From here you can search these documents. Enter your search terms below.</p>
-                <form>
-                    <div class="form-group">
-                        <input type="search" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
-                    </div>
-                </form>
-                <div id="mkdocs-search-results" data-no-results-text="No results found"></div>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            </div>
-            <div class="modal-body">
-              <table class="table">
-                <thead>
-                  <tr>
-                    <th style="width: 20%;">Keys</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="help shortcut"><kbd>?</kbd></td>
-                    <td>Open this help</td>
-                  </tr>
-                  <tr>
-                    <td class="next shortcut"><kbd>n</kbd></td>
-                    <td>Next page</td>
-                  </tr>
-                  <tr>
-                    <td class="prev shortcut"><kbd>p</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td class="search shortcut"><kbd>s</kbd></td>
-                    <td>Search</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div class="modal-footer">
-            </div>
-        </div>
-    </div>
 </div>
 
-    </body>
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var tab,labels=set.querySelector(".tabbed-labels");for(tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "..", "features": ["content.tabs.link"], "search": "../assets/javascripts/workers/search.f886a092.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.d7c377c4.min.js"></script>
+      
+    
+  </body>
 </html>
