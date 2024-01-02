@@ -1,4 +1,3 @@
-## FAQ
 
 How can I access a data file in my package?
 -------------------------------------------

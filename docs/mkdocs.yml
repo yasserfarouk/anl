@@ -3,16 +3,30 @@
 site_name: ANL Documentation
 site_url: https://yasserfarouk.github.io/anl/
 nav:
-    - Index: index.md
+    - Introduction: index.md
     - Installation: install.md
     - Tutorial: tutorials/tutorial.md
     - FAQ: faq.md
     - Reference: reference.md
 theme:
-  name: "mkdocs"
+  name: "material"
+  features:
+    - content.tabs.link
 plugins:
 - search
-- mkdocstrings
+- mkdocstrings:
+    handlers:
+      python:
+        options:
+          heading_level: 3
+          summary: true
+          members_order: alphabetical
+          docstring_style: google
+          show_signature: false
+          allow_inspection: true
+          show_root_heading: true
+          show_source: true
+        paths: [..]  # Specify paths to your Python code
 - include-markdown
 
 markdown_extensions:
@@ -26,3 +40,4 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.snippets
   - pymdownx.tabbed:
+      alternate_style: true

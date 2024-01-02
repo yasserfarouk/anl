@@ -649,13 +649,14 @@ The builtin `RVFitter` seems better in this case. It took longer but it seems to
 The ANL package comes with some example negotiators. These are not designed to be stong but to showcase how to use some of the features provided by the platform.
 
 - [MiCRO](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/micro.py) A strong baseline behavioral negotiation strategy developed by de Jonge, Dave in "An Analysis of the Linear Bilateral ANAC Domains Using the MiCRO Benchmark Strategy.", ICJAI 2022. This strategy assumes no knowledge of the opponent utility function and is implemented from scratch to showcase the following:
-  - Using `on_preferences_changed` for initialization.
-  - Using [PresortingInverseUtilityFunction](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.PresortingInverseUtilityFunction.html) for inverting a utility function.
+    - Using `on_preferences_changed` for initialization.
+    - Using [PresortingInverseUtilityFunction](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.PresortingInverseUtilityFunction.html) for inverting a utility function.
 - [NashSeeker](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/nash_seeker.py) A naive strategy that simply sets the opponent reserved value to a fixed value and then uses helpers from NegMAS to find the [Nash Bargaining Solution](https://en.wikipedia.org/wiki/Cooperative_bargaining) and use it for deciding what to offer. This showcases:
-  - Using NegMAS helpers to calculate the pareto-frontier and the Nash Bargaining Solution
+    - Using NegMAS helpers to calculate the pareto-frontier and the Nash Bargaining Solution
 - [RVFitter](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/rv_fitter.py) A strategy very similar to the one we implemented earlier as `SimpleRVFitter`. Instead of trying to estiamte the opponent reserved value from the first step, this strategy waits until it collects few offers before attempting the etimation. This showcases:
-  - Setting the opponent reserved value based on our best estimate.
-  - A simple way to use this estimate for our bidding strategy.
+    - Setting the opponent reserved value based on our best estimate.
+    - A simple way to use this estimate for our bidding strategy.
+    - Using logging. Logs can be saved using `self.nmi.log_info(dict(my_key=my_value))` and found under the logs folder.
 - [Boulware, Conceder, Linear](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) Time-based strategies that are implemented by just setting construction parameters of an existing NegMAS negotiator
 - [StochasticBoulware, StochasticConceder, StochasticLinear](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) Stochastic versions of the three time-based strategies above implemented by just setting construction parameters of an existing NegMAS negotiator
 - [NaiveTitForTat](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) A simple behavioral strategy implemented by just inheriting from an existing NegMAS negotiator.
