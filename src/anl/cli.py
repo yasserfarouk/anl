@@ -23,12 +23,7 @@ from rich import print
 
 import anl
 from anl import DEFAULT_AN2024_COMPETITORS
-from anl.anl2024.runner import (
-    DEFAULT2024SETTINGS,
-    DEFAULT_TOURNAMENT_PATH,
-    GENERAROR_MAP,
-    anl2024_tournament,
-)
+from anl.anl2024.runner import DEFAULT2024SETTINGS, DEFAULT_TOURNAMENT_PATH, GENMAP, anl2024_tournament
 
 n_completed = 0
 n_total = 0
@@ -319,7 +314,7 @@ def main():
     "--generator",
     default=DEFAULT2024SETTINGS["scenario_generator"],  # type: ignore
     type=str,
-    help="The method to generate scenarios. Default is mix which generates a mix of scenario types containing zero-sum, monotonic and general scenarios",
+    help="The method to generate scenarios. Default is mix which generates a mix of scenario types containing zero-sum, monotonic and general scenarios. Other possibilities are monotonic, pie, zerosom, arbitrary",
 )
 @click.option(
     "--zerosum",
@@ -338,7 +333,13 @@ def main():
 @click.option(
     "--curve",
     "-c",
-    default=DEFAULT2024SETTINGS["generator_params"].get("curve_fraction", 0.5),  # type: ignore
+    default=DEFAULT2024SETTINGS["generator_params"].get("curve_fraction", 0.25),  # type: ignore
+    type=float,
+    help="Fraction of monotonic and general scenarios generated using a Pareto curve not piecewise linear Pareto (used when generator=mix)",
+)
+@click.option(
+    "--pies",
+    default=DEFAULT2024SETTINGS["generator_params"].get("pies_fraction", 0.25),  # type: ignore
     type=float,
     help="Fraction of monotonic and general scenarios generated using a Pareto curve not piecewise linear Pareto (used when generator=mix)",
 )
@@ -420,6 +421,7 @@ def tournament2024(
     zerosum,
     monotonic,
     curve,
+    pies,
     two,
     scenarios_path,
 ):
@@ -446,6 +448,7 @@ def tournament2024(
             zerosum_fraction=zerosum,
             monotonic_fraction=monotonic,
             curve_fraction=curve,
+            pies_fraction=pies,
         )
     if small:
         scenarios = min(scenarios, 2)
@@ -707,7 +710,7 @@ def make_scenarios(
     outcomes = read_range(outcomes, min_outcomes, max_outcomes)
 
     print(f"Will generate {scenarios} scenarios of {outcomes} outcomes each.")
-    scenario_generator = GENERAROR_MAP[generator]
+    scenario_generator = GENMAP[generator]
     scenarios = scenario_generator(
         n_scenarios=scenarios, n_outcomes=outcomes, **generator_params
     )

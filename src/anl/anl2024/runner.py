@@ -1,3 +1,4 @@
+import itertools
 import random
 from pathlib import Path
 from typing import Any, Callable, Iterable, Sequence
@@ -9,20 +10,13 @@ from negmas.inout import Scenario, UtilityFunction, pareto_frontier
 from negmas.negotiators import Negotiator
 from negmas.outcomes import make_issue, make_os
 from negmas.preferences import LinearAdditiveUtilityFunction as U
-from negmas.preferences.generators import generate_utility_values
+from negmas.preferences.generators import GENERATOR_MAP, generate_multi_issue_ufuns, generate_utility_values
 from negmas.preferences.ops import nash_points
 from negmas.preferences.value_fun import TableFun
 from negmas.sao.mechanism import SAOMechanism
 from negmas.tournaments.neg.simple import SimpleTournamentResults, cartesian_tournament
 
-from anl.anl2024.negotiators.builtins import (
-    Boulware,
-    Conceder,
-    Linear,
-    MiCRO,
-    NashSeeker,
-    RVFitter,
-)
+from anl.anl2024.negotiators.builtins import Boulware, Conceder, Linear, MiCRO, NashSeeker, RVFitter
 
 # from anl.anl2024.negotiators.builtin import (
 #     StochasticBoulware,
@@ -89,7 +83,8 @@ DEFAULT2024SETTINGS = dict(
         log_uniform=False,
         zerosum_fraction=0.05,
         monotonic_fraction=0.25,
-        curve_fraction=0.5,
+        curve_fraction=0.25,
+        pies_fraction=0.2,
         pareto_first=False,
         n_pareto=(0.005, 0.25),
     ),
@@ -99,6 +94,107 @@ DEFAULT2024SETTINGS = dict(
 
 ScenarioGenerator = Callable[[int, int | tuple[int, int] | list[int]], list[Scenario]]
 """Type of callable that can be used for generating scenarios. It must receive the number of scenarios and number of outcomes (as int, tuple or list) and return a list of `Scenario` s"""
+
+
+def pies_scenarios(
+    n_scenarios: int = 20,
+    n_outcomes: int | tuple[int, int] | list[int] = 100,
+    *,
+    reserved_ranges: ReservedRanges = ((0.0, 0.999999), (0.0, 0.999999)),
+    log_uniform: bool = True,
+    monotonic=True,
+) -> list[Scenario]:
+    """Creates multi-issue scenarios with arbitrary/monotonically increasing value functions
+
+    Args:
+        n_scenarios: Number of scenarios to create
+        n_outcomes: Number of outcomes per scenario. If a tuple it will be interpreted as a min/max range to sample n. outcomes from.
+                    If a list, samples from this list will be used (with replacement).
+        reserved_ranges: Ranges of reserved values for first and second negotiators
+        log_uniform: If given, the distribution used will be uniform on the logarithm of n. outcomes (only used when n_outcomes is a 2-valued tuple).
+        monotonic: If true all ufuns are monotonically increasing in the portion of the pie
+
+    Remarks:
+        - When n_outcomes is a tuple, the number of outcomes for each scenario will be sampled independently.
+    """
+    ufun_sets = []
+    base_name = "DivideTyePies" if monotonic else "S"
+
+    def normalize(x):
+        mn, mx = x.min(), x.max()
+        return ((x - mn) / (mx - mn)).tolist()
+
+    def make_monotonic(x, i):
+        x = np.sort(np.asarray(x), axis=None)
+
+        if i:
+            x = x[::-1]
+        r = random.random()
+        if r < 0.33:
+            x = np.exp(x)
+        elif r < 0.67:
+            x = np.log(x)
+        else:
+            pass
+        return normalize(x)
+
+    max_jitter_level = 0.8
+    for i in range(n_scenarios):
+        n = intin(n_outcomes, log_uniform)
+        issues = (
+            make_issue(
+                [f"{i}_{n-1 - i}" for i in range(n)],
+                "portions" if not monotonic else "i1",
+            ),
+        )
+        # funs = [
+        #     dict(
+        #         zip(
+        #             issues[0].all,
+        #             # adjust(np.asarray([random.random() for _ in range(n)])),
+        #             generate(n, i),
+        #         )
+        #     )
+        #     for i in range(2)
+        # ]
+        os = make_os(issues, name=f"{base_name}{i}")
+        outcomes = list(os.enumerate_or_sample())
+        ufuns = U.generate_bilateral(
+            outcomes,
+            conflict_level=0.5 + 0.5 * random.random(),
+            conflict_delta=random.random(),
+        )
+        jitter_level = random.random() * max_jitter_level
+        funs = [
+            np.asarray([float(u(_)) for _ in outcomes])
+            + np.random.random() * jitter_level
+            for u in ufuns
+        ]
+
+        if monotonic:
+            funs = [make_monotonic(x, i) for i, x in enumerate(funs)]
+        else:
+            funs = [normalize(x) for x in funs]
+        ufuns = tuple(
+            U(
+                values=(TableFun(dict(zip(issues[0].all, vals))),),
+                name=f"{uname}{i}",
+                outcome_space=os,
+                # reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),
+            )
+            for (uname, vals) in zip(("First", "Second"), funs)
+            # for (uname, r, vals) in zip(("First", "Second"), reserved_ranges, funs)
+        )
+        sample_reserved_values(ufuns, reserved_ranges=reserved_ranges)
+        ufun_sets.append(ufuns)
+
+    return [
+        Scenario(
+            outcome_space=ufuns[0].outcome_space,  # type: ignore We are sure this is not None
+            ufuns=ufuns,
+        )
+        for ufuns in ufun_sets
+    ]
 
 
 def pie_scenarios(
@@ -218,6 +314,113 @@ def arbitrary_pie_scenarios(
     )
 
 
+def product(generator):
+    """
+    Calculates the product of all elements in a generator.
+
+    Args:
+        generator: A generator of numbers.
+
+    Returns:
+        The product of all elements in the generator.
+    """
+    total = 1
+    for num in generator:
+        total *= num
+    return total
+
+
+def find_three_integers(x):
+    """Finds three integers that multiply to a number, considering numbers around x."""
+
+    for offset in itertools.count(0):
+        current_number = x + (-1) ** offset * offset
+
+        # Stop searching downwards at 8
+        if current_number < 8:
+            break
+
+        result = find_three_integers_for_number(current_number)
+        if result:
+            return result
+
+    return None  # No solution found within the search range
+
+
+def find_three_integers_for_number(x, fraction=0.1):
+    """Helper function to find three integers for a given number."""
+
+    # Check for perfect cubes
+    cube_root = int(x ** (1 / 3))
+    if cube_root**3 >= x * (1 - fraction):
+        return (
+            cube_root,
+            cube_root + random.randint(-1, 1),
+            cube_root,
+        )
+
+    # Factor x into primes
+    prime_factors = []
+    divisor = 2
+    while x > 1:
+        while x % divisor == 0:
+            prime_factors.append(divisor)
+            x //= divisor
+        divisor += 1
+
+    # Try to group prime factors into threes
+    for combination in itertools.combinations(prime_factors, 3):
+        if product(combination) == x:
+            return combination
+
+    # Try combining factors to create three integers
+    if len(prime_factors) >= 4:
+        for i in range(1, len(prime_factors) - 2):
+            if (
+                prime_factors[0] * prime_factors[i] * product(prime_factors[i + 1 :])
+                == x
+            ):
+                return (
+                    prime_factors[0],
+                    prime_factors[i],
+                    product(prime_factors[i + 1 :]),
+                )
+
+    return None
+
+
+def monotonic_pies_scenarios(
+    n_scenarios: int = 20,
+    n_outcomes: int | tuple[int, int] | list[int] = 100,
+    *,
+    reserved_ranges: ReservedRanges = ((0.0, 0.999999), (0.0, 0.999999)),
+    log_uniform: bool = False,
+) -> list[Scenario]:
+    ufun_sets = []
+    for s in range(n_scenarios):
+        ufuns = generate_multi_issue_ufuns(
+            3,
+            sizes=find_three_integers_for_number(n_outcomes),
+            os_name=f"DivideThePies{s}",
+        )
+        os = ufuns[0].outcome_space
+        assert os is not None
+        sample_reserved_values(
+            ufuns,
+            pareto=tuple(tuple(u(_) for u in ufuns) for _ in os.enumerate_or_sample()),
+            reserved_ranges=reserved_ranges,
+        )
+        ufun_sets.append(ufuns)
+
+    return [
+        Scenario(
+            outcome_space=ufuns[0].outcome_space,  # type: ignore We are sure this is not None
+            ufuns=ufuns,
+        )
+        for ufuns in ufun_sets
+    ]
+
+
 def monotonic_pie_scenarios(
     n_scenarios: int = 20,
     n_outcomes: int | tuple[int, int] | list[int] = 100,
@@ -232,6 +435,14 @@ def monotonic_pie_scenarios(
         log_uniform=log_uniform,
         monotonic=True,
     )
+
+    return [
+        Scenario(
+            outcome_space=ufuns[0].outcome_space,  # type: ignore We are sure this is not None
+            ufuns=ufuns,
+        )
+        for ufuns in ufun_sets
+    ]
 
 
 def sample_reserved_values(
@@ -344,6 +555,7 @@ def mixed_scenarios(
     zerosum_fraction: float = DEFAULT2024SETTINGS["generator_params"]["zerosum_fraction"],  # type: ignore
     monotonic_fraction: float = DEFAULT2024SETTINGS["generator_params"]["monotonic_fraction"],  # type: ignore
     curve_fraction: float = DEFAULT2024SETTINGS["generator_params"]["curve_fraction"],  # type: ignore
+    pies_fraction: float = DEFAULT2024SETTINGS["generator_params"]["pies_fraction"],  # type: ignore
     pareto_first: bool = DEFAULT2024SETTINGS["generator_params"]["pareto_first"],  # type: ignore
     n_ufuns: int = DEFAULT2024SETTINGS["n_ufuns"],  # type: ignore
     n_pareto: int | float | tuple[float | int, float | int] | list[int | float] = DEFAULT2024SETTINGS["generator_params"]["n_pareto"],  # type: ignore
@@ -363,6 +575,7 @@ def mixed_scenarios(
         monotonic_fraction: Fraction of scenarios where each ufun is a monotonic function of the received pie.
         curve_fraction: Fraction of general and monotonic scenarios that use a curve for Pareto generation instead of
                         a piecewise linear Pareto frontier.
+        pies_fraction: Fraction of divide-the-pies multi-issue scenarios
         pareto_first: If given, the Pareto frontier will always be in the first set of outcomes
         n_ufuns: Number of ufuns to generate per scenario
         n_pareto: Number of outcomes on the Pareto frontier in general scenarios.
@@ -392,9 +605,11 @@ def mixed_scenarios(
             else:
                 n_pareto = int(0.5 + n_pareto * n) if n_pareto < 1 else int(n_pareto)
             n_pareto_selected = intin(n_pareto, log_uniform=pareto_log_uniform)  # type: ignore
+        ufuns, vals = None, None
         for _ in range(n_trials):
             try:
                 if r < zerosum_fraction:
+                    name = "DivideThePie"
                     vals = generate_utility_values(
                         n_pareto=n_pareto_selected,
                         n_outcomes=n,
@@ -402,7 +617,15 @@ def mixed_scenarios(
                         pareto_first=pareto_first,
                         pareto_generator="zero_sum",
                     )
-                    name = "DivideThePie"
+                elif r < zerosum_fraction + pies_fraction:
+                    name = "DivideThePies"
+                    ufuns = generate_multi_issue_ufuns(
+                        n_issues=3,
+                        n_values=(9, 11),
+                        pareto_generators=tuple(GENERATOR_MAP.keys()),
+                        ufun_names=("First0", "Second1"),
+                        os_name=f"{name}{i}",
+                    )
                 else:
                     if n_pareto_selected < 2:
                         n_pareto_selected = 2
@@ -421,21 +644,22 @@ def mixed_scenarios(
         else:
             continue
 
-        issues = (make_issue([f"{i}_{n-1 - i}" for i in range(n)], "portions"),)
-        ufuns = tuple(
-            U(
-                values=(
-                    TableFun(
-                        {_: float(vals[i][k]) for i, _ in enumerate(issues[0].all)}
+        if ufuns is None:
+            issues = (make_issue([f"{i}_{n-1 - i}" for i in range(n)], "portions"),)
+            ufuns = tuple(
+                U(
+                    values=(
+                        TableFun(
+                            {_: float(vals[i][k]) for i, _ in enumerate(issues[0].all)}  # type: ignore
+                        ),
                     ),
-                ),
-                name=f"{uname}{i}",
-                # reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),
-                outcome_space=make_os(issues, name=f"{name}{i}"),
+                    name=f"{uname}{i}",
+                    # reserved_value=(r[0] + random.random() * (r[1] - r[0] - 1e-8)),
+                    outcome_space=make_os(issues, name=f"{name}{i}"),
+                )
+                for k, uname in enumerate(("First", "Second"))
+                # for k, (uname, r) in enumerate(zip(("First", "Second"), reserved_ranges))
             )
-            for k, uname in enumerate(("First", "Second"))
-            # for k, (uname, r) in enumerate(zip(("First", "Second"), reserved_ranges))
-        )
         sample_reserved_values(ufuns, reserved_ranges=reserved_ranges)
         ufun_sets.append(ufuns)
 
@@ -448,10 +672,11 @@ def mixed_scenarios(
     ]
 
 
-GENERAROR_MAP = dict(
+GENMAP = dict(
     monotonic=monotonic_pie_scenarios,
     arbitrary=arbitrary_pie_scenarios,
     zerosum=zerosum_pie_scenarios,
+    pies=monotonic_pies_scenarios,
     default=mixed_scenarios,
     mix=mixed_scenarios,
 )
@@ -536,7 +761,7 @@ def anl2024_tournament(
     if generator_params is None:
         generator_params = dict()
     if isinstance(scenario_generator, str):
-        scenario_generator = GENERAROR_MAP[scenario_generator]
+        scenario_generator = GENMAP[scenario_generator]
     all_outcomes = not scenario_generator == zerosum_pie_scenarios
     if nologs:
         path = None
