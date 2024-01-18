@@ -14,7 +14,7 @@ This package is a thin-wrapper around the [NegMAS](https://negmas.readthedocs.io
 The official website for the ANL competition is: [https://scml.cs.brown.edu/anl](https://scml.cs.brown.edu/anl)
 
 
-## Installation
+## Quick start
 
 ```bash
 pip install anl
@@ -25,13 +25,6 @@ You can also install the in-development version with::
 ```bash
 pip install https://github.com/autoneg/anl/archive/master.zip
 ```
-
-
-## Documentation
-
-* Documentation for the ANL package: [https://yasserfarouk.github.io/anl/](https://yasserfarouk.github.io/anl/)
-* Documentation for the NegMAS library: [https://negmas.readthedocs.io](https://negmas.readthedocs.io)
-
 
 ## CLI
 
@@ -67,7 +60,6 @@ anl make-scenarios myscenarios --scenarios=5
 anl tournament2024 --scenarios-path=myscenarios --scenarios=0
 ```
 The first command will create 5 scenarios and save them under `myscenarios`. The second command will use these scenarios without generating any new scenarios to run a tournament.
-
 
 ## Visualizer
 

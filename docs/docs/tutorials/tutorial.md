@@ -2,7 +2,7 @@
 
 ## Developing a negotiator
 
-Agents for the ANL competition are standard [NegMAS](https://yasserfarouk.github.io/negmas) negotiators. As such, they can be developed using any approach used to develop negotiators in NegMAS.
+The agents for the ANL competition are standard [NegMAS](https://yasserfarouk.github.io/negmas) negotiators. As such, they can be developed using any approach used to develop negotiators in NegMAS.
 
 To develop a negotiator, you need to inherit from the [SAONegotiator](https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAONegotiator.html) class and implement the [`__call__()`](https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAONegotiator.html#negmas.sao.SAONegotiator.__call__) method.
 
@@ -61,14 +61,14 @@ results = anl2024_tournament(
 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
 <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.701151</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.083134</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.059973</span>
 </pre>
 
 
 
 We can immediately notice that `MyRandomNegotiator` is getting a negative average advantage which means that it sometimes gets agreements that are worse than disagreement (i.e. with utility less than its reserved value). Can you guess why is this happening? How can we resolve that?
 
-#### Note about runing tournaments
+#### Note about running tournaments
 
 - When running a tournament using `anl2024_tournament` inside a Jupyter Notebook, you **must** pass `njobs=-1` to force serial execution of negotiations. This is required because the multiprocessing library used by NegMAS does not play nicely with Jupyter Notebooks. If you run the tournament using the same method from a `.py` python script file, you can omit this argument to run a tournament using all available cores.
 - When you pass `nologs=True`, no logs are stored for this tournament. If you omit this argument, a log will be created under `~/negmas/anl2024/tournaments` which can be visualized using the ANL visualizer by running:
@@ -121,7 +121,7 @@ results.final_scores
     <tr>
       <th>1</th>
       <td>MyRandomNegotiator</td>
-      <td>0.083134</td>
+      <td>0.059973</td>
     </tr>
   </tbody>
 </table>
@@ -164,7 +164,7 @@ for i, col in enumerate(["advantage", "welfare", "nash_optimality"]):
 
 ## Available helpers
 
-Our negotaitor was not so good but it examplifies the simplest method for developing a negotiator in NegMAS. For more information refer to [NegMAS Documentation](https://negmas.readthedocs.io). You develop your agent, as explained above, by implementing the `__call__` method of your class. 
+Our negotaitor was not so good but it examplifies the simplest method for developing a negotiator in NegMAS. For more information refer to [NegMAS Documentation](https://negmas.readthedocs.io). You develop your agent, as explained above, by implementing the `__call__` method of your class.
 
 This method, receives an [SAOState](https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAOState.html) which represents the current `state` of the negotiation. The most important members of this state object are `current_offer` which gives the current offer from the partner (or `None` if this is the beginning of the negotiation) and `relative_time` which gives the relative time of the negotiation ranging between `0` and `1`.
 
@@ -183,7 +183,7 @@ The negotiator can use the following objects to help it implement its strategy:
     - `random_outcomes(n)` Samples `n` random outcomes from this negotiation.
     - `outcome_space` The [OutcomeSpace](https://negmas.readthedocs.io/en/latest/api/negmas.outcomes.OutcomeSpace.html) of the negotiation which represent all possible agreements. In ANL 2024, this will always be of type [DiscreteCartesianOutcomeSpace](https://negmas.readthedocs.io/en/latest/api/negmas.outcomes.DiscreteCartesianOutcomeSpace.html) with a single issue.
     - `discrete_outcomes()` A generator of all outcomes in the outcome space.
-    - `log_info()` Logs structured information for this negotiator that can be checked in the logs later (Similarily there are `log_error`, `log_warning`, `log_debug`). 
+    - `log_info()` Logs structured information for this negotiator that can be checked in the logs later (Similarily there are `log_error`, `log_warning`, `log_debug`).
 - `self.ufun` A [LinearAdditiveUtilityFunction](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.LinearAdditiveUtilityFunction.html#negmas.preferences.LinearAdditiveUtilityFunction) representing the agent's own utility function. This object provides some helpful functionality including:
    - `self.ufun.is_better(a, b)` Tests if outcome `a` is better than `b` (use `None` for disagreement). Similarily we have, `is_worse`, `is_not_worse` and `is_not_better`.
    - `self.ufun.reserved_value` Your negotiator's reserved value (between 0 and 1). You can access this also as `self.ufun(None)`.
@@ -225,14 +225,14 @@ Now we can analyze the simple random negotiator we developed earlier.
   ```python
   return SAOResponse(ResponseType.REJECT_OFFER, self.nmi.random_outcomes(1)[0])
   ```
-  
+
 This negotiator did not use the fact that we know the opponent utility function up to reserved value. It did not even use the fact that we know our *own* utility function. As expected, it did not get a good score. Let's develop a simple yet more meaningful agent that uses both of these pieces of information.
 
 Can you now see why is this negotiator is getting negative advantages sometimes? We were careful in our acceptance strategy but not in our *offering strategy*. There is nothing in our code that prevents our negotiator from offering irrational outcomes (i.e. outcomes worse than disagreement for itself) and sometimes the opponent will just accept those. Can you fix this?
 
 ## A more meaningful negotiator
 
-How can we use knowledge of our own and our opponent's utility functions (up to reserved value for them)? Here is one possibility: 
+How can we use knowledge of our own and our opponent's utility functions (up to reserved value for them)? Here is one possibility:
 
 - **Acceptance Strategy** We accept offers that have a utility above some *aspiration* level. This aspiration level starts very high (1.0) and goes monotoncially down but never under the reserved value which is reached when the relative time is 1.0 (i.e. by the end of the negotiation). This is implemented in `is_acceptable()` below.
 - **Opponent Modeling** We estimate the opponent reserved value under the assumption that they are using a monotonically decreasing curve to select a utility value and offer an outcome around it. This is implemented in `update_reserved_value()` below.
@@ -253,7 +253,7 @@ class SimpleRVFitter(SAONegotiator):
     def __init__(self, *args, e: float = 5.0, **kwargs):
         """Initialization"""
         super().__init__(*args, **kwargs)
-        self.e = e        
+        self.e = e
         # keeps track of times at which the opponent offers
         self.opponent_times: list[float] = []
         # keeps track of opponent utilities of its offers
@@ -272,7 +272,7 @@ class SimpleRVFitter(SAONegotiator):
             return SAOResponse(ResponseType.ACCEPT_OFFER, state.current_offer)
         # call the offering strategy
         return SAOResponse(ResponseType.REJECT_OFFER, self.generate_offer(state.relative_time))
-    
+
     def generate_offer(self, relative_time) -> Outcome:
         # The offering strategy
         # We only update our estimate of the rational list of outcomes if it is not set or
@@ -302,7 +302,7 @@ class SimpleRVFitter(SAONegotiator):
         asp = aspiration_function(relative_time, 1.0, 0.0, self.e)
         # find the index of the rational outcome at the aspiration level (in the rational set of outcomes)
         max_rational = len(self._rational) - 1
-        indx = max(0, min(max_rational, int(asp * max_rational)))        
+        indx = max(0, min(max_rational, int(asp * max_rational)))
         outcome = self._rational[indx][-1]
         return outcome
 
@@ -378,10 +378,10 @@ anl2024_tournament(
 
 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.629338</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>      SimpleRVFitter  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.619796</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>            Conceder  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.362968</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.082266</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.625088</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>      SimpleRVFitter  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.572325</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>            Conceder  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.363117</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.318512</span>
 </pre>
 
 
@@ -415,22 +415,22 @@ anl2024_tournament(
     <tr>
       <th>0</th>
       <td>Boulware</td>
-      <td>0.629338</td>
+      <td>0.625088</td>
     </tr>
     <tr>
       <th>1</th>
       <td>SimpleRVFitter</td>
-      <td>0.619796</td>
+      <td>0.572325</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Conceder</td>
-      <td>0.362968</td>
+      <td>0.363117</td>
     </tr>
     <tr>
       <th>3</th>
       <td>MyRandomNegotiator</td>
-      <td>-0.082266</td>
+      <td>-0.318512</td>
     </tr>
   </tbody>
 </table>
@@ -443,7 +443,7 @@ Much better :-)
 Let's see how each part of this negotiator works and how they fit together.
 
 ### Construction
-The first method of the negotiator to be called is the `__init__` method which is called when the negotiator is created **usually before the ufun is set**. You can use this method to construct the negotiator setting initial values for any variables you need to run your agent. 
+The first method of the negotiator to be called is the `__init__` method which is called when the negotiator is created **usually before the ufun is set**. You can use this method to construct the negotiator setting initial values for any variables you need to run your agent.
 
 An important thing to note here is that your negotiator **must** pass any parameters it does not use to its parent to make sure the object is constructed correctly. This is how we implement this in our `SimpleRVFitter`:
 
@@ -467,7 +467,7 @@ The overall algorithm is implemented --- as usual --- in the `__call__()` method
 def __call__(self, state):
     self.update_reserved_value(state.current_offer, state.relative_time)
     if self.is_acceptable(state.current_offer, state.relative_time):
-        return SAOResponse(ResponseType.ACCEPT_OFFER, state.current_offer)  
+        return SAOResponse(ResponseType.ACCEPT_OFFER, state.current_offer)
     return SAOResponse(ResponseType.REJECT_OFFER, self.generate_offer(state.relative_time))
 ```
 
@@ -494,20 +494,20 @@ The first step is in our algorithm is to update our estimate of the opponent's r
       bounds = ((0.2, 0.0), (5.0, min(self.opponent_utilities)))
       ```
       - We then just apply curve fitting while keeping the old estimate. We keep the old estimate to check whether there is enough change to warrent reevaluation of the rational outcome sets in our offering strategy. We ignore any errors keeping the old estimate in that case.
-      
+
       ```python
       optimal_vals, _ = curve_fit(
           lambda x, e, rv: aspiration_function(x, self.opponent_utilities[0], rv, e),
           self.opponent_times, self.opponent_utilities, bounds=bounds
       )
-      
+
       ```
       Note that we just pass `self.opponent_utilities[0]` as the maximum for the concession curve because we know that this is the utility of the first offer from the opponent.
-      
+
       - Finally, we update the opponent reserved value with our new estimate keeping the latest value for later:
       ```python
       self._past_oppnent_rv = self.opponent_ufun.reserved_value
-      self.opponent_ufun.reserved_value = optimal_vals[1]      
+      self.opponent_ufun.reserved_value = optimal_vals[1]
       ```
 
 ### Acceptance Strategy
@@ -520,7 +520,7 @@ Our acceptance strategy is implemented in `is_acceptable()` and consists of the 
        return False
    ```
 2. Find our current aspiration level which starts at 1.0 (inidicating we will only accept our best offer in the first step) ending at our reserved value (indicating that we are willing to accept any rational outcome by the end of the negotiation). Use the exponent we stored during construction.
-   ```python        
+   ```python
    asp = aspiration_function(state.relative_time, 1.0, self.ufun.reserved_value, self.e)
    ```
 3. Accept the offer iff its utility is higher than the aspiration level:
@@ -533,7 +533,7 @@ Note that this acceptance strategy does not use the estimated opponent reserved 
 
 Now that we have updated our estimate of the opponent reserved value and decided not to accept their offer, we have to generate our own offer which the job of the bidding strategy implementedin `generate_offer()`. This is done in three steps as well:
 
-1. If the difference between the current and last estimate of the opponent reserved value is large enough, we create the rational outcome list. 
+1. If the difference between the current and last estimate of the opponent reserved value is large enough, we create the rational outcome list.
     - This test is implemented by:
     ```python
     not self._rational or abs(self.opponent_ufun.reserved_value - self._past_oppnent_rv) > 1e-3
@@ -549,10 +549,10 @@ Now that we have updated our estimate of the opponent reserved value and decided
         and (opp_util := float(self.opponent_ufun(_))) > self.opponent_ufun.reserved_value
   )]
   ```
-    - Finally, we sort this list. Because each element is a tuple, the list will be sorted ascendingly by our utility with equal values sorted ascendingly by the opponent utility.    
+    - Finally, we sort this list. Because each element is a tuple, the list will be sorted ascendingly by our utility with equal values sorted ascendingly by the opponent utility.
   ```python
   self._rational = sorted(...)
-  ```  
+  ```
 
 2. If there are no rational outcomes (e.g. our estimate of the opponent rv is very wrong), then just revert to offering our top offer
    ```python
@@ -561,16 +561,16 @@ Now that we have updated our estimate of the opponent reserved value and decided
    ```
 3. If we have a rational set, we calculate an aspiration level that starts at 1 and ends at 0 (note that we do not need to end at the reserved value because all outcomes in `self._rational` are already no worse than disagreement. We then calculate the outcome that is at the current aspiration level from the end of the rational outcome list and offer it:
    ```python
-   asp = aspiration_function(relative_time, 1.0, 0.0, self.e)   
+   asp = aspiration_function(relative_time, 1.0, 0.0, self.e)
    max_rational = len(self._rational) - 1
-   indx = max(0, min(max_rational, int(asp * max_rational)))        
+   indx = max(0, min(max_rational, int(asp * max_rational)))
    outcome = self._rational[indx][-1]
    return outcome
    ```
 
 ### Running a single negotiation
 
-What if we now want to see what happens in a single negotiation using our shiny new negotiator? 
+What if we now want to see what happens in a single negotiation using our shiny new negotiator?
 We first need a scenario to define the outcome space and ufuns. We can then add negotiators to it and run it. Let's see an example:
 
 
@@ -590,7 +590,7 @@ for u in ufuns0:
 session = SAOMechanism(n_steps=1000, outcome_space=s.outcome_space)
 # add negotiators. Remember to pass the opponent_ufun in private_info
 session.add(
-    SimpleRVFitter(name="SimpleRVFitter", 
+    SimpleRVFitter(name="SimpleRVFitter",
                    private_info=dict(opponent_ufun=ufuns0[1]))
     , ufun=s.ufuns[0]
 )
@@ -607,7 +607,7 @@ plt.show()
     
 
 
-Notice how in the second half of the negotiation, the SimpleRVFitter is only offering outcomes that are rational for both negotiators (can you see that in the left-side plot? can you see it in the top right-side plot?). This means that the curve fitting approach is working OK here. The opponent is a time-based strategy in this case though. 
+Notice how in the second half of the negotiation, the SimpleRVFitter is only offering outcomes that are rational for both negotiators (can you see that in the left-side plot? can you see it in the top right-side plot?). This means that the curve fitting approach is working OK here. The opponent is a time-based strategy in this case though.
 
 What happens if it was not? Let's try it against the builtin RVFitter for example
 
@@ -618,12 +618,12 @@ from anl.anl2024.negotiators import RVFitter
 session = SAOMechanism(n_steps=1000, outcome_space=s.outcome_space)
 # add negotiators. Remember to pass the opponent_ufun in private_info
 session.add(
-    SimpleRVFitter(name="SimpleRVFitter", 
+    SimpleRVFitter(name="SimpleRVFitter",
                    private_info=dict(opponent_ufun=ufuns0[1]))
     , ufun=s.ufuns[0]
 )
 session.add(
-    RVFitter(name="RVFitter", 
+    RVFitter(name="RVFitter",
                    private_info=dict(opponent_ufun=ufuns0[0]))
     , ufun=s.ufuns[1]
 )

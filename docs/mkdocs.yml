@@ -5,7 +5,9 @@ site_url: https://yasserfarouk.github.io/anl/
 nav:
     - Introduction: index.md
     - Installation: install.md
-    - Tutorial: tutorials/tutorial.md
+    - Tutorials:
+        - Running a negotiation: tutorials/Tutorial_run_a_negotiation.md
+        - Develop a new negotiator: tutorials/tutorial.md
     - FAQ: faq.md
     - Reference: reference.md
 theme:
