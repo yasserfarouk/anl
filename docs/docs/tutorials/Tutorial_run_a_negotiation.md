@@ -45,8 +45,11 @@ from negmas import (
     make_issue,
     SAOMechanism,
    TimeBasedConcedingNegotiator,
-    SAONegotiator,
-    ResponseType,
+)
+from negmas.gb.negotiators.timebased import (
+    ConcederTBNegotiator,
+    BoulwareTBNegotiator,
+    LinearTBNegotiator
 )
 from negmas.preferences import LinearAdditiveUtilityFunction as UFun
 from negmas.preferences.value_fun import IdentityFun, AffineFun
@@ -62,7 +65,7 @@ issues = [
 session = SAOMechanism(issues=issues, n_steps=20)
 ```
 
-The negotiation protocol in NegMAS is handled by a `Mechanism` object. Here we instantiate a`SAOMechanism` which implements the [Stacked Alternating Offers Protocol](https://ii.tudelft.nl/~catholijn/publications/sites/default/files/Aydogan2017_Chapter_AlternatingOffersProtocolsForM.pdf). In this protocol, negotiators exchange offers until an offer is accepted by all negotiators (in this case 2), a negotiators leaves the table ending the negotiation or a time-out condition is met. In the example above, we use a limit on the number of rounds of `20` (a step of a mechanism is an executed round). #TODO: Is de deadline 10 or 20 here?
+The negotiation protocol in NegMAS is handled by a `Mechanism` object. Here we instantiate a`SAOMechanism` which implements the [Stacked Alternating Offers Protocol](https://ii.tudelft.nl/~catholijn/publications/sites/default/files/Aydogan2017_Chapter_AlternatingOffersProtocolsForM.pdf). In this protocol, negotiators exchange offers until an offer is accepted by all negotiators (in this case 2), a negotiators leaves the table ending the negotiation or a time-out condition is met. In the example above, we use a limit on the number of rounds of `20` (a step of a mechanism is an executed round).
 
 Next, we define the utilities of the seller and the buyer. The utility function of the seller is defined by the ```
 IdentityFun```  which means that the higher the price, the higher the utility function. The buyer's utility function is reversed. The last two lines make sure that utility is scaled between 0 and 1.
@@ -79,18 +82,18 @@ buyer_utility = UFun(
     outcome_space=session.outcome_space,
 )
 
-seller_utility = seller_utility.scale_max(1.0)
-buyer_utility = buyer_utility.shift_by(50)
-buyer_utility = buyer_utility.scale_max(1.0)
+seller_utility = seller_utility.normalize()
+buyer_utility = buyer_utility.normalize()
+
 ```
 
-Then we add two agents with a conceding strategy. The negotiation ends with status overview. For example, you can see if the negotiation timed-out, what agreement was found, and how long the negotiation took. Moreover, we output the full negotiation history. For a more visual representation, we can plot the session. This shows the bidding curve, but also the proximity to e.g. the Nash point.
+Then we add two agents with a boulware strategy. The negotiation ends with status overview. For example, you can see if the negotiation timed-out, what agreement was found, and how long the negotiation took. Moreover, we output the full negotiation history. For a more visual representation, we can plot the session. This shows the bidding curve, but also the proximity to e.g. the Nash point.
 
 
 ```python
 # create and add agent A and B
-session.add(TimeBasedConcedingNegotiator(name="seller"), ufun=seller_utility)
-session.add(TimeBasedConcedingNegotiator(name="buyer"), ufun=buyer_utility)
+session.add(BoulwareTBNegotiator(name="seller"), ufun=seller_utility)
+session.add(BoulwareTBNegotiator(name="buyer"), ufun=buyer_utility)
 
 # run the negotiation and show the results
 print(session.run())

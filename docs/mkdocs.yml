@@ -7,7 +7,7 @@ nav:
     - Installation: install.md
     - Tutorials:
         - Running a negotiation: tutorials/Tutorial_run_a_negotiation.md
-        - Develop a new negotiator: tutorials/tutorial.md
+        - Develop a new negotiator: tutorials/tutorial_develop.md
     - FAQ: faq.md
     - Reference: reference.md
 theme:

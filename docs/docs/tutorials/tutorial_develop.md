@@ -144,7 +144,7 @@ plt.legend();
 
 
     
-![png](tutorial_files/tutorial_8_0.png)
+![png](tutorial_develop_files/tutorial_develop_8_0.png)
     
 
 
@@ -158,7 +158,7 @@ for i, col in enumerate(["advantage", "welfare", "nash_optimality"]):
 
 
     
-![png](tutorial_files/tutorial_9_0.png)
+![png](tutorial_develop_files/tutorial_develop_9_0.png)
     
 
 
@@ -603,7 +603,7 @@ plt.show()
 
 
     
-![png](tutorial_files/tutorial_16_0.png)
+![png](tutorial_develop_files/tutorial_develop_16_0.png)
     
 
 
@@ -636,7 +636,7 @@ plt.show()
 
 
     
-![png](tutorial_files/tutorial_18_0.png)
+![png](tutorial_develop_files/tutorial_develop_18_0.png)
     
 
 
@@ -661,4 +661,4 @@ The ANL package comes with some example negotiators. These are not designed to b
 - [StochasticBoulware, StochasticConceder, StochasticLinear](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) Stochastic versions of the three time-based strategies above implemented by just setting construction parameters of an existing NegMAS negotiator
 - [NaiveTitForTat](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) A simple behavioral strategy implemented by just inheriting from an existing NegMAS negotiator.
 
-[Download Notebook](/tutorials/notebooks/tutorial.ipynb)
+[Download Notebook](/tutorials/notebooks/tutorial_develop.ipynb)
