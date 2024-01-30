@@ -2,7 +2,6 @@ from negmas import MappingUtilityFunction
 from negmas.inout import SAOMechanism
 from negmas.outcomes import make_issue, make_os
 from negmas.preferences.generators import make_zero_sum_pareto
-from negmas.tournaments.neg.simple import SimpleTournamentResults
 
 from anl.anl2024.negotiators.builtins import MiCRO
 from anl.anl2024.runner import anl2024_tournament
