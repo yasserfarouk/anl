@@ -258,7 +258,7 @@ class SimpleRVFitter(SAONegotiator):
         self.opponent_times: list[float] = []
         # keeps track of opponent utilities of its offers
         self.opponent_utilities: list[float] = []
-        # keeps track of the our last estimate of the opponent reserved value
+        # keeps track of our last estimate of the opponent reserved value
         self._past_oppnent_rv = 0.0
         # keeps track of the rational outcome set given our estimate of the
         # opponent reserved value and our knowledge of ours

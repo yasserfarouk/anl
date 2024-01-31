@@ -46,11 +46,7 @@ from negmas import (
     SAOMechanism,
    TimeBasedConcedingNegotiator,
 )
-from negmas.gb.negotiators.timebased import (
-    ConcederTBNegotiator,
-    BoulwareTBNegotiator,
-    LinearTBNegotiator
-)
+from anl.anl2024.negotiators import Boulware, Conceder, RVFitter
 from negmas.preferences import LinearAdditiveUtilityFunction as UFun
 from negmas.preferences.value_fun import IdentityFun, AffineFun
 import matplotlib.pyplot as plt
@@ -92,13 +88,17 @@ Then we add two agents with a boulware strategy. The negotiation ends with statu
 
 ```python
 # create and add agent A and B
-session.add(BoulwareTBNegotiator(name="seller"), ufun=seller_utility)
-session.add(BoulwareTBNegotiator(name="buyer"), ufun=buyer_utility)
+session.add(Boulware(name="seller"), ufun=seller_utility)
+session.add(Boulware(name="buyer"), ufun=buyer_utility)
 
 # run the negotiation and show the results
 print(session.run())
 
-session.plot(ylimits=(0.0, 1.01), show_reserved=False)
+# negotiation history
+for i, _ in enumerate(session.history):
+    print(f"{i:03}: {_.new_offers}")  # the first line gives the offer of the seller and the buyer  in the first round
+
+session.plot(ylimits=(0.0, 1.01), show_reserved=False, mark_max_welfare_points=False)
 plt.show()
 
 
