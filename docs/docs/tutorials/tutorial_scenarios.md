@@ -1,39 +1,4 @@
-```python
-%matplotlib inline
-import warnings
-warnings.filterwarnings('ignore')
-# setup disply parameters
-from matplotlib import pylab as plt
-import seaborn as sns
-from matplotlib.ticker import StrMethodFormatter
-float_formatter = StrMethodFormatter('{x:0.03f}')
-from IPython.core.display import display, HTML
-display(HTML("<style>.container { width:95% !important; }</style>"))
-SMALL_SIZE = 14
-MEDIUM_SIZE = 16
-BIGGER_SIZE = 20
-
-plt.rc('font', size=SMALL_SIZE)          # controls default text sizes
-plt.rc('axes', titlesize=SMALL_SIZE)     # fontsize of the axes title
-plt.rc('axes', labelsize=MEDIUM_SIZE)    # fontsize of the x and y labels
-plt.rc('xtick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('ytick', labelsize=SMALL_SIZE)    # fontsize of the tick labels
-plt.rc('legend', fontsize=SMALL_SIZE)    # legend fontsize
-plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
-plt.rc('figure', figsize=(18, 6)) # set figure size
-plt.rc("animation", html="html5")
-import random
-random.seed(203)
-import numpy as np
-np.random.seed(345)
-from rich import print
-```
-
-
-<style>.container { width:95% !important; }</style>
-
-
-## Visualizing preference profiles
+# Visualizing preference profiles
 In ANL 2024, different types of scenarios are used, see [the detailed description](http://tinyurl.com/ANAC2024docs) of ANL 2024 for more information. In this notebook, we will provide some code to visualize the different types.
 
 
@@ -78,9 +43,9 @@ visualize((session, A_utility, B_utility))
 
 
     
-![png](tutorial_scenarios_files/tutorial_scenarios_4_0.png)
+![png](tutorial_scenarios_files/tutorial_scenarios_3_0.png)
     
 
 
 
-[Download Notebook](/tutorials/notebooks/tutorial_scenarios.ipynb)
+[Download Notebook](/anl/tutorials/notebooks/tutorial_scenarios.ipynb)

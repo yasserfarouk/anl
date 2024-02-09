@@ -21,7 +21,7 @@ for mdfile in docs/tutorials/*.md; do
     filename1=${mdfile##*/}
     filename=${filename1%???}
     # sed -i='' '/Output()/d' $mdfile
-    echo "[Download Notebook](/tutorials/notebooks/$filename.ipynb)" >> $mdfile
+    echo "[Download Notebook](/anl/tutorials/notebooks/$filename.ipynb)" >> $mdfile
 done
 echo "------------------------------------------------"
 mkdocs build
