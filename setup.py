@@ -16,7 +16,7 @@ def read(*names, **kwargs):
 
 setup(
     name="anl",
-    version="0.1.8",
+    version="0.1.9",
     description="ANAC Automated Negotiations League Platform",
     long_description="%s\n%s"
     % (
@@ -64,7 +64,7 @@ setup(
         "pytest",
         "hypothesis",
         "prettytable",
-        "negmas>=0.10.12",
+        "negmas>=0.10.13",
         "tqdm",
         "joblib",
         "jupyter",

@@ -1,6 +1,14 @@
 Changelog
 =========
 
+0.1.9 (2024.02.14)
+------------------
+
+- Adding divide-the-pies scenarios
+- Adding workflow to test on negmas master
+- Tutorial and docs update
+- Update faq
+
 0.1.8 (2023.12.31)
 ------------------
 

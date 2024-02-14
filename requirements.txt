@@ -1,6 +1,6 @@
 click
 prettytable
-negmas>=0.10.12
+negmas>=0.10.13
 tqdm
 jupyter
 gif
