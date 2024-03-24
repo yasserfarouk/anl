@@ -10,13 +10,24 @@ from negmas.inout import Scenario, UtilityFunction, pareto_frontier
 from negmas.negotiators import Negotiator
 from negmas.outcomes import make_issue, make_os
 from negmas.preferences import LinearAdditiveUtilityFunction as U
-from negmas.preferences.generators import GENERATOR_MAP, generate_multi_issue_ufuns, generate_utility_values
+from negmas.preferences.generators import (
+    GENERATOR_MAP,
+    generate_multi_issue_ufuns,
+    generate_utility_values,
+)
 from negmas.preferences.ops import nash_points
 from negmas.preferences.value_fun import TableFun
 from negmas.sao.mechanism import SAOMechanism
 from negmas.tournaments.neg.simple import SimpleTournamentResults, cartesian_tournament
 
-from anl.anl2024.negotiators.builtins import Boulware, Conceder, Linear, MiCRO, NashSeeker, RVFitter
+from anl.anl2024.negotiators.builtins import (
+    Boulware,
+    Conceder,
+    Linear,
+    MiCRO,
+    NashSeeker,
+    RVFitter,
+)
 
 # from anl.anl2024.negotiators.builtin import (
 #     StochasticBoulware,
@@ -436,14 +447,6 @@ def monotonic_pie_scenarios(
         monotonic=True,
     )
 
-    return [
-        Scenario(
-            outcome_space=ufuns[0].outcome_space,  # type: ignore We are sure this is not None
-            ufuns=ufuns,
-        )
-        for ufuns in ufun_sets
-    ]
-
 
 def sample_reserved_values(
     ufuns: tuple[UtilityFunction, ...],
@@ -465,11 +468,11 @@ def sample_reserved_values(
     n_funs = len(ufuns)
     if pareto is None:
         pareto = pareto_frontier(ufuns)[0]
-    assert pareto is not None, f"Cannot find the pareto frontier."
+    assert pareto is not None, "Cannot find the pareto frontier."
     nash = nash_points(ufuns, frontier=pareto, ranges=[(0, 1) for _ in range(n_funs)])
     if not nash:
         raise ValueError(
-            f"Cannot find the Nash point so we cannot find the appropriate reserved ranges"
+            "Cannot find the Nash point so we cannot find the appropriate reserved ranges"
         )
     nash_utils = nash[0][0]
     if not reserved_ranges:
@@ -546,19 +549,24 @@ def zerosum_pie_scenarios(
 
 def mixed_scenarios(
     n_scenarios: int = DEFAULT2024SETTINGS["n_scenarios"],  # type: ignore
-    n_outcomes: int
-    | tuple[int, int]
-    | list[int] = DEFAULT2024SETTINGS["n_outcomes"],  # type: ignore
+    n_outcomes: int | tuple[int, int] | list[int] = DEFAULT2024SETTINGS["n_outcomes"],  # type: ignore
     *,
     reserved_ranges: ReservedRanges = DEFAULT2024SETTINGS["reserved_ranges"],  # type: ignore
     log_uniform: bool = DEFAULT2024SETTINGS["outcomes_log_uniform"],  # type: ignore
-    zerosum_fraction: float = DEFAULT2024SETTINGS["generator_params"]["zerosum_fraction"],  # type: ignore
-    monotonic_fraction: float = DEFAULT2024SETTINGS["generator_params"]["monotonic_fraction"],  # type: ignore
+    zerosum_fraction: float = DEFAULT2024SETTINGS["generator_params"][  # type: ignore
+        "zerosum_fraction"
+    ],
+    monotonic_fraction: float = DEFAULT2024SETTINGS["generator_params"][  # type: ignore
+        "monotonic_fraction"
+    ],
     curve_fraction: float = DEFAULT2024SETTINGS["generator_params"]["curve_fraction"],  # type: ignore
     pies_fraction: float = DEFAULT2024SETTINGS["generator_params"]["pies_fraction"],  # type: ignore
     pareto_first: bool = DEFAULT2024SETTINGS["generator_params"]["pareto_first"],  # type: ignore
     n_ufuns: int = DEFAULT2024SETTINGS["n_ufuns"],  # type: ignore
-    n_pareto: int | float | tuple[float | int, float | int] | list[int | float] = DEFAULT2024SETTINGS["generator_params"]["n_pareto"],  # type: ignore
+    n_pareto: int
+    | float
+    | tuple[float | int, float | int]
+    | list[int | float] = DEFAULT2024SETTINGS["generator_params"]["n_pareto"],  # type: ignore
     pareto_log_uniform: bool = False,
     n_trials=10,
 ) -> list[Scenario]:
@@ -600,7 +608,8 @@ def mixed_scenarios(
         else:
             if isinstance(n_pareto, Iterable):
                 n_pareto = type(n_pareto)(
-                    int(_ * n + 0.5) if _ < 1 else int(_) for _ in n_pareto  # type: ignore
+                    int(_ * n + 0.5) if _ < 1 else int(_)
+                    for _ in n_pareto  # type: ignore
                 )
             else:
                 n_pareto = int(0.5 + n_pareto * n) if n_pareto < 1 else int(n_pareto)
@@ -696,20 +705,22 @@ def anl2024_tournament(
     n_steps: int | tuple[int, int] | None = DEFAULT2024SETTINGS["n_steps"],  # type: ignore
     time_limit: float | tuple[float, float] | None = DEFAULT2024SETTINGS["time_limit"],  # type: ignore
     pend: float | tuple[float, float] = DEFAULT2024SETTINGS["pend"],  # type: ignore
-    pend_per_second: float
-    | tuple[float, float] = DEFAULT2024SETTINGS["pend_per_second"],  # type: ignore
-    step_time_limit: float
-    | tuple[float, float]
-    | None = DEFAULT2024SETTINGS["step_time_limit"],  # type: ignore
-    negotiator_time_limit: float
-    | tuple[float, float]
-    | None = DEFAULT2024SETTINGS["negotiator_time_limit"],  # type: ignore
+    pend_per_second: float | tuple[float, float] = DEFAULT2024SETTINGS[
+        "pend_per_second"
+    ],  # type: ignore
+    step_time_limit: float | tuple[float, float] | None = DEFAULT2024SETTINGS[
+        "step_time_limit"
+    ],  # type: ignore
+    negotiator_time_limit: float | tuple[float, float] | None = DEFAULT2024SETTINGS[
+        "negotiator_time_limit"
+    ],  # type: ignore
     self_play: bool = DEFAULT2024SETTINGS["self_play"],  # type: ignore
     randomize_runs: bool = DEFAULT2024SETTINGS["randomize_runs"],  # type: ignore
     known_partner: bool = DEFAULT2024SETTINGS["known_partner"],  # type: ignore
     final_score: tuple[str, str] = DEFAULT2024SETTINGS["final_score"],  # type: ignore
-    scenario_generator: str
-    | ScenarioGenerator = DEFAULT2024SETTINGS["scenario_generator"],  # type: ignore
+    scenario_generator: str | ScenarioGenerator = DEFAULT2024SETTINGS[
+        "scenario_generator"
+    ],  # type: ignore
     generator_params: dict[str, Any] | None = DEFAULT2024SETTINGS["generator_params"],  # type: ignore
     competitor_params: Sequence[dict | None] | None = None,
     name: str | None = None,
@@ -797,7 +808,15 @@ def anl2024_tournament(
     )
     private_infos = [
         tuple(
-            dict(opponent_ufun=U(values=_.values, weights=_.weights, bias=_._bias, reserved_value=0, outcome_space=_.outcome_space))  # type: ignore
+            dict(
+                opponent_ufun=U(
+                    values=_.values,  # type: ignore
+                    weights=_.weights,  # type: ignore
+                    bias=_._bias,  # type: ignore
+                    reserved_value=0,
+                    outcome_space=_.outcome_space,
+                )
+            )  # type: ignore
             for _ in s.ufuns[::-1]
         )
         for s in scenarios
