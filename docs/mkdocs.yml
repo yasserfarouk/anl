@@ -8,6 +8,7 @@ nav:
     - Tutorials:
         - Running a negotiation: tutorials/Tutorial_run_a_negotiation.md
         - Develop a new negotiator: tutorials/tutorial_develop.md
+        - Visualize scenarios: tutorials/tutorial_scenarios.md
     - FAQ: faq.md
     - Reference: reference.md
 theme:

@@ -60,25 +60,13 @@ results = anl2024_tournament(
 
 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.701151</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.059973</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.697026</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.021086</span>
 </pre>
 
 
 
-We can immediately notice that `MyRandomNegotiator` is getting a negative average advantage which means that it sometimes gets agreements that are worse than disagreement (i.e. with utility less than its reserved value). Can you guess why is this happening? How can we resolve that?
-
-#### Note about running tournaments
-
-- When running a tournament using `anl2024_tournament` inside a Jupyter Notebook, you **must** pass `njobs=-1` to force serial execution of negotiations. This is required because the multiprocessing library used by NegMAS does not play nicely with Jupyter Notebooks. If you run the tournament using the same method from a `.py` python script file, you can omit this argument to run a tournament using all available cores.
-- When you pass `nologs=True`, no logs are stored for this tournament. If you omit this argument, a log will be created under `~/negmas/anl2024/tournaments` which can be visualized using the ANL visualizer by running:
-
-```bash
-anlv show
-```
-
-
-#### Back to the tutorial
+The score that is printed is the average advantage, which is the received utility minus the reservation value. We can immediately notice that `MyRandomNegotiator` is getting a negative average advantage which means that it sometimes gets agreements that are worse than disagreement (i.e. with utility less than its reservation value). Can you guess why is this happening? How can we resolve that?
 
 You can easily check the final scores using the `final_scores` member of the returned [SimpleTournamentResults](https://negmas.readthedocs.io/en/latest/api/negmas.tournaments.SimpleTournamentResults.html) object.
 
@@ -116,12 +104,12 @@ results.final_scores
     <tr>
       <th>0</th>
       <td>Boulware</td>
-      <td>0.701151</td>
+      <td>0.697026</td>
     </tr>
     <tr>
       <th>1</th>
       <td>MyRandomNegotiator</td>
-      <td>0.059973</td>
+      <td>-0.021086</td>
     </tr>
   </tbody>
 </table>
@@ -129,7 +117,7 @@ results.final_scores
 
 
 
-The returned results are all pandas dataframes. We can use standard pandas functions to get deeper understanding of the results. Here is how to plot a KDE figure comparing different strategies in this tournament:
+The returned results are all pandas dataframes. We can use standard pandas functions to get deeper understanding of the results. Here is how to plot a KDE figure (kind of histogram) comparing different strategies in this tournament. The higher the line, the more often this value of the advantage is observed.
 
 
 
@@ -164,7 +152,7 @@ for i, col in enumerate(["advantage", "welfare", "nash_optimality"]):
 
 ## Available helpers
 
-Our negotaitor was not so good but it examplifies the simplest method for developing a negotiator in NegMAS. For more information refer to [NegMAS Documentation](https://negmas.readthedocs.io). You develop your agent, as explained above, by implementing the `__call__` method of your class.
+Our negotiator was not so good but it exemplifies the simplest method for developing a negotiator in NegMAS. For more information refer to [NegMAS Documentation](https://negmas.readthedocs.io). You develop your agent, as explained above, by implementing the `__call__` method of your class.
 
 This method, receives an [SAOState](https://negmas.readthedocs.io/en/latest/api/negmas.sao.SAOState.html) which represents the current `state` of the negotiation. The most important members of this state object are `current_offer` which gives the current offer from the partner (or `None` if this is the beginning of the negotiation) and `relative_time` which gives the relative time of the negotiation ranging between `0` and `1`.
 
@@ -186,7 +174,7 @@ The negotiator can use the following objects to help it implement its strategy:
     - `log_info()` Logs structured information for this negotiator that can be checked in the logs later (Similarily there are `log_error`, `log_warning`, `log_debug`).
 - `self.ufun` A [LinearAdditiveUtilityFunction](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.LinearAdditiveUtilityFunction.html#negmas.preferences.LinearAdditiveUtilityFunction) representing the agent's own utility function. This object provides some helpful functionality including:
    - `self.ufun.is_better(a, b)` Tests if outcome `a` is better than `b` (use `None` for disagreement). Similarily we have, `is_worse`, `is_not_worse` and `is_not_better`.
-   - `self.ufun.reserved_value` Your negotiator's reserved value (between 0 and 1). You can access this also as `self.ufun(None)`.
+   - `self.ufun.reserved_value` Your negotiator's reserved/reservation value (between 0 and 1). You can access this also as `self.ufun(None)`.
    - `self.ufun(w)` Returns the utility value of the outcome `w`. It is recommended to cast this value to float (i.e. `float(self.ufun(w)`) to support probabilistic utility functions.
    - `self.outcome_space` The [OutcomeSpace](https://negmas.readthedocs.io/en/latest/api/negmas.outcomes.OutcomeSpace.html) of the negotiation which represent all possible agreements. In ANL 2024, this will always be of type [DiscreteCartesianOutcomeSpace](https://negmas.readthedocs.io/en/latest/api/negmas.outcomes.DiscreteCartesianOutcomeSpace.html) with a single issue.
    - `self.ufun.invert()` Returns and caches an [InverseUtilityFunction](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.InverseUFun.html#negmas.preferences.InverseUFun) object which can be used to find outcomes given their utilities. The most important services provided by the InverseUtilityFunction returned are:
@@ -194,7 +182,7 @@ The negotiator can use the following objects to help it implement its strategy:
        - `best()`, `worst()` returns the best (worst) outcomes.
        - `one_in()`, `some_in()` returns one (or some) outcomes within the given range of utilities.
        - `next_better()`, `next_worse()` returns the next outcome descendingly (ascendingly) in utility value.
-- `self.opponent_ufun` A [LinearAdditiveUtilityFunction](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.LinearAdditiveUtilityFunction.html#negmas.preferences.LinearAdditiveUtilityFunction) representing the **opponent's** utility function. You can access this also as `self.private_info["opponent_ufun"]`. This utility function will have a zero reserved value indepdendent of the opponent's true reserved value. You can actually set the reserved value on this object to your best estimate. All ufun funcationality is available in this object.
+- `self.opponent_ufun` A [LinearAdditiveUtilityFunction](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.LinearAdditiveUtilityFunction.html#negmas.preferences.LinearAdditiveUtilityFunction) representing the **opponent's** utility function. You can access this also as `self.private_info["opponent_ufun"]`. This utility function will have a zero reserved value independent of the opponent's true reserved value. You can actually set the reserved value on this object to your best estimate. All ufun funcationality is available in this object.
 
 
 Other than these objects, your negotiator can access any of the analytic facilities available in NegMAS. For example, you can calculate the [pareto_frontier](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.pareto_frontier.html), [Nash Bargaining Soluion](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.nash_points.html), [Kalai Bargaining Solution](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.kalai_points.html), [points with maximum wellfare](https://negmas.readthedocs.io/en/latest/api/negmas.preferences.max_welfare_points.html), etc. You can check the implementation of the [NashSeeker](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/nash_seeker.py) agent for examples of using these facilities.
@@ -258,7 +246,7 @@ class SimpleRVFitter(SAONegotiator):
         self.opponent_times: list[float] = []
         # keeps track of opponent utilities of its offers
         self.opponent_utilities: list[float] = []
-        # keeps track of the our last estimate of the opponent reserved value
+        # keeps track of our last estimate of the opponent reserved value
         self._past_oppnent_rv = 0.0
         # keeps track of the rational outcome set given our estimate of the
         # opponent reserved value and our knowledge of ours
@@ -661,4 +649,18 @@ The ANL package comes with some example negotiators. These are not designed to b
 - [StochasticBoulware, StochasticConceder, StochasticLinear](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) Stochastic versions of the three time-based strategies above implemented by just setting construction parameters of an existing NegMAS negotiator
 - [NaiveTitForTat](https://github.com/yasserfarouk/anl/blob/main/src/anl/anl2024/negotiators/builtins/wrappers.py) A simple behavioral strategy implemented by just inheriting from an existing NegMAS negotiator.
 
-[Download Notebook](/tutorials/notebooks/tutorial_develop.ipynb)
+#### Note about running tournaments
+
+- When running a tournament using `anl2024_tournament` inside a Jupyter Notebook, you **must** pass `njobs=-1` to force serial execution of negotiations. This is required because the multiprocessing library used by NegMAS does not play nicely with Jupyter Notebooks. If you run the tournament using the same method from a `.py` python script file, you can omit this argument to run a tournament using all available cores.
+- When you pass `nologs=True`, no logs are stored for this tournament. If you omit this argument, a log will be created under `~/negmas/anl2024/tournaments` which can be visualized using the ANL visualizer by running:
+
+```bash
+anlv show
+```
+
+
+```python
+
+
+```
+[Download Notebook](/anl/tutorials/notebooks/tutorial_develop.ipynb)
