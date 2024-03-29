@@ -33,24 +33,28 @@ class MiCRO(SAONegotiator):
     def __call__(self, state: SAOState) -> SAOResponse:
         # The main implementation of the MiCRO strategy
         assert self.ufun
-        # initialize the sorter (This should better be done in on_negotiation_start() to allow for reuse but this is not needed in ANL)
+        # initialize the sorter
+        # (This should better be done in on_preferences_changed() to allow
+        # for reuse but this is not needed in ANL)
         if self.sorter is None:
-            # A sorter, sorts a ufun and can be used to get outcomes using their utiility
+            # Presort the outcome space on utility value
             self.sorter = PresortingInverseUtilityFunction(
                 self.ufun, rational_only=True, eps=-1, rel_eps=-1
             )
-            # Initialize the sorter. This is an O(nlog n) operation where n is the number of outcomes
+            # Initialize the sorter. This is an O(n log n) operation where n
+            # is the number of outcomes
             self.sorter.init()
         # get the current offer and prepare for rejecting it
         offer = state.current_offer
 
-        # If I received something, check for acceptance
+        # If I received something, save it
         if offer is not None:
             self._received.add(offer)
 
         # Find out my next offer and the acceptable offer
         will_concede = len(self._sent) <= len(self._received)
-        # My next offer is either a conceding outcome if will_concede or sampled randomly from my past offers
+        # My next offer is either a conceding outcome if will_concede
+        # or sampled randomly from my past offers
         next_offer = (
             self.sample_sent() if not will_concede else self.sorter.next_worse()
         )
@@ -62,13 +66,14 @@ class MiCRO(SAONegotiator):
             if next_utility < self.ufun.reserved_value:
                 will_concede, next_offer = False, self.sample_sent()
         next_utility = float(self.ufun(next_offer))
-        # Find my acceptable outcome. It will None if I did not offer anything yet.
+        # Find my acceptable outcome, will be None if I did not offer anything yet.
         acceptable_utility = (
             self.worst_offer_utility if not will_concede else next_utility
         )
 
-        # The Acceptance Policy of MiCRO
-        # accept if the offer is not worse than my acceptable offer if I am conceding or the best so far if I am not
+        # The Acceptance Policy for MiCRO (as suggested in the paper)
+        # accept if the offer is not worse than my acceptable offer if I am
+        # conceding or the best so far if I am not
         offer_utility = float(self.ufun(offer))
         if (
             offer is not None
@@ -76,7 +81,8 @@ class MiCRO(SAONegotiator):
             and offer_utility >= self.ufun.reserved_value
         ):
             return SAOResponse(ResponseType.ACCEPT_OFFER, offer)
-        # If I cannot find any offers, I know that there are NO rational outcomes in this negotiation for me and will end it.
+        # If I cannot find any offers, I know that there are NO rational
+        # outcomes in this negotiation for me and will end it.
         if next_offer is None:
             return SAOResponse(ResponseType.END_NEGOTIATION, None)
         # Offer my next-offer and record it
@@ -85,7 +91,7 @@ class MiCRO(SAONegotiator):
         return SAOResponse(ResponseType.REJECT_OFFER, next_offer)
 
     def sample_sent(self) -> Outcome | None:
-        # Get an outcome from the set I sent so far (or my best if I sent nothing)
+        # Get an outcome from the set I sent so far, or my best if I sent nothing
         if not len(self._sent):
             return None
         return random.choice(list(self._sent))
