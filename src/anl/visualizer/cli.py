@@ -2,6 +2,7 @@
 import sys
 from functools import partial
 from pathlib import Path
+import matplotlib
 
 import click
 from streamlit.web import cli as stcli
@@ -29,16 +30,28 @@ def main():
     "--port",
     type=int,
     default=8501,
-    help=f"The port to run the visualizer on",
+    help="The port to run the visualizer on",
 )
 @click.option(
     "-a",
     "--address",
     type=str,
     default="0.0.0.0",
-    help=f"The address to run the visualizer on",
+    help="The address to run the visualizer on",
 )
-def show(folder: Path, port: int, address: str):
+@click.option(
+    "--backend",
+    type=str,
+    default="agg",
+    help="The matplotlib backend to use: See https://matplotlib.org/stable/users/explain/figure/backends.html",
+)
+@click.option(
+    "--interactive/--no-interactive",
+    type=bool,
+    default=None,
+    help="Whether to set matplotlib to be interactive.",
+)
+def show(folder: Path, port: int, address: str, backend: str, interactive: bool):
     # folder = Path(folder) if folder is not None else None
     if folder:
         sys.argv = [
@@ -53,6 +66,11 @@ def show(folder: Path, port: int, address: str):
         sys.argv += ["--server.port", str(port)]
     if address not in ("", "default"):
         sys.argv += ["--server.address", address]
+
+    if backend:
+        matplotlib.use(backend)
+    if interactive is not None:
+        matplotlib.interactive(interactive)
     sys.exit(stcli.main())
 
 
