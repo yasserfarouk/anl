@@ -32,6 +32,7 @@ def test_micro_always_agrees_against_itself():
         competitors=[MiCRO],
         n_repetitions=1,
         nologs=True,
+        self_play=True,
     )
     scores = results.scores
 
