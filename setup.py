@@ -64,7 +64,7 @@ setup(
         "pytest",
         "hypothesis",
         "prettytable",
-        "negmas>=0.10.13",
+        "negmas>=0.10.20",
         "tqdm",
         "joblib",
         "jupyter",
