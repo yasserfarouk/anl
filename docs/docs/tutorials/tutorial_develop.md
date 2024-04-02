@@ -60,8 +60,8 @@ results = anl2024_tournament(
 
 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.697026</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.021086</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.767437</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>  MyRandomNegotiator  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.262742</span>
 </pre>
 
 
@@ -104,12 +104,12 @@ results.final_scores
     <tr>
       <th>0</th>
       <td>Boulware</td>
-      <td>0.697026</td>
+      <td>0.767437</td>
     </tr>
     <tr>
       <th>1</th>
       <td>MyRandomNegotiator</td>
-      <td>-0.021086</td>
+      <td>0.262742</td>
     </tr>
   </tbody>
 </table>
@@ -366,10 +366,10 @@ anl2024_tournament(
 
 
 <pre style="white-space:pre;overflow-x:auto;line-height:normal;font-family:Menlo,'DejaVu Sans Mono',consolas,'Courier New',monospace">             strategy     score
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.625088</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>      SimpleRVFitter  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.572325</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>            Conceder  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.363117</span>
-<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>  MyRandomNegotiator <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">-0.318512</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0</span>            Boulware  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.648516</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">1</span>      SimpleRVFitter  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.562182</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">2</span>            Conceder  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.314239</span>
+<span style="color: #008080; text-decoration-color: #008080; font-weight: bold">3</span>  MyRandomNegotiator  <span style="color: #008080; text-decoration-color: #008080; font-weight: bold">0.040486</span>
 </pre>
 
 
@@ -403,22 +403,22 @@ anl2024_tournament(
     <tr>
       <th>0</th>
       <td>Boulware</td>
-      <td>0.625088</td>
+      <td>0.648516</td>
     </tr>
     <tr>
       <th>1</th>
       <td>SimpleRVFitter</td>
-      <td>0.572325</td>
+      <td>0.562182</td>
     </tr>
     <tr>
       <th>2</th>
       <td>Conceder</td>
-      <td>0.363117</td>
+      <td>0.314239</td>
     </tr>
     <tr>
       <th>3</th>
       <td>MyRandomNegotiator</td>
-      <td>-0.318512</td>
+      <td>0.040486</td>
     </tr>
   </tbody>
 </table>
@@ -658,9 +658,4 @@ The ANL package comes with some example negotiators. These are not designed to b
 anlv show
 ```
 
-
-```python
-
-
-```
 [Download Notebook](/anl/tutorials/notebooks/tutorial_develop.ipynb)
