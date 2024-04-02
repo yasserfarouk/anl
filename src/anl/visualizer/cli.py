@@ -36,7 +36,7 @@ def main():
     "-a",
     "--address",
     type=str,
-    default="0.0.0.0",
+    default="127.0.0.1",
     help="The address to run the visualizer on",
 )
 @click.option(
