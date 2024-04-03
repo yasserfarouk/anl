@@ -78,7 +78,8 @@ DEFAULT2024SETTINGS = dict(
     reserved_ranges=((0.0, 1.0), (0.0, 1.0)),
     competitors=DEFAULT_AN2024_COMPETITORS,
     rotate_ufuns=False,
-    time_limit=3 * 60,
+    time_limit=float("inf"),
+    hidden_time_limit=3 * 60,
     pend=0,
     pend_per_second=0,
     step_time_limit=None,
@@ -704,6 +705,9 @@ def anl2024_tournament(
     n_repetitions: int = DEFAULT2024SETTINGS["n_repetitions"],  # type: ignore
     n_steps: int | tuple[int, int] | None = DEFAULT2024SETTINGS["n_steps"],  # type: ignore
     time_limit: float | tuple[float, float] | None = DEFAULT2024SETTINGS["time_limit"],  # type: ignore
+    hidden_time_limit: float | tuple[float, float] | None = DEFAULT2024SETTINGS[
+        "hidden_time_limit"
+    ],  # type: ignore
     pend: float | tuple[float, float] = DEFAULT2024SETTINGS["pend"],  # type: ignore
     pend_per_second: float | tuple[float, float] = DEFAULT2024SETTINGS[
         "pend_per_second"
@@ -746,6 +750,8 @@ def anl2024_tournament(
         n_repetitions: Number of times to repeat each negotiation
         n_steps: Number of steps/rounds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)
         time_limit: Number of seconds allowed for the each negotiation (None for no-limit and a 2-valued tuple for sampling from a range)
+        hidden_time_limit: Number of seconds allowed for the each negotiation but not usable as a timing device (i.e. not known to the negotiator),
+                           None for no-limit and a 2-valued tuple for sampling from a range
         pend: Probability of ending the negotiation every step/round (None for no-limit and a 2-valued tuple for sampling from a range)
         pend_per_second: Probability of ending the negotiation every second (None for no-limit and a 2-valued tuple for sampling from a range)
         step_time_limit: Time limit for every negotiation step (None for no-limit and a 2-valued tuple for sampling from a range)

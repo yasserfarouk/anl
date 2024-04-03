@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 """The ANL universal command line tool"""
+
 import math
 import sys
 import warnings
@@ -23,7 +24,12 @@ from rich import print
 
 import anl
 from anl import DEFAULT_AN2024_COMPETITORS
-from anl.anl2024.runner import DEFAULT2024SETTINGS, DEFAULT_TOURNAMENT_PATH, GENMAP, anl2024_tournament
+from anl.anl2024.runner import (
+    DEFAULT2024SETTINGS,
+    DEFAULT_TOURNAMENT_PATH,
+    GENMAP,
+    anl2024_tournament,
+)
 
 n_completed = 0
 n_total = 0
@@ -141,19 +147,25 @@ def main():
 @click.option(
     "--outcomes",
     "-o",
-    default=DEFAULT2024SETTINGS["n_outcomes"] if not isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
+    default=DEFAULT2024SETTINGS["n_outcomes"]
+    if not isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
+    else -1,  # type: ignore # type: ignore
     type=int,
     help="Number of outcomes in every scenario. If negative or zero, --min-outcomes and --max-outcomes will beused",
 )
 @click.option(
     "--min-outcomes",
-    default=DEFAULT2024SETTINGS["n_outcomes"][0] if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
+    default=DEFAULT2024SETTINGS["n_outcomes"][0]
+    if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
+    else -1,  # type: ignore # type: ignore
     type=int,
     help="Minimum number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
 @click.option(
     "--max-outcomes",
-    default=DEFAULT2024SETTINGS["n_outcomes"][1] if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
+    default=DEFAULT2024SETTINGS["n_outcomes"][1]
+    if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
+    else -1,  # type: ignore # type: ignore
     type=int,
     help="Max number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
@@ -173,7 +185,9 @@ def main():
 )
 @click.option(
     "--competitors",
-    default=";".join(_().type_name.split(".")[-1] for _ in DEFAULT2024SETTINGS["competitors"]),  # type: ignore # type: ignore
+    default=";".join(
+        _().type_name.split(".")[-1] for _ in DEFAULT2024SETTINGS["competitors"]
+    ),  # type: ignore # type: ignore
     help="A semicolon (;) separated list of agent types to use for the competition. You"
     " can also pass the special value default for the default builtin"
     " agents",
@@ -214,6 +228,15 @@ def main():
 @click.option(
     "--timelimit",
     "-t",
+    default=DEFAULT2024SETTINGS["hidden_time_limit"]  # type: ignore
+    if not isinstance(DEFAULT2024SETTINGS["hidden_time_limit"], Iterable)  # type: ignore
+    else -1,
+    type=float,
+    help="Number of seconds allowed in every negotiation. Negative numbers mean no-limit",
+)
+@click.option(
+    "--allowedtime",
+    "-T",
     default=DEFAULT2024SETTINGS["time_limit"]  # type: ignore
     if not isinstance(DEFAULT2024SETTINGS["time_limit"], Iterable)  # type: ignore
     else -1,
@@ -221,20 +244,20 @@ def main():
     help="Number of seconds allowed in every negotiation. Negative numbers mean no-limit",
 )
 @click.option(
-    "--min-timelimit",
+    "--min-allowedtime",
     default=DEFAULT2024SETTINGS["time_limit"][0]  # type: ignore
     if isinstance(DEFAULT2024SETTINGS["time_limit"], Iterable)  # type: ignore
     else -1,
     type=int,
-    help="Minimum number of seconds in every scenario. Only used of --timelimit is zero or negative",
+    help="Minimum number of seconds in every scenario. Only used of --allowedtime is zero or negative",
 )
 @click.option(
-    "--max-timelimit",
+    "--max-allowedtime",
     default=DEFAULT2024SETTINGS["time_limit"][1]  # type: ignore
     if isinstance(DEFAULT2024SETTINGS["time_limit"], Iterable)  # type: ignore
     else -1,
     type=int,
-    help="Max number of seconds in every scenario. Only used of --timelimit is zero or negative",
+    help="Max number of seconds in every scenario. Only used of --allowedtime is zero or negative",
 )
 @click.option(
     "--steps",
@@ -406,8 +429,9 @@ def tournament2024(
     min_pend,
     max_pend,
     timelimit,
-    min_timelimit,
-    max_timelimit,
+    allowedtime,
+    min_allowedtime,
+    max_allowedtime,
     steps,
     min_steps,
     max_steps,
@@ -460,7 +484,7 @@ def tournament2024(
 
     steps = read_range(steps, min_steps, max_steps)
     outcomes = read_range(outcomes, min_outcomes, max_outcomes)
-    timelimit = read_range(timelimit, min_timelimit, max_timelimit)
+    allowedtime = read_range(allowedtime, min_allowedtime, max_allowedtime)
     pend = read_range(pend, min_pend, max_pend)
     if len(path) > 0:
         sys.path.append(path)
@@ -520,23 +544,23 @@ def tournament2024(
     print(all_competitors)
     n_params = sum(len(_) for _ in all_params)
     if n_params > 0:
-        print(f"Will use the following competitor parameters:")
+        print("Will use the following competitor parameters:")
         for c, p in zip(all_competitors, all_params):
             if not p:
                 continue
             print(f"{c}:\n\t{p}")
     if not isinstance(steps, tuple) and steps <= 0:
         steps = None
-    if not isinstance(timelimit, tuple) and timelimit <= 0:
-        timelimit = None
+    if not isinstance(allowedtime, tuple) and allowedtime <= 0:
+        allowedtime = None
     if (
         steps is None
-        and timelimit is None
+        and allowedtime is None
         and not isinstance(pend, tuple)
         and pend <= 0.0
     ):
         print(
-            f"[red]ERROR[/red] You specified no way to end the negotiation. You MUST pass either --steps, --timelimit or --pend (or the --min, --max versions of them)"
+            "[red]ERROR[/red] You specified no way to end the negotiation. You MUST pass either --steps, --allowedtime or --pend (or the --min, --max versions of them)"
         )
         sys.exit(1)
     loaded_scenarios = []
@@ -560,11 +584,13 @@ def tournament2024(
         print(
             f"Will use {len(loaded_scenarios)} scenarios loaded from {scenarios_path}."
         )
-    print(f"Negotiations will end if any of the following conditions is satisfied:")
+    print("Negotiations will end if any of the following conditions is satisfied:")
     if steps is not None:
         print(f"\tN. Rounds: {steps}")
     if timelimit is not None:
         print(f"\tN. Seconds: {timelimit}")
+    if allowedtime is not None:
+        print(f"\tN. Seconds (known): {allowedtime}")
     if pend is not None and (isinstance(pend, tuple) or pend > 0):
         print(f"\tProbability of ending each round : {pend}")
     if len(loaded_scenarios) + scenarios == 0:
@@ -582,7 +608,8 @@ def tournament2024(
         rotate_ufuns=rotate,
         n_repetitions=repetitions,
         n_steps=steps,
-        time_limit=timelimit,
+        hidden_time_limit=timelimit,
+        time_limit=allowedtime,
         pend=pend,
         name=name,
         nologs=not save_logs,
@@ -615,19 +642,25 @@ def tournament2024(
 @click.option(
     "--outcomes",
     "-o",
-    default=DEFAULT2024SETTINGS["n_outcomes"] if not isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
+    default=DEFAULT2024SETTINGS["n_outcomes"]
+    if not isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
+    else -1,  # type: ignore # type: ignore
     type=int,
     help="Number of outcomes in every scenario. If negative or zero, --min-outcomes and --max-outcomes will beused",
 )
 @click.option(
     "--min-outcomes",
-    default=DEFAULT2024SETTINGS["n_outcomes"][0] if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
+    default=DEFAULT2024SETTINGS["n_outcomes"][0]
+    if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
+    else -1,  # type: ignore # type: ignore
     type=int,
     help="Minimum number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
 @click.option(
     "--max-outcomes",
-    default=DEFAULT2024SETTINGS["n_outcomes"][1] if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable) else -1,  # type: ignore # type: ignore
+    default=DEFAULT2024SETTINGS["n_outcomes"][1]
+    if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
+    else -1,  # type: ignore # type: ignore
     type=int,
     help="Max number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
@@ -693,7 +726,7 @@ def make_scenarios(
     plot,
 ):
     if scenarios == 0:
-        print(f"You must pass --scenarios with the number of scenarios to be generated")
+        print("You must pass --scenarios with the number of scenarios to be generated")
         exit()
     generator_params = dict()
     # read settings of the scenario generator from the settings file if available
