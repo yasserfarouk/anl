@@ -1,6 +1,17 @@
 Changelog
 =========
 
+0.1.10 (2024.04.03)
+-------------------
+
+- fixing issue #1 (anlv failure on macOS)
+- Correcting git installation method in docs
+- requiring negmas 0.10.21
+- Better comments on micro
+- Defaulting to 3min hidden time limit per negotiation
+- pypi workflow update
+- Fix tutorial links
+
 0.1.9 (2024.02.14)
 ------------------
 
