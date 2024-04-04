@@ -85,7 +85,8 @@ DEFAULT2024SETTINGS = dict(
     step_time_limit=None,
     negotiator_time_limit=None,
     self_play=True,
-    randomize_runs=True,
+    randomize_runs=False,
+    sort_runs=True,
     known_partner=False,
     final_score=("advantage", "mean"),
     scenario_generator="mix",
@@ -721,6 +722,7 @@ def anl2024_tournament(
     ],  # type: ignore
     self_play: bool = DEFAULT2024SETTINGS["self_play"],  # type: ignore
     randomize_runs: bool = DEFAULT2024SETTINGS["randomize_runs"],  # type: ignore
+    sort_runs: bool = DEFAULT2024SETTINGS["sort_runs"],  # type: ignore
     known_partner: bool = DEFAULT2024SETTINGS["known_partner"],  # type: ignore
     final_score: tuple[str, str] = DEFAULT2024SETTINGS["final_score"],  # type: ignore
     scenario_generator: str | ScenarioGenerator = DEFAULT2024SETTINGS[
@@ -764,6 +766,7 @@ def anl2024_tournament(
         verbosity: Verbosity level. The higher the more verbose
         self_play: Allow negotiators to run against themselves.
         randomize_runs: Randomize the order of negotiations
+        sort_runs: Make negotiations with shorter limits and outcome space sizes
         save_every: Save logs every this number of negotiations
         save_stats: Save statistics for scenarios
         known_partner: Allow negotiators to know the type of their partner (through their ID)
@@ -850,6 +853,7 @@ def anl2024_tournament(
         verbosity=verbosity,
         self_play=self_play,
         randomize_runs=randomize_runs,
+        sort_runs=sort_runs,
         save_every=save_every,
         save_stats=save_stats,
         final_score=final_score,

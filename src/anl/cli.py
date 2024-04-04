@@ -378,6 +378,11 @@ def main():
     help="Randomize the order of negotiations or not",
 )
 @click.option(
+    "--sort/--no-sort",
+    default=DEFAULT2024SETTINGS["sort_runs"],  # type: ignore
+    help="Sort the negotiations by size",
+)
+@click.option(
     "--two/--cartesian",
     default=False,  # type: ignore
     help="If --two is passed, a single negotiation will be conducted between the first two in the competitors list."
@@ -424,6 +429,7 @@ def tournament2024(
     known_partner,
     save_every,
     randomize,
+    sort,
     self_play,
     plot,
     pend,
@@ -619,6 +625,7 @@ def tournament2024(
         verbosity=verbosity,
         self_play=self_play,
         randomize_runs=randomize,
+        sort_runs=sort,
         save_every=save_every,
         known_partner=known_partner,
         final_score=(metric, stat),
