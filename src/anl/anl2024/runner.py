@@ -408,6 +408,7 @@ def monotonic_pies_scenarios(
     reserved_ranges: ReservedRanges = ((0.0, 0.999999), (0.0, 0.999999)),
     log_uniform: bool = False,
 ) -> list[Scenario]:
+    _ = log_uniform
     ufun_sets = []
     for s in range(n_scenarios):
         ufuns = generate_multi_issue_ufuns(
@@ -649,7 +650,7 @@ def mixed_scenarios(
                         else "piecewise_linear",
                     )
                 break
-            except:
+            except Exception:
                 continue
         else:
             continue
@@ -839,6 +840,7 @@ def anl2024_tournament(
         mechanism_type=SAOMechanism,
         n_steps=n_steps,
         time_limit=time_limit,
+        hidden_time_limit=hidden_time_limit,
         pend=pend,
         pend_per_second=pend_per_second,
         step_time_limit=step_time_limit,
