@@ -5,6 +5,7 @@ import math
 import sys
 import warnings
 from collections import defaultdict
+import matplotlib
 from functools import partial
 from itertools import chain
 from pathlib import Path
@@ -711,6 +712,18 @@ def tournament2024(
     type=float,
     help="Fraction of negotiations to plot and save",
 )
+@click.option(
+    "--backend",
+    type=str,
+    default="agg",
+    help="The matplotlib backend to use: See https://matplotlib.org/stable/users/explain/figure/backends.html",
+)
+@click.option(
+    "--interactive/--no-interactive",
+    type=bool,
+    default=None,
+    help="Whether to set matplotlib to be interactive.",
+)
 @click_config_file.configuration_option()
 def make_scenarios(
     path,
@@ -724,6 +737,8 @@ def make_scenarios(
     monotonic,
     curve,
     plot,
+    backend,
+    interactive,
 ):
     if scenarios == 0:
         print("You must pass --scenarios with the number of scenarios to be generated")
@@ -747,6 +762,10 @@ def make_scenarios(
     scenarios = scenario_generator(
         n_scenarios=scenarios, n_outcomes=outcomes, **generator_params
     )
+    if backend:
+        matplotlib.use(backend)
+    if interactive is not None:
+        matplotlib.interactive(interactive)
     path = Path(path)
     for s in scenarios:
         mypath = path / s.outcome_space.name  # type: ignore
