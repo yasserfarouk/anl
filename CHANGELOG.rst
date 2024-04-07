@@ -1,24 +1,33 @@
 Changelog
 =========
 
+0.1.11 (2024.04.07)
+-------------------
+
+* Adding tournament display and combination  to CLI
+* Adding --sort-runs to the CLI
+* Passing hidden_time_limit to the Cartesian tournament
+* Avoiding plotting issue in windows (not fully tested)
+* Requiring latest negmas (v0.10.23)
+
 0.1.10 (2024.04.03)
 -------------------
 
-- fixing issue #1 (anlv failure on macOS)
-- Correcting git installation method in docs
-- requiring negmas 0.10.21
-- Better comments on micro
-- Defaulting to 3min hidden time limit per negotiation
-- pypi workflow update
-- Fix tutorial links
+* fixing issue #1 (anlv failure on macOS)
+* Correcting git installation method in docs
+* requiring negmas 0.10.21
+* Better comments on micro
+* Defaulting to 3min hidden time limit per negotiation
+* pypi workflow update
+* Fix tutorial links
 
 0.1.9 (2024.02.14)
 ------------------
 
-- Adding divide-the-pies scenarios
-- Adding workflow to test on negmas master
-- Tutorial and docs update
-- Update faq
+* Adding divide-the-pies scenarios
+* Adding workflow to test on negmas master
+* Tutorial and docs update
+* Update faq
 
 0.1.8 (2023.12.31)
 ------------------
