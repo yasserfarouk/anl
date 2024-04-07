@@ -21,6 +21,7 @@ from negmas.helpers.inout import load
 from negmas.helpers.types import get_class
 from negmas.inout import Scenario
 from negmas.plots.util import plot_offline_run
+from negmas.tournaments.neg.simple.cartesian import RESULTS_DIR_NAME
 from rich import print
 
 import anl
@@ -31,6 +32,12 @@ from anl.anl2024.runner import (
     GENMAP,
     anl2024_tournament,
 )
+
+from negmas.tournaments.neg.simple import SimpleTournamentResults, combine_tournaments
+
+from rich.traceback import install
+
+install(suppress=[click])
 
 n_completed = 0
 n_total = 0
@@ -105,15 +112,15 @@ def shortest_unique_names(strs: List[str], sep="."):
     for i, s in enumerate(names):
         locs[s].append(i)
     mapping = {"": ""}
-    for s, l in locs.items():
+    for s, L in locs.items():
         if len(s) < 1:
             continue
-        if len(l) == 1:
-            mapping[strs[l[0]]] = s
+        if len(L) == 1:
+            mapping[strs[L[0]]] = s
             continue
-        strs_new = [sep.join(lsts[_][:-1]) for _ in l]
+        strs_new = [sep.join(lsts[_][:-1]) for _ in L]
         prefixes = shortest_unique_names(strs_new, sep)
-        for loc, prefix in zip(l, prefixes):
+        for loc, prefix in zip(L, prefixes):
             x = sep.join([prefix, s])
             if x.startswith(sep):
                 x = x[len(sep) :]
@@ -156,15 +163,15 @@ def main():
 )
 @click.option(
     "--min-outcomes",
-    default=DEFAULT2024SETTINGS["n_outcomes"][0]
+    default=DEFAULT2024SETTINGS["n_outcomes"][0]  # type: ignore
     if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
-    else -1,  # type: ignore # type: ignore
+    else -1,
     type=int,
     help="Minimum number of outcomes in every scenario. Only used of --outcomes is zero or negative",
 )
 @click.option(
     "--max-outcomes",
-    default=DEFAULT2024SETTINGS["n_outcomes"][1]
+    default=DEFAULT2024SETTINGS["n_outcomes"][1]  # type: ignore
     if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
     else -1,  # type: ignore # type: ignore
     type=int,
@@ -187,7 +194,8 @@ def main():
 @click.option(
     "--competitors",
     default=";".join(
-        _().type_name.split(".")[-1] for _ in DEFAULT2024SETTINGS["competitors"]
+        _().type_name.split(".")[-1]
+        for _ in DEFAULT2024SETTINGS["competitors"]  # type: ignore
     ),  # type: ignore # type: ignore
     help="A semicolon (;) separated list of agent types to use for the competition. You"
     " can also pass the special value default for the default builtin"
@@ -536,7 +544,7 @@ def tournament2024(
             try:
                 get_class(s)
                 return s
-            except:
+            except Exception:
                 pass
         print(f"[red]ERROR[/red] Unknown Competitor Type: {stem}")
         sys.exit()
@@ -658,7 +666,7 @@ def tournament2024(
 )
 @click.option(
     "--min-outcomes",
-    default=DEFAULT2024SETTINGS["n_outcomes"][0]
+    default=DEFAULT2024SETTINGS["n_outcomes"][0]  # type: ignore
     if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
     else -1,  # type: ignore # type: ignore
     type=int,
@@ -666,7 +674,7 @@ def tournament2024(
 )
 @click.option(
     "--max-outcomes",
-    default=DEFAULT2024SETTINGS["n_outcomes"][1]
+    default=DEFAULT2024SETTINGS["n_outcomes"][1]  # type: ignore
     if isinstance(DEFAULT2024SETTINGS["n_outcomes"], Iterable)
     else -1,  # type: ignore # type: ignore
     type=int,
@@ -810,6 +818,131 @@ def make_scenarios(
 @main.command(help="Displays ANL and NegMAS versions")
 def version():
     print(f"anl: {anl.__version__} (NegMAS: {negmas.__version__})")
+
+
+@main.command(help="Display results of a given tournament")
+@click.argument(
+    "path",
+    type=click.Path(file_okay=False),
+)
+def display(path: Path):
+    print(SimpleTournamentResults.load(Path(path)).final_scores)
+
+
+@main.command(
+    help="Combines results of multiple tournaments into a new folder (last one given)"
+)
+@click.argument(
+    "srcs",
+    type=click.Path(file_okay=False, exists=True),
+    nargs=-1,
+)
+@click.argument(
+    "dst",
+    type=click.Path(file_okay=False, exists=False),
+    nargs=1,
+)
+@click.option(
+    "--recursive/--no-recursive",
+    default=True,
+    help="Recursively search for tournament results",
+)
+@click.option(
+    "--recalc-details/--no-recalc-details",
+    default=True,
+    help=f"Recalculate all results from individual negotiation outputs (stored in {RESULTS_DIR_NAME})",
+)
+@click.option(
+    "--recalc-scores/--no-recalc-scores",
+    default=False,
+    help="Recalculate individual negotiator scores from negotiation results",
+)
+@click.option(
+    "--details/--no-details",
+    default=False,
+    help="The results must have details of results for each negotiation",
+)
+@click.option("--verbosity", default=1, type=int, help="Verbosity")
+@click.option(
+    "--copy/--no-copy",
+    default=False,
+    help="Copy all results, plots, negotiation details, and negotiator behavior details to the destination folder.",
+)
+@click.option(
+    "--rename/--no-rename",
+    default=True,
+    help="Rename all scenarios by prefixing them with tournament name. Do that if scenarios were generated randomly.",
+)
+@click.option(
+    "--add-folders/--no-add-folders",
+    default=None,
+    help="Add a folder for each tournament within the detailed information folders. If not give, folders will be added only if we we re renaming scenarios",
+)
+@click.option(
+    "--override/--no-override", default=False, help="Override existing folders/files"
+)
+@click.option(
+    "--add-tournament-column/--no-tournament-column",
+    default=None,
+    help="Add a column for tournament name to detailed results and scores. If not given, the column will be added if we are are adding folders (--add-folders) and not renaming (--no-rename)",
+)
+@click.option(
+    "--metric",
+    default=DEFAULT2024SETTINGS["final_score"][0],  # type: ignore # type: ignore
+    help="The metric to use for evaluating agents. Can be one of: utility, advantage, partner_welfare, welfare",
+)
+@click.option(
+    "--stat",
+    default=DEFAULT2024SETTINGS["final_score"][1],  # type: ignore # type: ignore
+    help="The statistic applied to the metric to evaluate agents. Can be one of: mean, median, std, min, max",
+)
+def combine(
+    srcs: Path | Iterable[Path],
+    dst: Path,
+    recursive: bool,
+    recalc_details: bool,
+    recalc_scores: bool,
+    details: bool,
+    verbosity: bool,
+    copy: bool,
+    rename: bool,
+    add_folders: bool,
+    override: bool,
+    metric: str,
+    stat: str,
+    add_tournament_column: bool,
+):
+    # done = False
+    # if rename:
+    #     print("[red]--rename[/red] is not supported yet!")
+    #     done = True
+    # if done:
+    #     exit(-1)
+
+    if not override and Path(dst).exists():
+        print(
+            f"[red]Error[/red]Destination {dst} exists. Provide --override to override it."
+        )
+    if add_folders is None:
+        add_folders = not rename
+    if add_tournament_column is None:
+        add_tournament_column = not rename or add_folders
+    results = combine_tournaments(
+        srcs,
+        dst,
+        recursive=recursive,
+        recalc_details=recalc_details,
+        recalc_scores=recalc_scores,
+        must_have_details=details,
+        verbosity=verbosity,
+        final_score_stat=(metric, stat),
+        copy=copy,
+        rename_scenarios=rename,
+        add_tournament_folders=add_folders,
+        override_existing=override,
+        add_tournament_column=add_tournament_column,
+    )
+    print(results.final_scores)
 
 
 if __name__ == "__main__":
