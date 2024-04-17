@@ -37,7 +37,7 @@ from negmas.tournaments.neg.simple import SimpleTournamentResults, combine_tourn
 
 from rich.traceback import install
 
-install(suppress=[click])
+install(suppress=[click], show_locals=True)
 
 n_completed = 0
 n_total = 0
