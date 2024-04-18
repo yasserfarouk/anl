@@ -843,6 +843,11 @@ def display(path: Path):
     nargs=1,
 )
 @click.option(
+    "--complete-only/--allow-partial",
+    default=True,
+    help="Whether to only use completed tournament in the combination process",
+)
+@click.option(
     "--recursive/--no-recursive",
     default=True,
     help="Recursively search for tournament results",
@@ -911,6 +916,7 @@ def combine(
     metric: str,
     stat: str,
     add_tournament_column: bool,
+    complete_only: bool,
 ):
     # done = False
     # if rename:
@@ -941,6 +947,7 @@ def combine(
         add_tournament_folders=add_folders,
         override_existing=override,
         add_tournament_column=add_tournament_column,
+        complete_only=complete_only,
     )
     print(results.final_scores)
 
