@@ -1,7 +1,8 @@
 import random
 
+from anl.anl2024.negotiators.base import ANLNegotiator
 import numpy as np
-from negmas import Outcome, ResponseType, SAONegotiator, SAOResponse, SAOState
+from negmas import Outcome, ResponseType, SAOResponse, SAOState
 from scipy.optimize import curve_fit
 
 __all__ = ["RVFitter"]
@@ -11,7 +12,7 @@ def aspiration_function(t, mx, rv, e):
     return (mx - rv) * (1.0 - np.power(t, e)) + rv
 
 
-class RVFitter(SAONegotiator):
+class RVFitter(ANLNegotiator):
     """A simple negotiator that uses curve fitting to learn the reserved value.
 
     Args:

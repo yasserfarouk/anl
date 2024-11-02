@@ -1,13 +1,15 @@
 import random
 
+from anl.anl2024.negotiators.base import ANLNegotiator
+
 from negmas import nash_points, pareto_frontier
 from negmas.outcomes import Outcome
-from negmas.sao import ResponseType, SAONegotiator, SAOResponse, SAOState
+from negmas.sao import ResponseType, SAOResponse, SAOState
 
 __all__ = ["NashSeeker"]
 
 
-class NashSeeker(SAONegotiator):
+class NashSeeker(ANLNegotiator):
     """Assumes that the opponent has a fixed reserved value and seeks the Nash equilibrium.
 
     Args:
