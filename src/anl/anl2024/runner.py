@@ -362,10 +362,11 @@ def find_three_integers(x):
 
 def find_three_integers_for_number(x, fraction=0.1):
     """Helper function to find three integers for a given number."""
+    N = 3
 
     # Check for perfect cubes
-    cube_root = int(x ** (1 / 3))
-    if cube_root**3 >= x * (1 - fraction):
+    cube_root = int(x ** (1 / N))
+    if cube_root**N >= x * (1 - fraction):
         return (
             cube_root,
             cube_root + random.randint(-1, 1),
@@ -382,13 +383,13 @@ def find_three_integers_for_number(x, fraction=0.1):
         divisor += 1
 
     # Try to group prime factors into threes
-    for combination in itertools.combinations(prime_factors, 3):
+    for combination in itertools.combinations(prime_factors, N):
         if product(combination) == x:
             return combination
 
     # Try combining factors to create three integers
-    if len(prime_factors) >= 4:
-        for i in range(1, len(prime_factors) - 2):
+    if len(prime_factors) > N:
+        for i in range(1, len(prime_factors) - N + 1):
             if (
                 prime_factors[0] * prime_factors[i] * product(prime_factors[i + 1 :])
                 == x
