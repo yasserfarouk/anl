@@ -1,13 +1,15 @@
 import random
 
+from anl.anl2024.negotiators.base import ANLNegotiator
+
 from negmas.outcomes import Outcome
 from negmas.preferences import PresortingInverseUtilityFunction
-from negmas.sao import ResponseType, SAONegotiator, SAOResponse, SAOState
+from negmas.sao import ResponseType, SAOResponse, SAOState
 
 __all__ = ["MiCRO"]
 
 
-class MiCRO(SAONegotiator):
+class MiCRO(ANLNegotiator):
     """
     A simple implementation of the MiCRO negotiation strategy
 
@@ -30,7 +32,7 @@ class MiCRO(SAONegotiator):
         self.sorter = None
         self._received, self._sent = set(), set()
 
-    def __call__(self, state: SAOState) -> SAOResponse:
+    def __call__(self, state: SAOState, dest: str | None = None) -> SAOResponse:
         # The main implementation of the MiCRO strategy
         assert self.ufun
         # initialize the sorter

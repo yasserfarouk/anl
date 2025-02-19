@@ -14,7 +14,7 @@ import random
 from negmas.sao import SAONegotiator, SAOResponse
 from negmas import Outcome, ResponseType
 class MyRandomNegotiator(SAONegotiator):
-    def __call__(self, state):
+    def __call__(self, state, dest: str | None = None):
         offer = state.current_offer
         if offer is not None and self.ufun.is_not_worse(offer, None) and random.random() < 0.25 :
             return SAOResponse(ResponseType.ACCEPT_OFFER, offer)
@@ -131,9 +131,9 @@ plt.legend();
 ```
 
 
-    
+
 ![png](tutorial_develop_files/tutorial_develop_8_0.png)
-    
+
 
 
 
@@ -145,9 +145,9 @@ for i, col in enumerate(["advantage", "welfare", "nash_optimality"]):
 ```
 
 
-    
+
 ![png](tutorial_develop_files/tutorial_develop_9_0.png)
-    
+
 
 
 ## Available helpers
@@ -252,7 +252,7 @@ class SimpleRVFitter(SAONegotiator):
         # opponent reserved value and our knowledge of ours
         self._rational: list[tuple[float, float, Outcome]] = []
 
-    def __call__(self, state):
+    def __call__(self, state, dest: str | None = None):
         # update the opponent reserved value in self.opponent_ufun
         self.update_reserved_value(state.current_offer, state.relative_time)
         # run the acceptance strategy and if the offer received is acceptable, accept it
@@ -452,7 +452,7 @@ We then set the variables we need for our negotiator:
 The overall algorithm is implemented --- as usual --- in the `__call__()` method. This is the complete algorithm:
 
 ```python
-def __call__(self, state):
+def __call__(self, state, dest: str | None = None):
     self.update_reserved_value(state.current_offer, state.relative_time)
     if self.is_acceptable(state.current_offer, state.relative_time):
         return SAOResponse(ResponseType.ACCEPT_OFFER, state.current_offer)
@@ -590,9 +590,9 @@ plt.show()
 ```
 
 
-    
+
 ![png](tutorial_develop_files/tutorial_develop_16_0.png)
-    
+
 
 
 Notice how in the second half of the negotiation, the SimpleRVFitter is only offering outcomes that are rational for both negotiators (can you see that in the left-side plot? can you see it in the top right-side plot?). This means that the curve fitting approach is working OK here. The opponent is a time-based strategy in this case though.
@@ -623,9 +623,9 @@ plt.show()
 ```
 
 
-    
+
 ![png](tutorial_develop_files/tutorial_develop_18_0.png)
-    
+
 
 
 This time, our simple RV fitter could not really learn the opponent reserved value effectively. We can see that from the fact that it kept offering outcomes that are irrational for the opponent almost until the end of the negotiation.

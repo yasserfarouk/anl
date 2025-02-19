@@ -1,13 +1,15 @@
 import random
 
+from anl.anl2024.negotiators.base import ANLNegotiator
+
 from negmas import nash_points, pareto_frontier
 from negmas.outcomes import Outcome
-from negmas.sao import ResponseType, SAONegotiator, SAOResponse, SAOState
+from negmas.sao import ResponseType, SAOResponse, SAOState
 
 __all__ = ["NashSeeker"]
 
 
-class NashSeeker(SAONegotiator):
+class NashSeeker(ANLNegotiator):
     """Assumes that the opponent has a fixed reserved value and seeks the Nash equilibrium.
 
     Args:
@@ -59,7 +61,7 @@ class NashSeeker(SAONegotiator):
             if u >= self._min_acceptable
         ]
 
-    def __call__(self, state: SAOState) -> SAOResponse:
+    def __call__(self, state: SAOState, dest: str | None = None) -> SAOResponse:
         # just assert that I have a ufun and I know the outcome space.
         assert self.ufun is not None and self.ufun.outcome_space is not None
         # read the current offer from the state. None means I am starting the negotiation

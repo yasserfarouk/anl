@@ -28,7 +28,7 @@ class StochasticLinear(AspirationNegotiator):
             tolerance=0.00001,
             stochastic=True,
             presort=True,
-            **kwargs
+            **kwargs,
         )
 
 
@@ -45,7 +45,7 @@ class StochasticConceder(AspirationNegotiator):
             tolerance=0.00001,
             stochastic=True,
             presort=True,
-            **kwargs
+            **kwargs,
         )
 
 
@@ -62,7 +62,7 @@ class StochasticBoulware(AspirationNegotiator):
             tolerance=0.00001,
             stochastic=True,
             presort=True,
-            **kwargs
+            **kwargs,
         )
 
 

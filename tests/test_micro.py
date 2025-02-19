@@ -42,11 +42,13 @@ def test_micro_always_agrees_against_itself():
         & (scores.advantage < 0),
         "scenario",
     ].unique()
-    assert not (failed_scenarios), f"Negative advanate: {failed_scenarios=}"
+    assert not (failed_scenarios.size > 0), f"Negative advanate: {failed_scenarios=}"
     failed_scenarios = scores.loc[
         (scores.strategy == "MiCRO")
         & (scores.partners == "MiCRO")
         & (scores.advantage < 1e-3),
         "scenario",
     ].unique()
-    assert not (failed_scenarios), f"Failure to get agreement: {failed_scenarios=}"
+    assert not (
+        failed_scenarios.size > 0
+    ), f"Failure to get agreement: {failed_scenarios=}"
