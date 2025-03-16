@@ -1,6 +1,18 @@
 Changelog
 =========
 
+
+0.1.12 (2024.03.16)
+-------------------
+
+* Compatibility with NegMAS 0.11.2
+* Avoid pypi test
+* Adding ANLNegotiator to support propose/respond. Negotiators for SAO have the following interface: __call__() which is the default for SAONegotiator. This is implemented by calling propose() and respond() whenever needed. ANL agents implemented __call__ directly. The ANLNegotiator provides an implementation of propose() and respond() assuming __call__ is called directly.
+* Renaming old builtin file
+* Adding --complete-only/allow-parital to CLI. Controls whether partially run tournaments are considered
+* Show debug errors in cli
+* Upgrading GitHub Actions to avoid node 16
+
 0.1.11 (2024.04.07)
 -------------------
 
